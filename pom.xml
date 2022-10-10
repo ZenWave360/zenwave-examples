@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>io.github.zenwave360.examples</groupId>
+    <artifactId>examples-parent</artifactId>
+    <version>0.6.1-SNAPSHOT</version>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <packaging>pom</packaging>
+
+    <properties>
+        <skipTests>true</skipTests>
+        <java.version>17</java.version>
+        <spring-boot.version>2.7.0</spring-boot.version>
+        <archunit-junit5.version>0.22.0</archunit-junit5.version>
+        <mapstruct.version>1.5.1.Final</mapstruct.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <avro.version>1.11.1</avro.version>
+        <testcontainers.version>1.17.2</testcontainers.version>
+
+        <zenwave.version>0.6.1-SNAPSHOT</zenwave.version>
+
+        <!-- Plugin versions -->
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
+        <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <checkstyle.version>9.2</checkstyle.version>
+        <nohttp-checkstyle.version>0.0.10</nohttp-checkstyle.version>
+        <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
+        <modernizer-maven-plugin.version>2.3.0</modernizer-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
+        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <openapi-generator-maven-plugin.version>5.3.1</openapi-generator-maven-plugin.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <version>${spring-boot.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>pre-unit-tests</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
+                        <execution>
+                            <id>post-unit-test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>pre-integration-tests</id>
+                            <goals>
+                                <goal>prepare-agent-integration</goal>
+                            </goals>
+                        </execution>
+                        <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
+                        <execution>
+                            <id>post-integration-tests</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>report-integration</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <!-- Force alphabetical order to have a reproducible build -->
+                        <runOrder>alphabetical</runOrder>
+                        <excludes>
+                            <exclude>**/*IT*</exclude>
+                            <exclude>**/*IntTest*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
+                    <configuration>
+                        <!-- Due to spring-boot repackage, without adding this property test classes are not found
+                             See https://github.com/spring-projects/spring-boot/issues/6254 -->
+                        <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        <!-- Force alphabetical order to have a reproducible build -->
+                        <runOrder>alphabetical</runOrder>
+                        <includes>
+                            <include>**/*IT*</include>
+                            <include>**/*IntTest*</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
+    </build>
+
+    <modules>
+        <module>asyncapi-spring-cloud-streams</module>
+        <module>spring-boot-mongo-elasticsearch</module>
+    </modules>
+</project>
