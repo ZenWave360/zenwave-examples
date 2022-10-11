@@ -13,6 +13,7 @@ Generate AsyncAPI definition from JDL entities:
 
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIConfiguration \
+    includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
@@ -28,6 +29,7 @@ Generate AsyncAPI definition from JDL entities:
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIConfiguration \
     specFile=src/main/resources/model/orders-model.jdl \
     schemaFormat=avro \
+    includeCommands=true \
     avroPackage=io.zenwave360.example.adapters.events.avro \
     targetFile=src/main/resources/model/asyncapi-avro.yml
 ```

@@ -237,6 +237,8 @@
 								<include>*.avsc</include>
 							</includes>
 							<imports>
+								<import>${project.basedir}/src/main/resources/model/avro/RequestType.avsc</import>
+								<import>${project.basedir}/src/main/resources/model/avro/EventType.avsc</import>
 								<import>${project.basedir}/src/main/resources/model/avro/Customer.avsc</import>
 								<import>${project.basedir}/src/main/resources/model/avro/PaymentDetails.avsc</import>
 								<import>${project.basedir}/src/main/resources/model/avro/ShippingDetails.avsc</import>
@@ -244,15 +246,6 @@
 								<import>${project.basedir}/src/main/resources/model/avro/OrderStatus.avsc</import>
 								<import>${project.basedir}/src/main/resources/model/avro/CustomerOrder.avsc</import>
 								<import>${project.basedir}/src/main/resources/model/avro/CustomerOrderSearchCriteria.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerCreatedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerUpdatedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerDeletedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/OrderStatusCreatedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/OrderStatusDeletedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/OrderStatusUpdatedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerOrderCreatedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerOrderDeletedPayload.avsc</import>
-								<import>${project.basedir}/src/main/resources/model/avro/CustomerOrderUpdatedPayload.avsc</import>
 							</imports>
 						</configuration>
 					</execution>

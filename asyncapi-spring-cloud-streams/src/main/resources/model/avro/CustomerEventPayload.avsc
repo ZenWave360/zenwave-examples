@@ -1,6 +1,6 @@
 {
   "type" : "record",
-  "name" : "CustomerCreatedPayload",
+  "name" : "CustomerEventPayload",
   "namespace" : "io.zenwave360.example.adapters.events.avro",
   "fields" : [ {
     "name" : "id",
@@ -8,5 +8,8 @@
   }, {
     "name" : "payload",
     "type" : "Customer"
+  }, {
+    "name" : "eventType",
+    "type" : "EventType"
   } ]
 }
