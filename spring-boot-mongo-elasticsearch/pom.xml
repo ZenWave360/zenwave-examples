@@ -132,6 +132,7 @@
 				<artifactId>zenwave-code-generator-mojo</artifactId>
 				<version>${zenwave.version}</version>
 				<configuration>
+					<skip>false</skip>
 					<addCompileSourceRoot>true</addCompileSourceRoot>
 				</configuration>
 				<executions>
@@ -148,9 +149,9 @@
 							<configOptions>
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
-								<transactionalOutbox>mongodb</transactionalOutbox>
+<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
 								<apiPackage>io.zenwave360.example.core.outbound.events</apiPackage>
-								<modelPackage>io.zenwave360.example.core.outbound.events.model</modelPackage>
+								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -163,14 +164,12 @@
 						<configuration>
 							<generatorName>jsonschema2pojo</generatorName>
 							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
-							<addCompileSourceRoot>false</addCompileSourceRoot>
 							<configOptions>
-								<modelPackage>io.zenwave360.example.core.outbound.events.model</modelPackage>
+								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
 								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>
 							</configOptions>
 						</configuration>
 					</execution>
-
 					<!-- Generate CONSUMER -->
 					<execution>
 						<id>generate-asyncapi-consumer</id>
@@ -179,29 +178,14 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
+							<skip>true</skip>
 							<generatorName>spring-cloud-streams3</generatorName>
 							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
 							<configOptions>
 								<role>CLIENT</role>
 								<style>IMPERATIVE</style>
 								<apiPackage>io.zenwave360.example.core.inbound.events</apiPackage>
-								<modelPackage>io.zenwave360.example.core.inbound.events.model</modelPackage>
-							</configOptions>
-						</configuration>
-					</execution>
-					<execution>
-						<id>generate-asyncapi-consumer-dtos</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<generatorName>jsonschema2pojo</generatorName>
-							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
-							<addCompileSourceRoot>false</addCompileSourceRoot>
-							<configOptions>
-								<modelPackage>io.zenwave360.example.core.inbound.events.model</modelPackage>
-								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>
+								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
 							</configOptions>
 						</configuration>
 					</execution>
