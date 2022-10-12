@@ -2,7 +2,6 @@ package io.zenwave360.example.adapters.events;
 
 import io.zenwave360.example.core.events.model.CustomerOrderRequestPayload;
 import io.zenwave360.example.core.events.model.CustomerOrderRequestPayload.RequestType;
-import io.zenwave360.example.core.events.model.CustomerRequestPayload;
 import io.zenwave360.example.core.events.provider.IDoCustomerOrderRequestConsumerService;
 import io.zenwave360.example.core.inbound.CustomerOrderUseCases;
 import io.zenwave360.example.core.inbound.dtos.CustomerOrderInput;

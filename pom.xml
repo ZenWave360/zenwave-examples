@@ -53,6 +53,13 @@
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     </properties>
 
+    <modules>
+        <module>skeletons/asyncapi-spring-cloud-streams</module>
+        <module>skeletons/spring-boot-mongo-elasticsearch</module>
+
+        <module>examples/spring-boot-mongo-elasticsearch</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -207,9 +214,4 @@
 
 
     </build>
-
-    <modules>
-        <module>asyncapi-spring-cloud-streams</module>
-        <module>spring-boot-mongo-elasticsearch</module>
-    </modules>
 </project>

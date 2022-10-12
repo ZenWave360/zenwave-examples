@@ -1,17 +1,6 @@
 package io.zenwave360.example.config;
 
-import io.zenwave360.example.core.events.provider.CustomerEventsProducer;
-import io.zenwave360.example.core.events.provider.CustomerOrderEventsProducer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.core.ChangeStreamOptions;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.messaging.ChangeStreamRequest;
-import org.springframework.data.mongodb.core.messaging.ChangeStreamRequest.ChangeStreamRequestOptions;
-import org.springframework.data.mongodb.core.messaging.DefaultMessageListenerContainer;
-import org.springframework.data.mongodb.core.messaging.MessageListenerContainer;
-
-import java.util.Map;
 
 @Configuration
 public class OutboxConfig {

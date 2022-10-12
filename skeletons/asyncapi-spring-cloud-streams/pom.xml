@@ -6,9 +6,9 @@
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>examples-parent</artifactId>
 		<version>0.6.1-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
 	</parent>
-	<artifactId>asyncapi-spring-cloud-streams-example</artifactId>
-	<version>0.6.1-SNAPSHOT</version>
+	<artifactId>asyncapi-spring-cloud-streams-skeleton</artifactId>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 
 	<dependencies>
@@ -231,8 +231,8 @@
 							<goal>schema</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/resources/model/avro/</sourceDirectory>
-							<outputDirectory>${project.basedir}/target/generated-sources/avro/src/main/java/</outputDirectory>
+							<sourceDirectory>src/main/resources/model/avro</sourceDirectory>
+							<outputDirectory>target/generated-sources/avro/src/main/java</outputDirectory>
 							<includes>
 								<include>*.avsc</include>
 							</includes>

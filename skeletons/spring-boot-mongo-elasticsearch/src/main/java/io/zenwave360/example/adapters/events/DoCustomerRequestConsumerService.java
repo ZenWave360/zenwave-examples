@@ -5,7 +5,6 @@ import io.zenwave360.example.core.events.model.CustomerRequestPayload.RequestTyp
 import io.zenwave360.example.core.events.provider.IDoCustomerRequestConsumerService;
 import io.zenwave360.example.core.inbound.CustomerUseCases;
 import io.zenwave360.example.core.inbound.dtos.CustomerInput;
-import io.zenwave360.example.core.inbound.dtos.CustomerInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
