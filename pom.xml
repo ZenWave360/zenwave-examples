@@ -54,8 +54,8 @@
     </properties>
 
     <modules>
-        <module>skeletons/asyncapi-spring-cloud-streams-skeleton</module>
-        <module>skeletons/spring-boot-mongo-elasticsearch-skeleton</module>
+        <module>skeletons/asyncapi-scs-generator-skeleton</module>
+        <module>skeletons/spring-boot-mongodb-elasticsearch-kafka-skeleton</module>
 
         <module>examples/spring-boot-mongodb-elasticsearch-kafka-example</module>
     </modules>
