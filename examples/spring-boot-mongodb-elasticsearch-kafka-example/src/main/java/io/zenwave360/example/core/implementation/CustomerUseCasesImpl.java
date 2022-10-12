@@ -28,15 +28,15 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   private final CustomerRepository customerRepository;
   private final CustomerSearchRepository customerSearchRepository;
 
-  @Autowired
-  private ICustomerEventsProducer customerEventsProducer;
+  private final ICustomerEventsProducer customerEventsProducer;
 
   /** Constructor. */
   public CustomerUseCasesImpl(
-      CustomerMapper customerMapper, CustomerRepository customerRepository, CustomerSearchRepository customerSearchRepository) {
+      CustomerMapper customerMapper, CustomerRepository customerRepository, CustomerSearchRepository customerSearchRepository, ICustomerEventsProducer customerEventsProducer) {
     this.customerMapper = customerMapper;
     this.customerRepository = customerRepository;
     this.customerSearchRepository = customerSearchRepository;
+    this.customerEventsProducer = customerEventsProducer;
   }
 
   // Customer
