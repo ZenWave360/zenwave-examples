@@ -54,10 +54,10 @@
     </properties>
 
     <modules>
-        <module>skeletons/asyncapi-spring-cloud-streams</module>
-        <module>skeletons/spring-boot-mongo-elasticsearch</module>
+        <module>skeletons/asyncapi-spring-cloud-streams-skeleton</module>
+        <module>skeletons/spring-boot-mongo-elasticsearch-skeleton</module>
 
-        <module>examples/spring-boot-mongo-elasticsearch</module>
+        <module>examples/spring-boot-mongo-elasticsearch-example</module>
     </modules>
 
     <dependencyManagement>

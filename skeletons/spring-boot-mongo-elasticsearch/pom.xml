@@ -8,8 +8,7 @@
 		<version>0.6.1-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
-	<artifactId>spring-boot-mongo-elasticsearch-example</artifactId>
-	<version>0.6.1-SNAPSHOT</version>
+	<artifactId>spring-boot-mongo-elasticsearch-skeleton</artifactId>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 	<description>ZenWave360 Example</description>
 
@@ -151,8 +150,8 @@
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
 <!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
-								<apiPackage>io.zenwave360.example.core.outbound.events</apiPackage>
-								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
+								<apiPackage>io.zenwave360.example.core.events.provider</apiPackage>
+								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
 					</execution>
