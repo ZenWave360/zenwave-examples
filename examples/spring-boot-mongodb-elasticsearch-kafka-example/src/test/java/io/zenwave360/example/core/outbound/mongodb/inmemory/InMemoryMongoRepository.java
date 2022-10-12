@@ -21,198 +21,198 @@ import org.springframework.data.repository.query.FluentQuery;
 
 public class InMemoryMongoRepository<T> implements MongoRepository<T, String> {
 
-  public interface PrimaryKeyGenerator<String> {
-    String next();
-  }
+    public interface PrimaryKeyGenerator<String> {
+        String next();
+    }
 
-  private final Map<String, T> entities = new HashMap<>();
+    private final Map<String, T> entities = new HashMap<>();
 
-  // private final PrimaryKeyGenerator<String> primaryKeyGenerator = () ->
-  // UUID.randomUUID().toString();
-  private final PrimaryKeyGenerator<String> primaryKeyGenerator =
-      new PrimaryKeyGenerator<String>() {
-        private int next = 0;
+    // private final PrimaryKeyGenerator<String> primaryKeyGenerator = () ->
+    // UUID.randomUUID().toString();
+    private final PrimaryKeyGenerator<String> primaryKeyGenerator =
+            new PrimaryKeyGenerator<String>() {
+                private int next = 0;
 
-        @Override
-        public String next() {
-          return String.valueOf(next++);
+                @Override
+                public String next() {
+                    return String.valueOf(next++);
+                }
+            };
+
+    public Map<String, T> getEntities() {
+        return entities;
+    }
+
+    public boolean containsKey(String key) {
+        return entities.containsKey(key);
+    }
+
+    public boolean containsEntity(T entity) {
+        return entities.containsValue(entity);
+    }
+
+    protected <F> F readField(Object target, String fieldName) {
+        try {
+            return (F) FieldUtils.readField(target, fieldName, true);
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("Field not found or not accessible: " + fieldName);
         }
-      };
-
-  public Map<String, T> getEntities() {
-    return entities;
-  }
-
-  public boolean containsKey(String key) {
-    return entities.containsKey(key);
-  }
-
-  public boolean containsEntity(T entity) {
-    return entities.containsValue(entity);
-  }
-
-  protected <F> F readField(Object target, String fieldName) {
-    try {
-      return (F) FieldUtils.readField(target, fieldName, true);
-    } catch (IllegalAccessException e) {
-      throw new IllegalArgumentException("Field not found or not accessible: " + fieldName);
     }
-  }
 
-  protected void writeField(Object target, String fieldName, Object value) {
-    try {
-      FieldUtils.writeField(target, fieldName, value, true);
-    } catch (IllegalAccessException e) {
-      throw new IllegalArgumentException("Field not found or not accessible: " + fieldName);
+    protected void writeField(Object target, String fieldName, Object value) {
+        try {
+            FieldUtils.writeField(target, fieldName, value, true);
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("Field not found or not accessible: " + fieldName);
+        }
     }
-  }
 
-  protected <F> List<T> findByField(String fieldName, F value) {
-    return entities.values().stream().filter(entity -> isSameValue(value, readField(entity, fieldName))).toList();
-  }
-
-  protected <F> T findByUniqueField(String fieldName, F value) {
-    List<T> foundEntities = findByField(fieldName, value);
-    if (foundEntities.isEmpty()) {
-      return null;
-    } else if (foundEntities.size() == 1) {
-      return foundEntities.get(0);
-    } else {
-      throw new IllegalArgumentException(
-          String.format("Field %s is not unique, found %s entities: %s", fieldName, foundEntities.size(), foundEntities));
+    protected <F> List<T> findByField(String fieldName, F value) {
+        return entities.values().stream().filter(entity -> isSameValue(value, readField(entity, fieldName))).toList();
     }
-  }
 
-  protected boolean contains(Iterable values, Object value) {
-    return StreamSupport.stream(values.spliterator(), false).anyMatch(e -> isSameValue(e, value));
-  }
-
-  protected boolean isSameValue(Object o1, Object o2) {
-    if (o1 == null) {
-      return o2 == null;
-    } else {
-      return o1.equals(o2);
+    protected <F> T findByUniqueField(String fieldName, F value) {
+        List<T> foundEntities = findByField(fieldName, value);
+        if (foundEntities.isEmpty()) {
+            return null;
+        } else if (foundEntities.size() == 1) {
+            return foundEntities.get(0);
+        } else {
+            throw new IllegalArgumentException(
+                    String.format("Field %s is not unique, found %s entities: %s", fieldName, foundEntities.size(), foundEntities));
+        }
     }
-  }
 
-  public <S extends T> S save(S entity) {
-    if (entity == null) {
-      throw new IllegalArgumentException("entity must not be null");
+    protected boolean contains(Iterable values, Object value) {
+        return StreamSupport.stream(values.spliterator(), false).anyMatch(e -> isSameValue(e, value));
     }
-    String id = firstNonNull(readField(entity, "id"), primaryKeyGenerator.next());
-    writeField(entity, "id", id);
-    entities.put(id, entity);
-    return entity;
-  }
 
-  public <S extends T> List<S> saveAll(Iterable<S> entitiesToSave) {
-    if (entitiesToSave == null) {
-      throw new IllegalArgumentException("entitiesToSave must not be null");
+    protected boolean isSameValue(Object o1, Object o2) {
+        if (o1 == null) {
+            return o2 == null;
+        } else {
+            return o1.equals(o2);
+        }
     }
-    return StreamSupport.stream(entitiesToSave.spliterator(), false).map(e -> save(e)).toList();
-  }
 
-  public Optional<T> findById(String id) {
-    return Optional.ofNullable(findByUniqueField("id", id));
-  }
-
-  public boolean existsById(String id) {
-    return findById(id).isPresent();
-  }
-
-  public List<T> findAll() {
-    return new ArrayList(entities.values());
-  }
-
-  public Iterable<T> findAllById(Iterable<String> ids) {
-    return entities.values().stream().filter(e -> contains(ids, readField(e, "id"))).toList();
-  }
-
-  public long count() {
-    return entities.size();
-  }
-
-  public void deleteById(String id) {
-    if (id == null) {
-      throw new IllegalArgumentException("id must not be null");
+    public <S extends T> S save(S entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity must not be null");
+        }
+        String id = firstNonNull(readField(entity, "id"), primaryKeyGenerator.next());
+        writeField(entity, "id", id);
+        entities.put(id, entity);
+        return entity;
     }
-    T removedEntity = entities.remove(id);
-    if (removedEntity == null) {
-      throw new EmptyResultDataAccessException("Entity with id " + id + " not found", 1);
+
+    public <S extends T> List<S> saveAll(Iterable<S> entitiesToSave) {
+        if (entitiesToSave == null) {
+            throw new IllegalArgumentException("entitiesToSave must not be null");
+        }
+        return StreamSupport.stream(entitiesToSave.spliterator(), false).map(e -> save(e)).toList();
     }
-  }
 
-  public void delete(T entity) {
-    if (entity == null) {
-      throw new IllegalArgumentException("entity must not be null");
+    public Optional<T> findById(String id) {
+        return Optional.ofNullable(findByUniqueField("id", id));
     }
-    entities.remove(readField(entity, "id"));
-  }
 
-  public void deleteAllById(Iterable<? extends String> ids) {
-    if (ids == null) {
-      throw new IllegalArgumentException("ids must not be null");
+    public boolean existsById(String id) {
+        return findById(id).isPresent();
     }
-    ids.forEach(id -> entities.remove(id));
-  }
 
-  public void deleteAll(Iterable<? extends T> entitiesToDelete) {
-    if (entitiesToDelete == null) {
-      throw new IllegalArgumentException("entitiesToDelete must not be null");
+    public List<T> findAll() {
+        return new ArrayList(entities.values());
     }
-    for (T entity : entitiesToDelete) {
-      delete(entity);
+
+    public Iterable<T> findAllById(Iterable<String> ids) {
+        return entities.values().stream().filter(e -> contains(ids, readField(e, "id"))).toList();
     }
-  }
 
-  public void deleteAll() {
-    entities.clear();
-  }
+    public long count() {
+        return entities.size();
+    }
 
-  public List<T> findAll(Sort sort) {
-    return null;
-  }
+    public void deleteById(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id must not be null");
+        }
+        T removedEntity = entities.remove(id);
+        if (removedEntity == null) {
+            throw new EmptyResultDataAccessException("Entity with id " + id + " not found", 1);
+        }
+    }
 
-  public Page<T> findAll(Pageable pageable) {
-    int total = (int) count();
-    int offset = (int) pageable.getOffset();
-    int limit = pageable.getPageSize();
-    return new PageImpl<>(findAll().subList(offset, Math.min(offset + limit, total)), pageable, total);
-  }
+    public void delete(T entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity must not be null");
+        }
+        entities.remove(readField(entity, "id"));
+    }
 
-  public <S extends T> S insert(S entity) {
-    return save(entity);
-  }
+    public void deleteAllById(Iterable<? extends String> ids) {
+        if (ids == null) {
+            throw new IllegalArgumentException("ids must not be null");
+        }
+        ids.forEach(id -> entities.remove(id));
+    }
 
-  public <S extends T> List<S> insert(Iterable<S> entities) {
-    return saveAll(entities);
-  }
+    public void deleteAll(Iterable<? extends T> entitiesToDelete) {
+        if (entitiesToDelete == null) {
+            throw new IllegalArgumentException("entitiesToDelete must not be null");
+        }
+        for (T entity : entitiesToDelete) {
+            delete(entity);
+        }
+    }
 
-  public <S extends T> Optional<S> findOne(Example<S> example) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public void deleteAll() {
+        entities.clear();
+    }
 
-  public <S extends T> List<S> findAll(Example<S> example) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public List<T> findAll(Sort sort) {
+        return null;
+    }
 
-  public <S extends T> List<S> findAll(Example<S> example, Sort sort) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public Page<T> findAll(Pageable pageable) {
+        int total = (int) count();
+        int offset = (int) pageable.getOffset();
+        int limit = pageable.getPageSize();
+        return new PageImpl<>(findAll().subList(offset, Math.min(offset + limit, total)), pageable, total);
+    }
 
-  public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public <S extends T> S insert(S entity) {
+        return save(entity);
+    }
 
-  public <S extends T> long count(Example<S> example) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public <S extends T> List<S> insert(Iterable<S> entities) {
+        return saveAll(entities);
+    }
 
-  public <S extends T> boolean exists(Example<S> example) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public <S extends T> Optional<S> findOne(Example<S> example) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 
-  public <S extends T, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
+    public <S extends T> List<S> findAll(Example<S> example) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public <S extends T> List<S> findAll(Example<S> example, Sort sort) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public <S extends T> long count(Example<S> example) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public <S extends T> boolean exists(Example<S> example) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public <S extends T, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

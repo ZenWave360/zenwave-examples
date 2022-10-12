@@ -17,24 +17,25 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 public interface CustomerSearchRepository extends ElasticsearchRepository<CustomerDocument, String>, CustomerSearchRepositoryInternal {}
 
 interface CustomerSearchRepositoryInternal {
-  Page<CustomerDocument> search(String query, Pageable pageable);
+    Page<CustomerDocument> search(String query, Pageable pageable);
 }
 
 class CustomerSearchRepositoryInternalImpl implements CustomerSearchRepositoryInternal {
 
-  private final ElasticsearchRestTemplate elasticsearchTemplate;
+    private final ElasticsearchRestTemplate elasticsearchTemplate;
 
-  CustomerSearchRepositoryInternalImpl(ElasticsearchRestTemplate elasticsearchTemplate) {
-    this.elasticsearchTemplate = elasticsearchTemplate;
-  }
+    CustomerSearchRepositoryInternalImpl(ElasticsearchRestTemplate elasticsearchTemplate) {
+        this.elasticsearchTemplate = elasticsearchTemplate;
+    }
 
-  @Override
-  public Page<CustomerDocument> search(String query, Pageable pageable) {
-    NativeSearchQuery nativeSearchQuery = new NativeSearchQuery(queryStringQuery(query));
-    nativeSearchQuery.setPageable(pageable);
-    List<CustomerDocument> hits =
-        elasticsearchTemplate.search(nativeSearchQuery, CustomerDocument.class).map(SearchHit::getContent).stream().collect(Collectors.toList());
+    @Override
+    public Page<CustomerDocument> search(String query, Pageable pageable) {
+        NativeSearchQuery nativeSearchQuery = new NativeSearchQuery(queryStringQuery(query));
+        nativeSearchQuery.setPageable(pageable);
+        List<CustomerDocument> hits =
+                elasticsearchTemplate.search(nativeSearchQuery, CustomerDocument.class).map(SearchHit::getContent).stream()
+                        .collect(Collectors.toList());
 
-    return new PageImpl<>(hits, pageable, hits.size());
-  }
+        return new PageImpl<>(hits, pageable, hits.size());
+    }
 }

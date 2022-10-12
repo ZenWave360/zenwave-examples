@@ -10,103 +10,118 @@ import javax.validation.constraints.*;
 /** */
 public class CustomerOrderInput implements Serializable {
 
-  private Instant date;
+    private String id;
 
-  private ShippingDetailsInput shippingDetails;
+    private Instant date;
 
-  private List<OrderedItemInput> orderedItems;
+    private ShippingDetailsInput shippingDetails;
 
-  private List<PaymentDetailsInput> paymentDetails;
+    private List<OrderedItemInput> orderedItems;
 
-  private OrderStatus status;
+    private List<PaymentDetailsInput> paymentDetails;
 
-  private CustomerInput customer;
+    private OrderStatus status;
 
-  public CustomerOrderInput withDate(Instant date) {
-    this.date = date;
-    return this;
-  }
+    private CustomerInput customer;
 
-  public CustomerOrderInput withShippingDetails(ShippingDetailsInput shippingDetails) {
-    this.shippingDetails = shippingDetails;
-    return this;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public CustomerOrderInput addOrderedItems(OrderedItemInput orderedItems) {
-    this.orderedItems.add(orderedItems);
-    return this;
-  }
+    public CustomerOrderInput withId(String id) {
+        this.id = id;
+        return this;
+    }
 
-  public CustomerOrderInput withOrderedItems(List<OrderedItemInput> orderedItems) {
-    this.orderedItems = orderedItems;
-    return this;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public CustomerOrderInput addPaymentDetails(PaymentDetailsInput paymentDetails) {
-    this.paymentDetails.add(paymentDetails);
-    return this;
-  }
+    public CustomerOrderInput withDate(Instant date) {
+        this.date = date;
+        return this;
+    }
 
-  public CustomerOrderInput withPaymentDetails(List<PaymentDetailsInput> paymentDetails) {
-    this.paymentDetails = paymentDetails;
-    return this;
-  }
+    public CustomerOrderInput withShippingDetails(ShippingDetailsInput shippingDetails) {
+        this.shippingDetails = shippingDetails;
+        return this;
+    }
 
-  public CustomerOrderInput withStatus(OrderStatus status) {
-    this.status = status;
-    return this;
-  }
+    public CustomerOrderInput addOrderedItems(OrderedItemInput orderedItems) {
+        this.orderedItems.add(orderedItems);
+        return this;
+    }
 
-  public CustomerOrderInput withCustomer(CustomerInput customer) {
-    this.customer = customer;
-    return this;
-  }
+    public CustomerOrderInput withOrderedItems(List<OrderedItemInput> orderedItems) {
+        this.orderedItems = orderedItems;
+        return this;
+    }
 
-  public Instant getDate() {
-    return date;
-  }
+    public CustomerOrderInput addPaymentDetails(PaymentDetailsInput paymentDetails) {
+        this.paymentDetails.add(paymentDetails);
+        return this;
+    }
 
-  public void setDate(Instant date) {
-    this.date = date;
-  }
+    public CustomerOrderInput withPaymentDetails(List<PaymentDetailsInput> paymentDetails) {
+        this.paymentDetails = paymentDetails;
+        return this;
+    }
 
-  public ShippingDetailsInput getShippingDetails() {
-    return shippingDetails;
-  }
+    public CustomerOrderInput withStatus(OrderStatus status) {
+        this.status = status;
+        return this;
+    }
 
-  public void setShippingDetails(ShippingDetailsInput shippingDetails) {
-    this.shippingDetails = shippingDetails;
-  }
+    public CustomerOrderInput withCustomer(CustomerInput customer) {
+        this.customer = customer;
+        return this;
+    }
 
-  public List<OrderedItemInput> getOrderedItems() {
-    return orderedItems;
-  }
+    public Instant getDate() {
+        return date;
+    }
 
-  public void setOrderedItems(List<OrderedItemInput> orderedItems) {
-    this.orderedItems = orderedItems;
-  }
+    public void setDate(Instant date) {
+        this.date = date;
+    }
 
-  public List<PaymentDetailsInput> getPaymentDetails() {
-    return paymentDetails;
-  }
+    public ShippingDetailsInput getShippingDetails() {
+        return shippingDetails;
+    }
 
-  public void setPaymentDetails(List<PaymentDetailsInput> paymentDetails) {
-    this.paymentDetails = paymentDetails;
-  }
+    public void setShippingDetails(ShippingDetailsInput shippingDetails) {
+        this.shippingDetails = shippingDetails;
+    }
 
-  public OrderStatus getStatus() {
-    return status;
-  }
+    public List<OrderedItemInput> getOrderedItems() {
+        return orderedItems;
+    }
 
-  public void setStatus(OrderStatus status) {
-    this.status = status;
-  }
+    public void setOrderedItems(List<OrderedItemInput> orderedItems) {
+        this.orderedItems = orderedItems;
+    }
 
-  public CustomerInput getCustomer() {
-    return customer;
-  }
+    public List<PaymentDetailsInput> getPaymentDetails() {
+        return paymentDetails;
+    }
 
-  public void setCustomer(CustomerInput customer) {
-    this.customer = customer;
-  }
+    public void setPaymentDetails(List<PaymentDetailsInput> paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public CustomerInput getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerInput customer) {
+        this.customer = customer;
+    }
 }

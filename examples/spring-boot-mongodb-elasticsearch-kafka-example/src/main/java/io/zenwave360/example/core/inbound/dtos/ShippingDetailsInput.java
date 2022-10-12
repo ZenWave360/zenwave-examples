@@ -10,18 +10,18 @@ import javax.validation.constraints.*;
 /** */
 public class ShippingDetailsInput implements Serializable {
 
-  private String address;
+    private String address;
 
-  public ShippingDetailsInput withAddress(String address) {
-    this.address = address;
-    return this;
-  }
+    public ShippingDetailsInput withAddress(String address) {
+        this.address = address;
+        return this;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public String getAddress() {
+        return address;
+    }
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

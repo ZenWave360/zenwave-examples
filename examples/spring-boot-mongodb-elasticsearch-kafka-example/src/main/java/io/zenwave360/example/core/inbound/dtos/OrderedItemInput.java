@@ -10,71 +10,71 @@ import javax.validation.constraints.*;
 /** */
 public class OrderedItemInput implements Serializable {
 
-  private Long catalogItemId;
+    private Long catalogItemId;
 
-  // @minlength("3")
+    // @minlength("3")
 
-  // @maxlength("250")
+    // @maxlength("250")
 
-  // @required("")
+    // @required("")
 
-  private String name;
+    private String name;
 
-  private Integer quantity;
+    private Integer quantity;
 
-  // @required("")
+    // @required("")
 
-  private BigDecimal price;
+    private BigDecimal price;
 
-  public OrderedItemInput withCatalogItemId(Long catalogItemId) {
-    this.catalogItemId = catalogItemId;
-    return this;
-  }
+    public OrderedItemInput withCatalogItemId(Long catalogItemId) {
+        this.catalogItemId = catalogItemId;
+        return this;
+    }
 
-  public OrderedItemInput withName(String name) {
-    this.name = name;
-    return this;
-  }
+    public OrderedItemInput withName(String name) {
+        this.name = name;
+        return this;
+    }
 
-  public OrderedItemInput withQuantity(Integer quantity) {
-    this.quantity = quantity;
-    return this;
-  }
+    public OrderedItemInput withQuantity(Integer quantity) {
+        this.quantity = quantity;
+        return this;
+    }
 
-  public OrderedItemInput withPrice(BigDecimal price) {
-    this.price = price;
-    return this;
-  }
+    public OrderedItemInput withPrice(BigDecimal price) {
+        this.price = price;
+        return this;
+    }
 
-  public Long getCatalogItemId() {
-    return catalogItemId;
-  }
+    public Long getCatalogItemId() {
+        return catalogItemId;
+    }
 
-  public void setCatalogItemId(Long catalogItemId) {
-    this.catalogItemId = catalogItemId;
-  }
+    public void setCatalogItemId(Long catalogItemId) {
+        this.catalogItemId = catalogItemId;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Integer getQuantity() {
-    return quantity;
-  }
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-  public void setQuantity(Integer quantity) {
-    this.quantity = quantity;
-  }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
-  public BigDecimal getPrice() {
-    return price;
-  }
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-  public void setPrice(BigDecimal price) {
-    this.price = price;
-  }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 }

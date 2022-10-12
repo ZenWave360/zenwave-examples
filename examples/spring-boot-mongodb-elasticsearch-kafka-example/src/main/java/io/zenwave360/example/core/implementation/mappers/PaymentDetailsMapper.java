@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface PaymentDetailsMapper {
 
-  PaymentDetails asEntity(PaymentDetailsInput input);
+    PaymentDetails asEntity(PaymentDetailsInput input);
 
-  PaymentDetails update(@MappingTarget PaymentDetails entity, PaymentDetailsInput input);
+    PaymentDetails update(@MappingTarget PaymentDetails entity, PaymentDetailsInput input);
 }

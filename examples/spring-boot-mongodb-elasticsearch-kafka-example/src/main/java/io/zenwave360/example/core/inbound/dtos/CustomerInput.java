@@ -10,108 +10,123 @@ import javax.validation.constraints.*;
 /** */
 public class CustomerInput implements Serializable {
 
-  // @minlength("3")
+    private String id;
 
-  // @maxlength("250")
+    // @minlength("3")
 
-  // @required("")
+    // @maxlength("250")
 
-  private String firstName;
+    // @required("")
 
-  // @minlength("3")
+    private String firstName;
 
-  // @maxlength("250")
+    // @minlength("3")
 
-  // @required("")
+    // @maxlength("250")
 
-  private String lastName;
+    // @required("")
 
-  // @minlength("3")
+    private String lastName;
 
-  // @maxlength("250")
+    // @minlength("3")
 
-  // @required("")
+    // @maxlength("250")
 
-  private String password;
+    // @required("")
 
-  // @minlength("3")
+    private String password;
 
-  // @maxlength("250")
+    // @minlength("3")
 
-  // @required("")
+    // @maxlength("250")
 
-  private String email;
+    // @required("")
 
-  // @minlength("3")
+    private String email;
 
-  // @maxlength("250")
+    // @minlength("3")
 
-  // @required("")
+    // @maxlength("250")
 
-  private String username;
+    // @required("")
 
-  public CustomerInput withFirstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
+    private String username;
 
-  public CustomerInput withLastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public CustomerInput withPassword(String password) {
-    this.password = password;
-    return this;
-  }
+    public CustomerInput withId(String id) {
+        this.id = id;
+        return this;
+    }
 
-  public CustomerInput withEmail(String email) {
-    this.email = email;
-    return this;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public CustomerInput withUsername(String username) {
-    this.username = username;
-    return this;
-  }
+    public CustomerInput withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public CustomerInput withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public CustomerInput withPassword(String password) {
+        this.password = password;
+        return this;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public CustomerInput withEmail(String email) {
+        this.email = email;
+        return this;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public CustomerInput withUsername(String username) {
+        this.username = username;
+        return this;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

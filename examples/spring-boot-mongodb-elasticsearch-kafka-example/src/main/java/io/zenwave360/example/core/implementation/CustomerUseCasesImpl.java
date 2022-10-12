@@ -11,7 +11,6 @@ import io.zenwave360.example.core.outbound.mongodb.CustomerRepository;
 import io.zenwave360.example.core.outbound.search.CustomerSearchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,11 +21,11 @@ import java.util.Optional;
 @Service
 public class CustomerUseCasesImpl implements CustomerUseCases {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-  private final CustomerMapper customerMapper;
-  private final CustomerRepository customerRepository;
-  private final CustomerSearchRepository customerSearchRepository;
+    private final CustomerMapper customerMapper;
+    private final CustomerRepository customerRepository;
+    private final CustomerSearchRepository customerSearchRepository;
 
   private final ICustomerEventsProducer customerEventsProducer;
 
@@ -39,7 +38,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     this.customerEventsProducer = customerEventsProducer;
   }
 
-  // Customer
+    // Customer
 
   @Override
   public Customer createCustomer(CustomerInput customerInput) {
@@ -55,41 +54,43 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     return customer;
   }
 
-  @Override
-  public Optional<Customer> updateCustomer(String id, CustomerInput customerInput) {
-    log.debug("Request to update Customer : {}", customerInput);
+    @Override
+    public Optional<Customer> updateCustomer(String id, CustomerInput customerInput) {
+        log.debug("Request to update Customer : {}", customerInput);
 
-    return customerRepository
-        .findById(id)
-        .map(
-            existingCustomer -> {
-              return customerMapper.update(existingCustomer, customerInput);
-            })
-        .map(customerRepository::save);
-  }
+        var customer =
+                customerRepository
+                        .findById(id)
+                        .map(
+                                existingCustomer -> {
+                                    return customerMapper.update(existingCustomer, customerInput);
+                                })
+                        .map(customerRepository::save);
+        return customer;
+    }
 
-  @Override
-  public Page<Customer> listCustomers(Pageable pageable) {
-    log.debug("Request list of Customers: {}", pageable);
-    return customerRepository.findAll(pageable);
-  }
+    @Override
+    public Page<Customer> listCustomers(Pageable pageable) {
+        log.debug("Request list of Customers: {}", pageable);
+        return customerRepository.findAll(pageable);
+    }
 
-  @Override
-  public Page<Customer> searchCustomers(CustomerCriteria criteria, Pageable pageable) {
-    log.debug("Request to search Customers: {} - {}", criteria, pageable);
-    // TODO implement this search by criteria
-    return customerRepository.findAll(criteria);
-  }
+    @Override
+    public Page<Customer> searchCustomers(CustomerCriteria criteria, Pageable pageable) {
+        log.debug("Request to search Customers: {} - {}", criteria, pageable);
+        // TODO implement this search by criteria
+        return customerRepository.findAll(criteria);
+    }
 
-  @Override
-  public Optional<Customer> getCustomer(String id) {
-    log.debug("Request to get Customer : {}", id);
-    return customerRepository.findById(id);
-  }
+    @Override
+    public Optional<Customer> getCustomer(String id) {
+        log.debug("Request to get Customer : {}", id);
+        return customerRepository.findById(id);
+    }
 
-  @Override
-  public void deleteCustomer(String id) {
-    log.debug("Request to delete Customer : {}", id);
-    customerRepository.deleteById(id);
-  }
+    @Override
+    public void deleteCustomer(String id) {
+        log.debug("Request to delete Customer : {}", id);
+        customerRepository.deleteById(id);
+    }
 }
