@@ -100,7 +100,7 @@
 							<configOptions>
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
-								<apiPackage>io.zenwave360.example.core.events.outbound.outbox.none</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.provider.outbox.none</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
@@ -118,7 +118,7 @@
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<apiPackage>io.zenwave360.example.core.events.outbound.outbox.mongodb</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.provider.outbox.mongodb</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
@@ -136,7 +136,7 @@
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<apiPackage>io.zenwave360.example.core.events.outbound.outbox.jdbc</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.provider.outbox.jdbc</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
@@ -167,7 +167,7 @@
 							<configOptions>
 								<role>PROVIDER</role>
 								<style>IMPERATIVE</style>
-								<apiPackage>io.zenwave360.example.core.events.outbound.avro</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.provider.avro</apiPackage>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -184,7 +184,7 @@
 							<configOptions>
 								<role>CLIENT</role>
 								<style>IMPERATIVE</style>
-								<apiPackage>io.zenwave360.example.core.events.inbound.imperative</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.client.imperative</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
@@ -201,7 +201,7 @@
 							<configOptions>
 								<role>CLIENT</role>
 								<style>REACTIVE</style>
-								<apiPackage>io.zenwave360.example.core.events.inbound.reactive</apiPackage>
+								<apiPackage>io.zenwave360.example.core.events.client.reactive</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
@@ -270,6 +270,40 @@
 					</execution>
 				</executions>
 			</plugin>
+
+<!--			<plugin>-->
+<!--				<groupId>net.coru</groupId>-->
+<!--				<artifactId>scs-multiapi-maven-plugin</artifactId>-->
+<!--				<version>4.1.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>generate-sources</phase>-->
+<!--						<goals>-->
+<!--							<goal>asyncapi-generation</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<specFiles>-->
+<!--								<specFile>-->
+<!--									<filePath>C:\Users\ivan.garcia\workspace\zenwave\zenwave-examples\spring-boot-mongo-elasticsearch\src\main\resources\model\asyncapi.yml</filePath>-->
+<!--									<consumer>-->
+<!--										<ids>onCustomerEvent</ids>-->
+<!--										<classNamePostfix>MY_CONSUMER_CLASS</classNamePostfix>-->
+<!--										<modelNameSuffix>DTO</modelNameSuffix>-->
+<!--										<apiPackage>net.coru.apigenerator.asyncapi.business_model.model.event.consumer</apiPackage>-->
+<!--										<modelPackage>net.coru.apigenerator.asyncapi.business_model.model.event</modelPackage>-->
+<!--									</consumer>-->
+<!--									<supplier>-->
+<!--										<ids>onCustomerOrderEvent</ids>-->
+<!--										<apiPackage>net.coru.apigenerator.asyncapi.business_model.model.event.producer</apiPackage>-->
+<!--										<modelPackage>net.coru.apigenerator.asyncapi.business_model.model.event</modelPackage>-->
+<!--									</supplier>-->
+<!--								</specFile>-->
+<!--							</specFiles>-->
+<!--							<generatedSourcesFolder>sources-generated</generatedSourcesFolder>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

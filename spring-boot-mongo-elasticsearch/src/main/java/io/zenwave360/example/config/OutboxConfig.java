@@ -1,19 +1,16 @@
 package io.zenwave360.example.config;
 
-import com.mongodb.client.model.changestream.FullDocument;
-import io.zenwave360.example.core.outbound.events.CustomerEventsProducer;
-import io.zenwave360.example.core.outbound.events.CustomerOrderEventsProducer;
-import org.bson.BsonDocument;
-import org.bson.Document;
+import io.zenwave360.example.core.events.provider.CustomerEventsProducer;
+import io.zenwave360.example.core.events.provider.CustomerOrderEventsProducer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.ChangeStreamOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.messaging.*;
+import org.springframework.data.mongodb.core.messaging.ChangeStreamRequest;
 import org.springframework.data.mongodb.core.messaging.ChangeStreamRequest.ChangeStreamRequestOptions;
-import org.springframework.util.ErrorHandler;
+import org.springframework.data.mongodb.core.messaging.DefaultMessageListenerContainer;
+import org.springframework.data.mongodb.core.messaging.MessageListenerContainer;
 
-import java.time.Instant;
 import java.util.Map;
 
 @Configuration

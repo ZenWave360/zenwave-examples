@@ -11,84 +11,88 @@ tags:
   - name: "CustomerOrder"
 
 channels:
-  customer.requests:
-    subscribe:
-      summary: Customer Async Requests
-      operationId: doCustomerRequest
-      tags:
-        - name: Customer
-      message:
-        $ref: "#/components/messages/CustomerRequestMessage"
-  customer.events:
+  customers:
     publish:
-      summary: Customer Domain Events
+      summary: Customer Channel Events
       operationId: onCustomerEvent
       tags:
         - name: Customer
       message:
-        $ref: "#/components/messages/CustomerEventMessage"
-
-  customer-order.requests:
-    subscribe:
-      summary: CustomerOrder Async Requests
-      operationId: doCustomerOrderRequest
-      tags:
-        - name: CustomerOrder
-      message:
-        $ref: "#/components/messages/CustomerOrderRequestMessage"
-  customer-order.events:
+        oneOf:
+          - $ref: "#/components/messages/CustomerCreatedMessage"
+          - $ref: "#/components/messages/CustomerUpdatedMessage"
+          - $ref: "#/components/messages/CustomerDeletedMessage"
+  
+  customer-orders:
     publish:
-      summary: CustomerOrder Domain Events
+      summary: CustomerOrder Channel Events
       operationId: onCustomerOrderEvent
       tags:
         - name: CustomerOrder
       message:
-        $ref: "#/components/messages/CustomerOrderEventMessage"
-
+        oneOf:
+          - $ref: "#/components/messages/CustomerOrderCreatedMessage"
+          - $ref: "#/components/messages/CustomerOrderUpdatedMessage"
+          - $ref: "#/components/messages/CustomerOrderDeletedMessage"
+  
 
 components:
   messages:
-    CustomerRequestMessage:
-      name: CustomerRequestMessage
-      title: Async Command/Request for a Customer
-      summary: Async Command/Request for a Customer
+    CustomerCreatedMessage:
+      name: CustomerCreated
+      title: Message for Customer Created Event
+      summary: Message for Customer Created Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
-        $ref: "#/components/schemas/CustomerRequestPayload"
-    CustomerEventMessage:
-      name: CustomerEventMessage
-      title: Message for a Customer Event
-      summary: Message for a Customer Event
+        $ref: "#/components/schemas/CustomerCreatedPayload"
+    CustomerUpdatedMessage:
+      name: CustomerUpdated
+      title: Message for Customer Updated Event
+      summary: Message for Customer Updated Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
-        $ref: "#/components/schemas/CustomerEventPayload"
-
-    CustomerOrderRequestMessage:
-      name: CustomerOrderRequestMessage
-      title: Async Command/Request for a CustomerOrder
-      summary: Async Command/Request for a CustomerOrder
+        $ref: "#/components/schemas/CustomerUpdatedPayload"
+    CustomerDeletedMessage:
+      name: CustomerDeleted
+      title: Message for Customer Deleted Event
+      summary: Message for Customer Deleted Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
-        $ref: "#/components/schemas/CustomerOrderRequestPayload"
-    CustomerOrderEventMessage:
-      name: CustomerOrderEventMessage
-      title: Message for a CustomerOrder Event
-      summary: Message for a CustomerOrder Event
+        $ref: "#/components/schemas/CustomerDeletedPayload"
+  
+    CustomerOrderCreatedMessage:
+      name: CustomerOrderCreated
+      title: Message for CustomerOrder Created Event
+      summary: Message for CustomerOrder Created Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
-        $ref: "#/components/schemas/CustomerOrderEventPayload"
-
+        $ref: "#/components/schemas/CustomerOrderCreatedPayload"
+    CustomerOrderUpdatedMessage:
+      name: CustomerOrderUpdated
+      title: Message for CustomerOrder Updated Event
+      summary: Message for CustomerOrder Updated Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/CustomerOrderUpdatedPayload"
+    CustomerOrderDeletedMessage:
+      name: CustomerOrderDeleted
+      title: Message for CustomerOrder Deleted Event
+      summary: Message for CustomerOrder Deleted Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/CustomerOrderDeletedPayload"
+  
 
   schemas:
     Customer:
       type: "object"
       x-business-entity: "Customer"
       required:
-        - "firstName"
-        - "lastName"
-        - "password"
-        - "email"
-        - "username"
+      - "firstName"
+      - "lastName"
+      - "password"
+      - "email"
+      - "username"
       properties:
         id:
           type: "string"
@@ -165,8 +169,8 @@ components:
       type: "object"
       x-business-entity: "OrderedItem"
       required:
-        - "name"
-        - "price"
+      - "name"
+      - "price"
       properties:
         catalogItemId:
           type: "integer"
@@ -181,81 +185,57 @@ components:
         price:
           type: "number"
           format: "double"
-    CustomerCriteria:
-      type: "object"
-      x-business-entity: "CustomerCriteria"
-      properties:
-        id:
-          type: "string"
-        firstName:
-          type: "string"
-        lastName:
-          type: "string"
-        password:
-          type: "string"
-        email:
-          type: "string"
-        username:
-          type: "string"
     OrderStatus:
       type: "string"
       x-business-entity: "OrderStatus"
       enum:
-        - "DELIVERED"
-        - "CONFIRMED"
-        - "SHIPPED"
+      - "DELIVERED"
+      - "CONFIRMED"
+      - "SHIPPED"
 
-    CustomerRequestPayload:
+    CustomerCreatedPayload:
       type: object
       properties:
         customerId:
-          type: string
-        requestType:
-          type: string
-          enum:
-            - "create"
-            - "update"
-            - "delete"
+          type: integer
+          format: int64
         customer:
           $ref: "#/components/schemas/Customer"
-    CustomerEventPayload:
+    CustomerUpdatedPayload:
       type: object
       properties:
         customerId:
-          type: string
-        eventType:
-          type: string
-          enum:
-            - "created"
-            - "updated"
-            - "deleted"
+          type: integer
+          format: int64
         customer:
           $ref: "#/components/schemas/Customer"
-
-    CustomerOrderRequestPayload:
+    CustomerDeletedPayload:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+  
+    CustomerOrderCreatedPayload:
       type: object
       properties:
         customerOrderId:
-          type: string
-        requestType:
-          type: string
-          enum:
-            - "create"
-            - "update"
-            - "delete"
+          type: integer
+          format: int64
         customerOrder:
           $ref: "#/components/schemas/CustomerOrder"
-    CustomerOrderEventPayload:
+    CustomerOrderUpdatedPayload:
       type: object
       properties:
         customerOrderId:
-          type: string
-        eventType:
-          type: string
-          enum:
-            - "created"
-            - "updated"
-            - "deleted"
+          type: integer
+          format: int64
         customerOrder:
           $ref: "#/components/schemas/CustomerOrder"
-
+    CustomerOrderDeletedPayload:
+      type: object
+      properties:
+        customerOrderId:
+          type: integer
+          format: int64
+  

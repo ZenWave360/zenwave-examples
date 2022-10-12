@@ -165,8 +165,8 @@
 							<generatorName>jsonschema2pojo</generatorName>
 							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
-								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
-								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>
+								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
+<!--								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>-->
 							</configOptions>
 						</configuration>
 					</execution>
@@ -184,8 +184,8 @@
 							<configOptions>
 								<role>CLIENT</role>
 								<style>IMPERATIVE</style>
-								<apiPackage>io.zenwave360.example.core.inbound.events</apiPackage>
-								<modelPackage>io.zenwave360.example.core.domain.events.model</modelPackage>
+								<apiPackage>io.zenwave360.example.core.events.client</apiPackage>
+								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>
 						</configuration>
 					</execution>
