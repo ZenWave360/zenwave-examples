@@ -9,13 +9,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.github.zenwave360.examples</groupId>
-    <artifactId>examples-parent</artifactId>
+    <artifactId>zenwave-examples</artifactId>
     <version>0.6.1-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <properties>
-        <skipTests>true</skipTests>
+<!--        <skipTests>true</skipTests>-->
         <java.version>17</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
         <archunit-junit5.version>0.22.0</archunit-junit5.version>
@@ -24,7 +24,7 @@
         <avro.version>1.11.1</avro.version>
         <testcontainers.version>1.17.2</testcontainers.version>
 
-        <zenwave.version>0.7.1-SNAPSHOT</zenwave.version>
+        <zenwave.version>${project.version}</zenwave.version>
 
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
