@@ -99,6 +99,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Customer"
+    delete:
+      summary: Delete Customer
+      operationId: deleteCustomer
+      tags: [Customer]
+      responses:
+        "204":
+          description: Customer deleted
   
 
   /customer-orders/search:
@@ -190,6 +197,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CustomerOrder"
+    delete:
+      summary: Delete CustomerOrder
+      operationId: deleteCustomerOrder
+      tags: [CustomerOrder]
+      responses:
+        "204":
+          description: CustomerOrder deleted
   
 
 

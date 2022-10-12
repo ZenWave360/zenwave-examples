@@ -82,6 +82,12 @@ public class CustomerApiController implements CustomerApi {
     }
   }
 
+  @Override
+  public ResponseEntity<Void> deleteCustomer(String id) {
+    customerUseCases.deleteCustomer(id);
+    return ResponseEntity.status(204).build();
+  }
+
   protected Pageable pageOf(Optional<Integer> page, Optional<Integer> limit, Optional<List<String>> sort) {
     return PageRequest.of(page.orElse(0), limit.orElse(10));
   }

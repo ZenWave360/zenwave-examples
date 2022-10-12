@@ -85,6 +85,12 @@ public class CustomerOrderApiController implements CustomerOrderApi {
     }
   }
 
+  @Override
+  public ResponseEntity<Void> deleteCustomerOrder(String id) {
+    customerOrderUseCases.deleteCustomerOrder(id);
+    return ResponseEntity.status(204).build();
+  }
+
   protected Pageable pageOf(Optional<Integer> page, Optional<Integer> limit, Optional<List<String>> sort) {
     return PageRequest.of(page.orElse(0), limit.orElse(10));
   }
