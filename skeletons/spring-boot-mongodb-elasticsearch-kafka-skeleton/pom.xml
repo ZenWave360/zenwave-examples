@@ -8,7 +8,7 @@
 		<version>0.6.1-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
-	<artifactId>spring-boot-mongo-elasticsearch-skeleton</artifactId>
+	<artifactId>spring-boot-mongodb-elasticsearch-kafka-skeleton</artifactId>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 	<description>ZenWave360 Example</description>
 
