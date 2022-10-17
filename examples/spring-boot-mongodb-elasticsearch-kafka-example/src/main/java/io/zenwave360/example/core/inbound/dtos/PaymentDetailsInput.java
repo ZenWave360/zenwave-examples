@@ -10,18 +10,18 @@ import javax.validation.constraints.*;
 /** */
 public class PaymentDetailsInput implements Serializable {
 
-    private String creditCardNumber;
+  private String creditCardNumber;
 
-    public PaymentDetailsInput withCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-        return this;
-    }
+  public PaymentDetailsInput withCreditCardNumber(String creditCardNumber) {
+    this.creditCardNumber = creditCardNumber;
+    return this;
+  }
 
-    public String getCreditCardNumber() {
-        return creditCardNumber;
-    }
+  public String getCreditCardNumber() {
+    return creditCardNumber;
+  }
 
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
+  public void setCreditCardNumber(String creditCardNumber) {
+    this.creditCardNumber = creditCardNumber;
+  }
 }

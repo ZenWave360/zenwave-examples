@@ -10,69 +10,68 @@ import org.springframework.data.mongodb.core.mapping.Field;
 /** */
 public class OrderedItem implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Field private Long catalogItemId;
+  @Field private Long catalogItemId;
 
-    @Field
-    // @minlength("3")// @maxlength("250")// @required("")
-    private String name;
+  @Field
+  @NotNull
+  @Size(min = 3, max = 250)
+  private String name;
 
-    @Field private Integer quantity;
+  @Field private Integer quantity;
 
-    @Field
-    // @required("")
-    private BigDecimal price;
+  @Field @NotNull private BigDecimal price;
 
-    public OrderedItem withCatalogItemId(Long catalogItemId) {
-        this.catalogItemId = catalogItemId;
-        return this;
-    }
+  public OrderedItem withCatalogItemId(Long catalogItemId) {
+    this.catalogItemId = catalogItemId;
+    return this;
+  }
 
-    public OrderedItem withName(String name) {
-        this.name = name;
-        return this;
-    }
+  public OrderedItem withName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public OrderedItem withQuantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
+  public OrderedItem withQuantity(Integer quantity) {
+    this.quantity = quantity;
+    return this;
+  }
 
-    public OrderedItem withPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
+  public OrderedItem withPrice(BigDecimal price) {
+    this.price = price;
+    return this;
+  }
 
-    public Long getCatalogItemId() {
-        return catalogItemId;
-    }
+  public Long getCatalogItemId() {
+    return catalogItemId;
+  }
 
-    public void setCatalogItemId(Long catalogItemId) {
-        this.catalogItemId = catalogItemId;
-    }
+  public void setCatalogItemId(Long catalogItemId) {
+    this.catalogItemId = catalogItemId;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+  public Integer getQuantity() {
+    return quantity;
+  }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
+  }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+  public BigDecimal getPrice() {
+    return price;
+  }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+  public void setPrice(BigDecimal price) {
+    this.price = price;
+  }
 }

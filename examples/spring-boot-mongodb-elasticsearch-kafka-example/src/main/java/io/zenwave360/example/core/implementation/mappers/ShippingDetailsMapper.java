@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface ShippingDetailsMapper {
 
-    ShippingDetails asEntity(ShippingDetailsInput input);
+  ShippingDetails asEntity(ShippingDetailsInput input);
 
-    ShippingDetails update(@MappingTarget ShippingDetails entity, ShippingDetailsInput input);
+  ShippingDetails update(@MappingTarget ShippingDetails entity, ShippingDetailsInput input);
 }

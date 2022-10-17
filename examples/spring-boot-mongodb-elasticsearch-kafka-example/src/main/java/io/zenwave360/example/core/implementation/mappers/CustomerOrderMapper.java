@@ -9,8 +9,8 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface CustomerOrderMapper {
 
-    CustomerOrder asEntity(CustomerOrderInput input);
+  CustomerOrder asEntity(CustomerOrderInput input);
 
-    @Mapping(target = "id", ignore = true)
-    CustomerOrder update(@MappingTarget CustomerOrder entity, CustomerOrderInput input);
+  @Mapping(target = "id", ignore = true)
+  CustomerOrder update(@MappingTarget CustomerOrder entity, CustomerOrderInput input);
 }

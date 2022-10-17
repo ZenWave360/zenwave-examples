@@ -6,93 +6,82 @@ import java.math.*;
 import java.time.*;
 import java.util.*;
 import javax.validation.constraints.*;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 /** */
-public class CustomerCriteria extends PageRequest implements Serializable, Pageable {
+public class CustomerCriteria implements Serializable {
 
-    public CustomerCriteria() {
-        this(0, 10, Sort.unsorted());
-    }
+  private String firstName;
 
-    public CustomerCriteria(int page, int size, Sort sort) {
-        super(page, size, sort);
-    }
+  private String lastName;
 
-    private String firstName;
+  private String password;
 
-    private String lastName;
+  private String email;
 
-    private String password;
+  private String username;
 
-    private String email;
+  public CustomerCriteria withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
 
-    private String username;
+  public CustomerCriteria withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
 
-    public CustomerCriteria withFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
+  public CustomerCriteria withPassword(String password) {
+    this.password = password;
+    return this;
+  }
 
-    public CustomerCriteria withLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
+  public CustomerCriteria withEmail(String email) {
+    this.email = email;
+    return this;
+  }
 
-    public CustomerCriteria withPassword(String password) {
-        this.password = password;
-        return this;
-    }
+  public CustomerCriteria withUsername(String username) {
+    this.username = username;
+    return this;
+  }
 
-    public CustomerCriteria withEmail(String email) {
-        this.email = email;
-        return this;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public CustomerCriteria withUsername(String username) {
-        this.username = username;
-        return this;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 }

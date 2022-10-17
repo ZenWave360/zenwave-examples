@@ -6,63 +6,52 @@ import java.math.*;
 import java.time.*;
 import java.util.*;
 import javax.validation.constraints.*;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 /** */
-public class CustomerOrderSearchCriteria extends PageRequest implements Serializable, Pageable {
+public class CustomerOrderSearchCriteria implements Serializable {
 
-    public CustomerOrderSearchCriteria() {
-        this(0, 10, Sort.unsorted());
-    }
+  private Instant dateTo;
 
-    public CustomerOrderSearchCriteria(int page, int size, Sort sort) {
-        super(page, size, sort);
-    }
+  private Instant dateFrom;
 
-    private Instant dateTo;
+  private OrderStatus status;
 
-    private Instant dateFrom;
+  public CustomerOrderSearchCriteria withDateTo(Instant dateTo) {
+    this.dateTo = dateTo;
+    return this;
+  }
 
-    private OrderStatus status;
+  public CustomerOrderSearchCriteria withDateFrom(Instant dateFrom) {
+    this.dateFrom = dateFrom;
+    return this;
+  }
 
-    public CustomerOrderSearchCriteria withDateTo(Instant dateTo) {
-        this.dateTo = dateTo;
-        return this;
-    }
+  public CustomerOrderSearchCriteria withStatus(OrderStatus status) {
+    this.status = status;
+    return this;
+  }
 
-    public CustomerOrderSearchCriteria withDateFrom(Instant dateFrom) {
-        this.dateFrom = dateFrom;
-        return this;
-    }
+  public Instant getDateTo() {
+    return dateTo;
+  }
 
-    public CustomerOrderSearchCriteria withStatus(OrderStatus status) {
-        this.status = status;
-        return this;
-    }
+  public void setDateTo(Instant dateTo) {
+    this.dateTo = dateTo;
+  }
 
-    public Instant getDateTo() {
-        return dateTo;
-    }
+  public Instant getDateFrom() {
+    return dateFrom;
+  }
 
-    public void setDateTo(Instant dateTo) {
-        this.dateTo = dateTo;
-    }
+  public void setDateFrom(Instant dateFrom) {
+    this.dateFrom = dateFrom;
+  }
 
-    public Instant getDateFrom() {
-        return dateFrom;
-    }
+  public OrderStatus getStatus() {
+    return status;
+  }
 
-    public void setDateFrom(Instant dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
+  public void setStatus(OrderStatus status) {
+    this.status = status;
+  }
 }

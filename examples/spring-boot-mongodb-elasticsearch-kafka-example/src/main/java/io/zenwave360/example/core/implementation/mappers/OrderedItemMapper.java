@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface OrderedItemMapper {
 
-    OrderedItem asEntity(OrderedItemInput input);
+  OrderedItem asEntity(OrderedItemInput input);
 
-    OrderedItem update(@MappingTarget OrderedItem entity, OrderedItemInput input);
+  OrderedItem update(@MappingTarget OrderedItem entity, OrderedItemInput input);
 }

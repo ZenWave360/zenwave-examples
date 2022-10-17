@@ -17,63 +17,63 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final CustomerOrderMapper customerOrderMapper;
-    private final CustomerOrderRepository customerOrderRepository;
+  private final CustomerOrderMapper customerOrderMapper;
+  private final CustomerOrderRepository customerOrderRepository;
 
-    /** Constructor. */
-    public CustomerOrderUseCasesImpl(CustomerOrderMapper customerOrderMapper, CustomerOrderRepository customerOrderRepository) {
-        this.customerOrderMapper = customerOrderMapper;
-        this.customerOrderRepository = customerOrderRepository;
-    }
+  /** Constructor. */
+  public CustomerOrderUseCasesImpl(CustomerOrderMapper customerOrderMapper, CustomerOrderRepository customerOrderRepository) {
+    this.customerOrderMapper = customerOrderMapper;
+    this.customerOrderRepository = customerOrderRepository;
+  }
 
-    // CustomerOrder
+  // CustomerOrder
 
-    @Override
-    public CustomerOrder createCustomerOrder(CustomerOrderInput customerOrderInput) {
-        log.debug("Request to save CustomerOrderInput : {}", customerOrderInput);
-        var customerOrder = customerOrderRepository.save(customerOrderMapper.update(new CustomerOrder(), customerOrderInput));
-        return customerOrder;
-    }
+  @Override
+  public CustomerOrder createCustomerOrder(CustomerOrderInput customerOrderInput) {
+    log.debug("Request to save CustomerOrderInput : {}", customerOrderInput);
+    var customerOrder = customerOrderRepository.save(customerOrderMapper.update(new CustomerOrder(), customerOrderInput));
+    return customerOrder;
+  }
 
-    @Override
-    public Optional<CustomerOrder> updateCustomerOrder(String id, CustomerOrderInput customerOrderInput) {
-        log.debug("Request to update CustomerOrder : {}", customerOrderInput);
+  @Override
+  public Optional<CustomerOrder> updateCustomerOrder(String id, CustomerOrderInput customerOrderInput) {
+    log.debug("Request to update CustomerOrder : {}", customerOrderInput);
 
-        var customerOrder =
-                customerOrderRepository
-                        .findById(id)
-                        .map(
-                                existingCustomerOrder -> {
-                                    return customerOrderMapper.update(existingCustomerOrder, customerOrderInput);
-                                })
-                        .map(customerOrderRepository::save);
-        return customerOrder;
-    }
+    var customerOrder =
+        customerOrderRepository
+            .findById(id)
+            .map(
+                existingCustomerOrder -> {
+                  return customerOrderMapper.update(existingCustomerOrder, customerOrderInput);
+                })
+            .map(customerOrderRepository::save);
+    return customerOrder;
+  }
 
-    @Override
-    public Page<CustomerOrder> listCustomerOrders(Pageable pageable) {
-        log.debug("Request list of CustomerOrders: {}", pageable);
-        return customerOrderRepository.findAll(pageable);
-    }
+  @Override
+  public Page<CustomerOrder> listCustomerOrders(Pageable pageable) {
+    log.debug("Request list of CustomerOrders: {}", pageable);
+    return customerOrderRepository.findAll(pageable);
+  }
 
-    @Override
-    public Page<CustomerOrder> searchCustomerOrders(CustomerOrderSearchCriteria criteria, Pageable pageable) {
-        log.debug("Request to search CustomerOrders: {} - {}", criteria, pageable);
-        // TODO implement this search by criteria
-        return customerOrderRepository.findAll(criteria);
-    }
+  @Override
+  public Page<CustomerOrder> searchCustomerOrders(CustomerOrderSearchCriteria criteria, Pageable pageable) {
+    log.debug("Request to search CustomerOrders: {} - {}", criteria, pageable);
+    // TODO implement this search by criteria
+    return customerOrderRepository.findAll(pageable);
+  }
 
-    @Override
-    public Optional<CustomerOrder> getCustomerOrder(String id) {
-        log.debug("Request to get CustomerOrder : {}", id);
-        return customerOrderRepository.findById(id);
-    }
+  @Override
+  public Optional<CustomerOrder> getCustomerOrder(String id) {
+    log.debug("Request to get CustomerOrder : {}", id);
+    return customerOrderRepository.findById(id);
+  }
 
-    @Override
-    public void deleteCustomerOrder(String id) {
-        log.debug("Request to delete CustomerOrder : {}", id);
-        customerOrderRepository.deleteById(id);
-    }
+  @Override
+  public void deleteCustomerOrder(String id) {
+    log.debug("Request to delete CustomerOrder : {}", id);
+    customerOrderRepository.deleteById(id);
+  }
 }

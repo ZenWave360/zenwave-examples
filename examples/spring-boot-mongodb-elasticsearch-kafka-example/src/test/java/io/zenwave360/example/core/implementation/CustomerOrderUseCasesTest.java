@@ -25,88 +25,88 @@ import org.springframework.data.domain.PageRequest;
 /** Acceptance Test for CustomerOrderUseCases. */
 public class CustomerOrderUseCasesTest {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Spy CustomerOrderMapper customerOrderMapper = Mappers.getMapper(CustomerOrderMapper.class);
-    @Spy CustomerOrderRepositoryInMemory customerOrderRepository = new CustomerOrderRepositoryInMemory();
+  @Spy CustomerOrderMapper customerOrderMapper = Mappers.getMapper(CustomerOrderMapper.class);
+  @Spy CustomerOrderRepositoryInMemory customerOrderRepository = new CustomerOrderRepositoryInMemory();
 
-    @InjectMocks CustomerOrderUseCasesImpl customerOrderUseCases;
+  @InjectMocks CustomerOrderUseCasesImpl customerOrderUseCases;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        customerOrderRepository.insert(new CustomerOrder());
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+    customerOrderRepository.insert(new CustomerOrder());
+  }
 
-    // CustomerOrder
+  // CustomerOrder
 
-    @Test
-    void testCRUDCustomerOrder() {
-        var input = new CustomerOrderInput();
-        // TODO fill input data
-        var customerOrder = customerOrderUseCases.createCustomerOrder(input);
-        assertNotNull(customerOrder.getId());
-        assertTrue(customerOrderRepository.containsEntity(customerOrder));
+  @Test
+  void testCRUDCustomerOrder() {
+    var input = new CustomerOrderInput();
+    // TODO fill input data
+    var customerOrder = customerOrderUseCases.createCustomerOrder(input);
+    assertNotNull(customerOrder.getId());
+    assertTrue(customerOrderRepository.containsEntity(customerOrder));
 
-        var id = customerOrder.getId();
-        var customerOrderUpdate = new CustomerOrderInput();
-        // TODO fill update data
-        assertTrue(customerOrderRepository.containsKey(id));
-        var customerOrderUpdated = customerOrderUseCases.updateCustomerOrder(id, customerOrderUpdate);
-        assertTrue(customerOrderUpdated.isPresent());
-        assertTrue(customerOrderRepository.containsEntity(customerOrderUpdated.get()));
+    var id = customerOrder.getId();
+    var customerOrderUpdate = new CustomerOrderInput();
+    // TODO fill update data
+    assertTrue(customerOrderRepository.containsKey(id));
+    var customerOrderUpdated = customerOrderUseCases.updateCustomerOrder(id, customerOrderUpdate);
+    assertTrue(customerOrderUpdated.isPresent());
+    assertTrue(customerOrderRepository.containsEntity(customerOrderUpdated.get()));
 
-        assertTrue(customerOrderRepository.containsKey(id));
-        customerOrderUseCases.deleteCustomerOrder(id);
-        assertFalse(customerOrderRepository.containsKey(id));
-    }
+    assertTrue(customerOrderRepository.containsKey(id));
+    customerOrderUseCases.deleteCustomerOrder(id);
+    assertFalse(customerOrderRepository.containsKey(id));
+  }
 
-    @Test
-    void testCreateCustomerOrder() {
-        var input = new CustomerOrderInput();
-        // TODO fill input data
-        var customerOrder = customerOrderUseCases.createCustomerOrder(input);
-        assertNotNull(customerOrder.getId());
-        assertTrue(customerOrderRepository.containsEntity(customerOrder));
-    }
+  @Test
+  void testCreateCustomerOrder() {
+    var input = new CustomerOrderInput();
+    // TODO fill input data
+    var customerOrder = customerOrderUseCases.createCustomerOrder(input);
+    assertNotNull(customerOrder.getId());
+    assertTrue(customerOrderRepository.containsEntity(customerOrder));
+  }
 
-    @Test
-    void testUpdateCustomerOrder() {
-        var id = "0"; // TODO fill id
-        var input = new CustomerOrderInput();
-        // TODO fill input data
-        assertTrue(customerOrderRepository.containsKey(id));
-        var customerOrder = customerOrderUseCases.updateCustomerOrder(id, input);
-        assertTrue(customerOrder.isPresent());
-        assertTrue(customerOrderRepository.containsEntity(customerOrder.get()));
-    }
+  @Test
+  void testUpdateCustomerOrder() {
+    var id = "0"; // TODO fill id
+    var input = new CustomerOrderInput();
+    // TODO fill input data
+    assertTrue(customerOrderRepository.containsKey(id));
+    var customerOrder = customerOrderUseCases.updateCustomerOrder(id, input);
+    assertTrue(customerOrder.isPresent());
+    assertTrue(customerOrderRepository.containsEntity(customerOrder.get()));
+  }
 
-    @Test
-    void testListCustomerOrders() {
-        var results = customerOrderUseCases.listCustomerOrders(PageRequest.of(0, 10));
-        assertNotNull(results);
-    }
+  @Test
+  void testListCustomerOrders() {
+    var results = customerOrderUseCases.listCustomerOrders(PageRequest.of(0, 10));
+    assertNotNull(results);
+  }
 
-    @Test
-    void testSearchCustomerOrders() {
-        var criteria = new CustomerOrderSearchCriteria();
-        // TODO fill criteria
-        var results = customerOrderUseCases.searchCustomerOrders(criteria, PageRequest.of(0, 10));
-        assertNotNull(results);
-    }
+  @Test
+  void testSearchCustomerOrders() {
+    var criteria = new CustomerOrderSearchCriteria();
+    // TODO fill criteria
+    var results = customerOrderUseCases.searchCustomerOrders(criteria, PageRequest.of(0, 10));
+    assertNotNull(results);
+  }
 
-    @Test
-    void testGetCustomerOrder() {
-        var id = "0"; // TODO fill id
-        var customerOrder = customerOrderUseCases.getCustomerOrder(id);
-        assertTrue(customerOrder.isPresent());
-    }
+  @Test
+  void testGetCustomerOrder() {
+    var id = "0"; // TODO fill id
+    var customerOrder = customerOrderUseCases.getCustomerOrder(id);
+    assertTrue(customerOrder.isPresent());
+  }
 
-    @Test
-    void testDeleteCustomerOrder() {
-        var id = "0"; // TODO fill id
-        assertTrue(customerOrderRepository.containsKey(id));
-        customerOrderUseCases.deleteCustomerOrder(id);
-        assertFalse(customerOrderRepository.containsKey(id));
-    }
+  @Test
+  void testDeleteCustomerOrder() {
+    var id = "0"; // TODO fill id
+    assertTrue(customerOrderRepository.containsKey(id));
+    customerOrderUseCases.deleteCustomerOrder(id);
+    assertFalse(customerOrderRepository.containsKey(id));
+  }
 }
