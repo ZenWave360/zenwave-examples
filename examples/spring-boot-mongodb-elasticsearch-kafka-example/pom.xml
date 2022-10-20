@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.8.1-SNAPSHOT</version>
+		<version>0.8.2-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-example</artifactId>
-	<version>0.8.1-SNAPSHOT</version>
+	<version>0.8.2-SNAPSHOT</version>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 	<description>ZenWave360 Example</description>
 
@@ -148,8 +148,8 @@
 							<generatorName>spring-cloud-streams3</generatorName>
 							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
-								<role>PROVIDER</role>
-								<style>IMPERATIVE</style>
+								<role>provider</role>
+								<style>imperative</style>
 <!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
 								<apiPackage>io.zenwave360.example.core.events.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
@@ -183,8 +183,8 @@
 							<generatorName>spring-cloud-streams3</generatorName>
 							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
 							<configOptions>
-								<role>CLIENT</role>
-								<style>IMPERATIVE</style>
+								<role>client</role>
+								<style>imperative</style>
 								<apiPackage>io.zenwave360.example.core.events.client</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>

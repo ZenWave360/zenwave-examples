@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import io.zenwave360.example.core.domain.*;
+import io.zenwave360.example.core.events.provider.ICustomerOrderEventsProducer;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.slf4j.Logger;
@@ -30,7 +32,10 @@ public class CustomerOrderUseCasesTest {
   @Spy CustomerOrderMapper customerOrderMapper = Mappers.getMapper(CustomerOrderMapper.class);
   @Spy CustomerOrderRepositoryInMemory customerOrderRepository = new CustomerOrderRepositoryInMemory();
 
+  @Mock ICustomerOrderEventsProducer customerOrderEventsProducer;
+
   @InjectMocks CustomerOrderUseCasesImpl customerOrderUseCases;
+
 
   @BeforeEach
   void setUp() {

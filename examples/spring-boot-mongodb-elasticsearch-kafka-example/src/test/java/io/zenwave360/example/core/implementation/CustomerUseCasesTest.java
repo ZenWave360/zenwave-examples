@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import io.zenwave360.example.core.domain.*;
+import io.zenwave360.example.core.events.provider.ICustomerEventsProducer;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
@@ -31,8 +32,10 @@ public class CustomerUseCasesTest {
   @Spy CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
   @Spy CustomerRepositoryInMemory customerRepository = new CustomerRepositoryInMemory();
   @Mock CustomerSearchRepository customerSearchRepository;
+  @Mock ICustomerEventsProducer customerEventsProducer;
 
   @InjectMocks CustomerUseCasesImpl customerUseCases;
+
 
   @BeforeEach
   void setUp() {
