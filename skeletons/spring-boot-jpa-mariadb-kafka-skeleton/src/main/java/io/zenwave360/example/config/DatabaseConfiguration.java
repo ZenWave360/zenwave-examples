@@ -16,8 +16,8 @@ import java.sql.SQLException;
 
 
 @Configuration
-@EnableJpaRepositories({ "io.zenwave360.example.core.domain" })
-@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+@EnableJpaRepositories({ "io.zenwave360.example.core.outbound.jpa" })
+//@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 

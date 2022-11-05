@@ -18,14 +18,14 @@ jbang alias add --name=zw \
     --repos=mavencentral,snapshots=https://s01.oss.sonatype.org/content/repositories/snapshots \
     --deps=\
 org.slf4j:slf4j-simple:1.7.36,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.8.2-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.8.2-SNAPSHOT\
-    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.8.2-SNAPSHOT
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.8.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.8.3-SNAPSHOT\
+    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.8.3-SNAPSHOT
 ```
 
 ### Generate Backend Application
@@ -49,6 +49,7 @@ Generate OpenAPI definition from JDL entities:
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLToOpenAPIConfiguration \
     specFile=src/main/resources/model/orders-model.jdl \
+    idType=integer \
     targetFile=src/main/resources/model/openapi.yml
 ```
 
@@ -61,8 +62,9 @@ Generate AsyncAPI definition from JDL entities:
 
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIConfiguration \
-    includeCommands=true \
+    includeCommands=false \
     specFile=src/main/resources/model/orders-model.jdl \
+    idType=integer \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 

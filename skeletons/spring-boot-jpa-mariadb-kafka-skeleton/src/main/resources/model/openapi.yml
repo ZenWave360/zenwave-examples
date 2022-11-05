@@ -71,7 +71,7 @@ paths:
       description: Customer id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: Get Customer by id
       operationId: getCustomer
@@ -169,7 +169,7 @@ paths:
       description: CustomerOrder id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: Get CustomerOrder by id
       operationId: getCustomerOrder
@@ -223,7 +223,7 @@ components:
       - "username"
       properties:
         id:
-          type: "string"
+          type: "integer"
         firstName:
           type: "string"
           minLength: 3
@@ -258,24 +258,27 @@ components:
       x-business-entity: "CustomerOrder"
       properties:
         id:
-          type: "string"
+          type: "integer"
         date:
           type: "string"
           format: "date-time"
-        shippingDetails:
-          $ref: "#/components/schemas/ShippingDetails"
+        status:
+          $ref: "#/components/schemas/OrderStatus"
         orderedItems:
           type: "array"
           items:
             $ref: "#/components/schemas/OrderedItem"
-        paymentDetails:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/PaymentDetails"
-        status:
-          $ref: "#/components/schemas/OrderStatus"
+        customerId:
+          type: "integer"
         customer:
-          $ref: "#/components/schemas/Customer"
+          description: this may be readonly
+          allOf:
+            - $ref: "#/components/schemas/Customer"
+          readOnly: true
+        shippingDetails:
+          $ref: "#/components/schemas/ShippingDetails"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentDetails"
     CustomerOrderPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
@@ -305,7 +308,7 @@ components:
       x-business-entity: "CustomerOrderSearchCriteria"
       properties:
         id:
-          type: "string"
+          type: "integer"
         dateTo:
           type: "string"
           format: "date-time"
@@ -358,6 +361,10 @@ components:
         price:
           type: "number"
           format: "double"
+        customerOrders:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CustomerOrder"
     OrderedItemPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
@@ -372,7 +379,7 @@ components:
       x-business-entity: "CustomerCriteria"
       properties:
         id:
-          type: "string"
+          type: "integer"
         firstName:
           type: "string"
         lastName:

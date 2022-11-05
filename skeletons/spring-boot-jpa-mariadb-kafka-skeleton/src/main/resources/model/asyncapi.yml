@@ -11,14 +11,6 @@ tags:
   - name: "CustomerOrder"
 
 channels:
-  customer.requests:
-    subscribe:
-      summary: Customer Async Requests
-      operationId: doCustomerRequest
-      tags:
-        - name: Customer
-      message:
-        $ref: "#/components/messages/CustomerRequestMessage"
   customer.events:
     publish:
       summary: Customer Domain Events
@@ -28,14 +20,6 @@ channels:
       message:
         $ref: "#/components/messages/CustomerEventMessage"
   
-  customer-order.requests:
-    subscribe:
-      summary: CustomerOrder Async Requests
-      operationId: doCustomerOrderRequest
-      tags:
-        - name: CustomerOrder
-      message:
-        $ref: "#/components/messages/CustomerOrderRequestMessage"
   customer-order.events:
     publish:
       summary: CustomerOrder Domain Events
@@ -43,18 +27,12 @@ channels:
       tags:
         - name: CustomerOrder
       message:
-        $ref: "#/components/messages/CustomerOrderEventMessage"
+        oneOf:
+          - $ref: "#/components/messages/CustomerOrderEventMessage"
   
 
 components:
   messages:
-    CustomerRequestMessage:
-      name: CustomerRequestMessage
-      title: Async Command/Request for a Customer
-      summary: Async Command/Request for a Customer
-      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
-      payload:
-        $ref: "#/components/schemas/CustomerRequestPayload"
     CustomerEventMessage:
       name: CustomerEventMessage
       title: Message for a Customer Event
@@ -63,13 +41,6 @@ components:
       payload:
         $ref: "#/components/schemas/CustomerEventPayload"
   
-    CustomerOrderRequestMessage:
-      name: CustomerOrderRequestMessage
-      title: Async Command/Request for a CustomerOrder
-      summary: Async Command/Request for a CustomerOrder
-      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
-      payload:
-        $ref: "#/components/schemas/CustomerOrderRequestPayload"
     CustomerOrderEventMessage:
       name: CustomerOrderEventMessage
       title: Message for a CustomerOrder Event
@@ -121,20 +92,8 @@ components:
         date:
           type: "string"
           format: "date-time"
-        shippingDetails:
-          $ref: "#/components/schemas/ShippingDetails"
-        orderedItems:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/OrderedItem"
-        paymentDetails:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/PaymentDetails"
         status:
           $ref: "#/components/schemas/OrderStatus"
-        customer:
-          $ref: "#/components/schemas/Customer"
     ShippingDetails:
       type: "object"
       x-business-entity: "ShippingDetails"
@@ -205,19 +164,6 @@ components:
       - "CONFIRMED"
       - "SHIPPED"
 
-    CustomerRequestPayload:
-      type: object
-      properties:
-        customerId:
-          type: string
-        requestType:
-          type: string
-          enum:
-          - "create"
-          - "update"
-          - "delete"
-        customer:
-          $ref: "#/components/schemas/Customer"
     CustomerEventPayload:
       type: object
       properties:
@@ -232,19 +178,6 @@ components:
         customer:
           $ref: "#/components/schemas/Customer"
   
-    CustomerOrderRequestPayload:
-      type: object
-      properties:
-        customerOrderId:
-          type: string
-        requestType:
-          type: string
-          enum:
-          - "create"
-          - "update"
-          - "delete"
-        customerOrder:
-          $ref: "#/components/schemas/CustomerOrder"
     CustomerOrderEventPayload:
       type: object
       properties:
