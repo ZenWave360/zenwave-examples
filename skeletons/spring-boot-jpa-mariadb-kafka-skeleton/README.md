@@ -18,20 +18,20 @@ jbang alias add --name=zw \
     --repos=mavencentral,snapshots=https://s01.oss.sonatype.org/content/repositories/snapshots \
     --deps=\
 org.slf4j:slf4j-simple:1.7.36,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.8.3-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.8.3-SNAPSHOT\
-    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.8.3-SNAPSHOT
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.3-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.3-SNAPSHOT\
+    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.3-SNAPSHOT
 ```
 
 ### Generate Backend Application
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLBackendApplicationDefaultConfiguration \
+jbang zw -p io.zenwave360.generator.plugins.JDLBackendApplicationDefaultPlugin \
     specFile=src/main/resources/model/orders-model.jdl \
     basePackage=io.zenwave360.example \
     persistence=jpa \
@@ -47,9 +47,10 @@ Generate OpenAPI definition from JDL entities:
 - CRUD operations for entities
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLToOpenAPIConfiguration \
+jbang zw -p io.zenwave360.generator.plugins.JDLToOpenAPIPlugin \
     specFile=src/main/resources/model/orders-model.jdl \
     idType=integer \
+    idTypeFormat=int64 \
     targetFile=src/main/resources/model/openapi.yml
 ```
 
@@ -61,21 +62,16 @@ Generate AsyncAPI definition from JDL entities:
 - Messages and payloads for each entity Create/Update/Delete events (AVRO and AsyncAPI schema)
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIConfiguration \
+jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIPlugin \
     includeCommands=false \
     specFile=src/main/resources/model/orders-model.jdl \
     idType=integer \
+    idTypeFormat=int64 \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 
 
 #### SpringMVC Controllers from OpenAPI
-
-Delete generated CRUD Controllers:
-
-```shell
-rm -rf src/main/java/io/zenwave360/example/adapters/web
-```
 
 Generate new SpringMVC controllers from OpenAPI:
 
@@ -84,7 +80,7 @@ mvn clean generate-sources
 ```
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersConfiguration \
+jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersPlugin \
     specFile=src/main/resources/model/openapi.yml \
     jdlFile=src/main/resources/model/orders-model.jdl \
     basePackage=io.zenwave360.example \
@@ -99,7 +95,7 @@ jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersConfiguration \
 Generates test for SpringMVC or Spring WebFlux using WebTestClient based on OpenAPI specification.
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientConfiguration \
+jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     jdlFile=src/main/resources/model/orders-model.jdl \
     targetFolder=src/test/java \
@@ -107,5 +103,5 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientConfiguration \
     openApiApiPackage=io.zenwave360.example.adapters.web \
     openApiModelPackage=io.zenwave360.example.adapters.web.model \
     openApiModelNameSuffix=DTO \
-    groupBy=SERVICE
+    groupBy=service
 ```

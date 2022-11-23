@@ -72,6 +72,7 @@ paths:
       required: true
       schema:
         type: integer
+        format: int64
     get:
       summary: Get Customer by id
       operationId: getCustomer
@@ -170,6 +171,7 @@ paths:
       required: true
       schema:
         type: integer
+        format: int64
     get:
       summary: Get CustomerOrder by id
       operationId: getCustomerOrder
@@ -206,7 +208,163 @@ paths:
           description: CustomerOrder deleted
   
 
+  /shipping-details:
+    get:
+      summary: Find ShippingDetails
+      operationId: listShippingDetails
+      tags: [Customer]
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        "200":
+          description: ShippingDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShippingDetailsPaginated"
+    post:
+      summary: Create ShippingDetails
+      operationId: createShippingDetails
+      tags: [Customer]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShippingDetails"
+      responses:
+        "201":
+          description: ShippingDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShippingDetails"
 
+  /shipping-details/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ShippingDetails id
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      summary: Get ShippingDetails by id
+      operationId: getShippingDetails
+      tags: [Customer]
+      responses:
+        "200":
+          description: ShippingDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShippingDetails"
+    put:
+      summary: Update ShippingDetails
+      operationId: updateShippingDetails
+      tags: [Customer]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShippingDetails"
+      responses:
+        "200":
+          description: ShippingDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShippingDetails"
+    delete:
+      summary: Delete ShippingDetails
+      operationId: deleteShippingDetails
+      tags: [Customer]
+      responses:
+        "204":
+          description: ShippingDetails deleted
+  
+
+
+
+  /payment-details:
+    get:
+      summary: Find PaymentDetails
+      operationId: listPaymentDetails
+      tags: [Customer]
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        "200":
+          description: PaymentDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentDetailsPaginated"
+    post:
+      summary: Create PaymentDetails
+      operationId: createPaymentDetails
+      tags: [Customer]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentDetails"
+      responses:
+        "201":
+          description: PaymentDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentDetails"
+
+  /payment-details/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: PaymentDetails id
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      summary: Get PaymentDetails by id
+      operationId: getPaymentDetails
+      tags: [Customer]
+      responses:
+        "200":
+          description: PaymentDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentDetails"
+    put:
+      summary: Update PaymentDetails
+      operationId: updatePaymentDetails
+      tags: [Customer]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentDetails"
+      responses:
+        "200":
+          description: PaymentDetails
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentDetails"
+    delete:
+      summary: Delete PaymentDetails
+      operationId: deletePaymentDetails
+      tags: [Customer]
+      responses:
+        "204":
+          description: PaymentDetails deleted
+  
 
 
 
@@ -224,6 +382,15 @@ components:
       properties:
         id:
           type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
         firstName:
           type: "string"
           minLength: 3
@@ -259,9 +426,16 @@ components:
       properties:
         id:
           type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
         date:
           type: "string"
           format: "date-time"
+        shippingDetails:
+          $ref: "#/components/schemas/OrderShippingDetails"
+          description: "Shipping Details are stored embedded so they don't change\
+            \ if the original shipping address changes"
         status:
           $ref: "#/components/schemas/OrderStatus"
         orderedItems:
@@ -270,13 +444,12 @@ components:
             $ref: "#/components/schemas/OrderedItem"
         customerId:
           type: "integer"
+          format: "int64"
         customer:
-          description: this may be readonly
-          allOf:
-            - $ref: "#/components/schemas/Customer"
-          readOnly: true
-        shippingDetails:
-          $ref: "#/components/schemas/ShippingDetails"
+          $ref: "#/components/schemas/Customer"
+        paymentDetailsId:
+          type: "integer"
+          format: "int64"
         paymentDetails:
           $ref: "#/components/schemas/PaymentDetails"
     CustomerOrderPaginated:
@@ -292,8 +465,20 @@ components:
       type: "object"
       x-business-entity: "ShippingDetails"
       properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        phone:
+          type: "string"
         address:
           type: "string"
+        customerId:
+          type: "integer"
+          format: "int64"
+        customer:
+          $ref: "#/components/schemas/Customer"
     ShippingDetailsPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
@@ -303,11 +488,38 @@ components:
             type: "array"
             items:
               $ref: "#/components/schemas/ShippingDetails"
+    BaseEntity:
+      type: "object"
+      x-business-entity: "BaseEntity"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+    BaseEntityPaginated:
+      allOf:
+      - $ref: "#/components/schemas/Page"
+      - x-business-entity-paginated: "BaseEntity"
+      - properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/components/schemas/BaseEntity"
     CustomerOrderSearchCriteria:
       type: "object"
       x-business-entity: "CustomerOrderSearchCriteria"
       properties:
         id:
+          type: "integer"
+          format: "int64"
+        version:
           type: "integer"
         dateTo:
           type: "string"
@@ -330,8 +542,20 @@ components:
       type: "object"
       x-business-entity: "PaymentDetails"
       properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        cardHolderName:
+          type: "string"
         creditCardNumber:
           type: "string"
+        customerId:
+          type: "integer"
+          format: "int64"
+        customer:
+          $ref: "#/components/schemas/Customer"
     PaymentDetailsPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
@@ -348,6 +572,11 @@ components:
       - "name"
       - "price"
       properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
         catalogItemId:
           type: "integer"
           format: "int64"
@@ -361,10 +590,6 @@ components:
         price:
           type: "number"
           format: "double"
-        customerOrders:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/CustomerOrder"
     OrderedItemPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
@@ -379,6 +604,9 @@ components:
       x-business-entity: "CustomerCriteria"
       properties:
         id:
+          type: "integer"
+          format: "int64"
+        version:
           type: "integer"
         firstName:
           type: "string"
@@ -399,6 +627,23 @@ components:
             type: "array"
             items:
               $ref: "#/components/schemas/CustomerCriteria"
+    OrderShippingDetails:
+      type: "object"
+      x-business-entity: "OrderShippingDetails"
+      properties:
+        address:
+          type: "string"
+        phone:
+          type: "string"
+    OrderShippingDetailsPaginated:
+      allOf:
+      - $ref: "#/components/schemas/Page"
+      - x-business-entity-paginated: "OrderShippingDetails"
+      - properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/components/schemas/OrderShippingDetails"
     OrderStatus:
       type: "string"
       x-business-entity: "OrderStatus"

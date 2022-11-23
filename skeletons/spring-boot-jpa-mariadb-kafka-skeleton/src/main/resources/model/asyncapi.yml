@@ -27,8 +27,43 @@ channels:
       tags:
         - name: CustomerOrder
       message:
-        oneOf:
-          - $ref: "#/components/messages/CustomerOrderEventMessage"
+        $ref: "#/components/messages/CustomerOrderEventMessage"
+  
+  shipping-details.events:
+    publish:
+      summary: ShippingDetails Domain Events
+      operationId: onShippingDetailsEvent
+      tags:
+        - name: Customer
+      message:
+        $ref: "#/components/messages/ShippingDetailsEventMessage"
+  
+  base-entity.events:
+    publish:
+      summary: BaseEntity Domain Events
+      operationId: onBaseEntityEvent
+      tags:
+        - name: Default
+      message:
+        $ref: "#/components/messages/BaseEntityEventMessage"
+  
+  payment-details.events:
+    publish:
+      summary: PaymentDetails Domain Events
+      operationId: onPaymentDetailsEvent
+      tags:
+        - name: Customer
+      message:
+        $ref: "#/components/messages/PaymentDetailsEventMessage"
+  
+  ordered-item.events:
+    publish:
+      summary: OrderedItem Domain Events
+      operationId: onOrderedItemEvent
+      tags:
+        - name: Default
+      message:
+        $ref: "#/components/messages/OrderedItemEventMessage"
   
 
 components:
@@ -49,6 +84,38 @@ components:
       payload:
         $ref: "#/components/schemas/CustomerOrderEventPayload"
   
+    ShippingDetailsEventMessage:
+      name: ShippingDetailsEventMessage
+      title: Message for a ShippingDetails Event
+      summary: Message for a ShippingDetails Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/ShippingDetailsEventPayload"
+  
+    BaseEntityEventMessage:
+      name: BaseEntityEventMessage
+      title: Message for a BaseEntity Event
+      summary: Message for a BaseEntity Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/BaseEntityEventPayload"
+  
+    PaymentDetailsEventMessage:
+      name: PaymentDetailsEventMessage
+      title: Message for a PaymentDetails Event
+      summary: Message for a PaymentDetails Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/PaymentDetailsEventPayload"
+  
+    OrderedItemEventMessage:
+      name: OrderedItemEventMessage
+      title: Message for a OrderedItem Event
+      summary: Message for a OrderedItem Event
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/OrderedItemEventPayload"
+  
 
   schemas:
     Customer:
@@ -63,6 +130,12 @@ components:
       properties:
         id:
           type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
         firstName:
           type: "string"
           minLength: 3
@@ -92,14 +165,50 @@ components:
         date:
           type: "string"
           format: "date-time"
+        shippingDetails:
+          $ref: "#/components/schemas/OrderShippingDetails"
+          description: "Shipping Details are stored embedded so they don't change\
+            \ if the original shipping address changes"
         status:
           $ref: "#/components/schemas/OrderStatus"
+        orderedItems:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/OrderedItem"
+        customerId:
+          type: "string"
+        customer:
+          $ref: "#/components/schemas/Customer"
+        paymentDetailsId:
+          type: "string"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentDetails"
     ShippingDetails:
       type: "object"
       x-business-entity: "ShippingDetails"
       properties:
+        id:
+          type: "string"
+        phone:
+          type: "string"
         address:
           type: "string"
+        customerId:
+          type: "string"
+        customer:
+          $ref: "#/components/schemas/Customer"
+    BaseEntity:
+      type: "object"
+      x-business-entity: "BaseEntity"
+      properties:
+        id:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
     CustomerOrderSearchCriteria:
       type: "object"
       x-business-entity: "CustomerOrderSearchCriteria"
@@ -118,8 +227,16 @@ components:
       type: "object"
       x-business-entity: "PaymentDetails"
       properties:
+        id:
+          type: "string"
+        cardHolderName:
+          type: "string"
         creditCardNumber:
           type: "string"
+        customerId:
+          type: "string"
+        customer:
+          $ref: "#/components/schemas/Customer"
     OrderedItem:
       type: "object"
       x-business-entity: "OrderedItem"
@@ -127,6 +244,8 @@ components:
       - "name"
       - "price"
       properties:
+        id:
+          type: "string"
         catalogItemId:
           type: "integer"
           format: "int64"
@@ -155,6 +274,14 @@ components:
         email:
           type: "string"
         username:
+          type: "string"
+    OrderShippingDetails:
+      type: "object"
+      x-business-entity: "OrderShippingDetails"
+      properties:
+        address:
+          type: "string"
+        phone:
           type: "string"
     OrderStatus:
       type: "string"
@@ -191,4 +318,60 @@ components:
           - "deleted"
         customerOrder:
           $ref: "#/components/schemas/CustomerOrder"
+  
+    ShippingDetailsEventPayload:
+      type: object
+      properties:
+        shippingDetailsId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - "created"
+          - "updated"
+          - "deleted"
+        shippingDetails:
+          $ref: "#/components/schemas/ShippingDetails"
+  
+    BaseEntityEventPayload:
+      type: object
+      properties:
+        baseEntityId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - "created"
+          - "updated"
+          - "deleted"
+        baseEntity:
+          $ref: "#/components/schemas/BaseEntity"
+  
+    PaymentDetailsEventPayload:
+      type: object
+      properties:
+        paymentDetailsId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - "created"
+          - "updated"
+          - "deleted"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentDetails"
+  
+    OrderedItemEventPayload:
+      type: object
+      properties:
+        orderedItemId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - "created"
+          - "updated"
+          - "deleted"
+        orderedItem:
+          $ref: "#/components/schemas/OrderedItem"
   

@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.8.2-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<version>0.9.3-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-skeleton</artifactId>
 	<name>${pom.groupId}:${pom.artifactId}</name>
@@ -52,6 +52,12 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>au.com.dius.pact.consumer</groupId>
+			<artifactId>junit5</artifactId>
+			<version>${pact.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -153,7 +159,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
+								<transactionalOutbox>mongodb</transactionalOutbox>
 								<apiPackage>io.zenwave360.example.core.events.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
 							</configOptions>

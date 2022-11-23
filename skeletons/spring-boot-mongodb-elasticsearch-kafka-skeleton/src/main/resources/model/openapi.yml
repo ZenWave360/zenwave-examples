@@ -224,6 +224,8 @@ components:
       properties:
         id:
           type: "string"
+        version:
+          type: "integer"
         firstName:
           type: "string"
           minLength: 3
@@ -259,6 +261,8 @@ components:
       properties:
         id:
           type: "string"
+        version:
+          type: "integer"
         date:
           type: "string"
           format: "date-time"
@@ -306,6 +310,8 @@ components:
       properties:
         id:
           type: "string"
+        version:
+          type: "integer"
         dateTo:
           type: "string"
           format: "date-time"
@@ -373,6 +379,8 @@ components:
       properties:
         id:
           type: "string"
+        version:
+          type: "integer"
         firstName:
           type: "string"
         lastName:
