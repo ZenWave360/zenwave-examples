@@ -24,7 +24,7 @@ public class DoCustomerRequestConsumerService implements IDoCustomerRequestConsu
 
 
     @Override
-    public void doCustomerRequest(CustomerRequestPayload payload, Map<String, Object> headers) {
+    public void doCustomerRequest(CustomerRequestPayload payload, CustomerRequestPayloadHeaders headers) {
         CustomerInput input = eventsMapper.asCustomerInput(payload.getCustomer());
         if(payload.getRequestType() == RequestType.CREATE) {
             customerUseCases.createCustomer(input);

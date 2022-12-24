@@ -19,7 +19,7 @@ public class DoCustomerOrderRequestConsumerService implements IDoCustomerOrderRe
     @Autowired
     private CustomerOrderUseCases customerOrderUseCases;
     @Override
-    public void doCustomerOrderRequest(CustomerOrderRequestPayload payload, Map<String, Object> headers) {
+    public void doCustomerOrderRequest(CustomerOrderRequestPayload payload, CustomerOrderRequestPayloadHeaders headers) {
         CustomerOrderInput input = eventsMapper.asCustomerOrderInput(payload.getCustomerOrder());
         if(payload.getRequestType() == RequestType.CREATE) {
             customerOrderUseCases.createCustomerOrder(input);

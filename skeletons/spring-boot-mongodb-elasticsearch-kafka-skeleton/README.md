@@ -18,14 +18,15 @@ jbang alias add --name=zw \
     --repos=mavencentral,snapshots=https://s01.oss.sonatype.org/content/repositories/snapshots \
     --deps=\
 org.slf4j:slf4j-simple:1.7.36,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.4-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.4-SNAPSHOT\
-    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.4-SNAPSHOT
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-rest-assured:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.5-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.5-SNAPSHOT\
+    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.5-SNAPSHOT
 ```
 
 ### Generate Backend Application
@@ -94,7 +95,34 @@ Generates test for SpringMVC or Spring WebFlux using WebTestClient based on Open
 jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
-    controllersPackage=io.zenwave360.example.adapters.web \
+    testsPackage=io.zenwave360.example.adapters.web.tests.webtestclient \
+    openApiApiPackage=io.zenwave360.example.adapters.web \
+    openApiModelPackage=io.zenwave360.example.adapters.web.model \
+    openApiModelNameSuffix=DTO \
+    groupBy=service
+```
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
+    specFile=src/main/resources/model/openapi.yml \
+    targetFolder=src/test/java \
+    testsPackage=io.zenwave360.example.adapters.web \
+    openApiApiPackage=io.zenwave360.example.adapters.web.tests.webtestclient \
+    openApiModelPackage=io.zenwave360.example.adapters.web.model \
+    openApiModelNameSuffix=DTO \
+    groupBy=businessFlow \
+    businessFlowTestName=CustomerCRUDTest \
+    operationIds=createCustomer,getCustomer,updateCustomer,deleteCustomer,getCustomer
+```
+# REST-Assured Generator
+
+Generates REST-Assured tests based on OpenAPI specification.
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.RestAssuredPlugin \
+    specFile=src/main/resources/model/openapi.yml \
+    targetFolder=src/test/java \
+    testsPackage=io.zenwave360.example.adapters.web.tests.restassured \
     openApiApiPackage=io.zenwave360.example.adapters.web \
     openApiModelPackage=io.zenwave360.example.adapters.web.model \
     openApiModelNameSuffix=DTO \

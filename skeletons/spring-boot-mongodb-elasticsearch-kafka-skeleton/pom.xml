@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.9.4-SNAPSHOT</version>
+		<version>0.9.5-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-skeleton</artifactId>
@@ -53,19 +53,13 @@
 		</dependency>
 
 		<dependency>
-			<groupId>au.com.dius.pact.consumer</groupId>
-			<artifactId>junit5</artifactId>
-			<version>${pact.version}</version>
-			<scope>test</scope>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite-engine</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -78,6 +72,18 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -190,7 +196,7 @@
 						<configuration>
 							<skip>true</skip>
 							<generatorName>spring-cloud-streams3</generatorName>
-							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>

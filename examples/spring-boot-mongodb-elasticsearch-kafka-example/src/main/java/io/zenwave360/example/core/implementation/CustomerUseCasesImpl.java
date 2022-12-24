@@ -48,7 +48,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
             .withCustomer(new io.zenwave360.example.core.events.model.Customer()
                     .withEmail(customer.getEmail())
                     .withFirstName(customer.getFirstName())
-                    .withLastName(customer.getLastName())));
+                    .withLastName(customer.getLastName())), null);
     return customer;
   }
 

@@ -8,7 +8,6 @@ defaultContentType: application/json
 tags:
   - name: "Default"
   - name: "Customer"
-  - name: "CustomerOrder"
 
 channels:
   customer.requests:
@@ -26,25 +25,9 @@ channels:
       tags:
         - name: Customer
       message:
-        $ref: "#/components/messages/CustomerEventMessage"
-  
-  customer-order.requests:
-    subscribe:
-      summary: CustomerOrder Async Requests
-      operationId: doCustomerOrderRequest
-      tags:
-        - name: CustomerOrder
-      message:
-        $ref: "#/components/messages/CustomerOrderRequestMessage"
-  customer-order.events:
-    publish:
-      summary: CustomerOrder Domain Events
-      operationId: onCustomerOrderEvent
-      tags:
-        - name: CustomerOrder
-      message:
-        $ref: "#/components/messages/CustomerOrderEventMessage"
-  
+        oneOf:
+          - $ref: "#/components/messages/CustomerEventMessage"
+          - $ref: "#/components/messages/CustomerEventMessage2"
 
 components:
   messages:
@@ -62,21 +45,10 @@ components:
       schemaFormat: application/vnd.apache.avro+json;version=1.9.0
       payload:
         $ref: "avro/CustomerEventPayload.avsc"
-  
-    CustomerOrderRequestMessage:
-      name: CustomerOrderRequestMessage
-      title: Async Command/Request for a CustomerOrder
-      summary: Async Command/Request for a CustomerOrder
+    CustomerEventMessage2:
+      name: CustomerEventMessage2
+      title: Message for a Customer Event
+      summary: Message for a Customer Event
       schemaFormat: application/vnd.apache.avro+json;version=1.9.0
       payload:
-        $ref: "avro/CustomerOrderRequestPayload.avsc"
-    CustomerOrderEventMessage:
-      name: CustomerOrderEventMessage
-      title: Message for a CustomerOrder Event
-      summary: Message for a CustomerOrder Event
-      schemaFormat: application/vnd.apache.avro+json;version=1.9.0
-      payload:
-        $ref: "avro/CustomerOrderEventPayload.avsc"
-  
-
-
+        $ref: "avro/CustomerEventPayload2.avsc"

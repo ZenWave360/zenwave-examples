@@ -1,15 +1,15 @@
 {
   "type" : "record",
-  "name" : "OrderStatusRequestPayload",
+  "name" : "CustomerEventPayload2",
   "namespace" : "io.zenwave360.example.adapters.events.avro",
   "fields" : [ {
     "name" : "id",
     "type" : "string"
   }, {
     "name" : "payload",
-    "type" : "OrderStatus"
+    "type" : "Customer"
   }, {
-    "name" : "requestType",
-    "type" : "RequestType"
+    "name" : "eventType",
+    "type" : "EventType"
   } ]
 }

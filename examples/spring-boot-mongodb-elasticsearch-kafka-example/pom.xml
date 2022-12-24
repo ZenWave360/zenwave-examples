@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.9.4-SNAPSHOT</version>
+		<version>0.9.5-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-example</artifactId>
-	<version>0.9.4-SNAPSHOT</version>
+	<version>0.9.5-SNAPSHOT</version>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 	<description>ZenWave360 Example</description>
 
@@ -181,7 +181,7 @@
 						<configuration>
 							<skip>true</skip>
 							<generatorName>spring-cloud-streams3</generatorName>
-							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>
