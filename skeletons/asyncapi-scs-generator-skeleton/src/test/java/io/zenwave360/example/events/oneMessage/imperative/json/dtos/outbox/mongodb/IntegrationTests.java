@@ -43,17 +43,19 @@ public class IntegrationTests {
 
     @Test
     void doCustomerCommandTest() throws InterruptedException {
+        // Given
         var message = new CustomerRequestPayload().withCustomerId("231");
         var headers = new ICustomerCommandsProducer.CustomerRequestPayloadHeaders()
                 .entityId("231")
                 .commonHeader("value")
                 .set("undocumented", "value");
-
+        // When
         customerCommandsProducer.doCustomerRequest(message, headers);
+        // Then
         var messages = awaitReceivedMessages(doCustomerRequestConsumerService);
+
         Assertions.assertEquals(1, messages.size());
         Assertions.assertEquals(message.getCustomerId(), ((CustomerRequestPayload) messages.get(0)).getCustomerId());
-
         var receivedHeaders = getReceivedHeaders(doCustomerRequestConsumerService);
         Assertions.assertEquals("231", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
@@ -61,17 +63,19 @@ public class IntegrationTests {
 
     @Test
     void onCustomerEventTest() throws InterruptedException {
+        // Given
         var message = new CustomerEventPayload().withCustomerId("123");
         var headers = new ICustomerEventsProducer.CustomerEventPayloadHeaders()
                 .entityId("123")
                 .commonHeader("value")
                 .set("undocumented", "value");
+        // When
         customerEventsProducer.onCustomerEvent(message, headers);
-
+        // Then
         var messages = awaitReceivedMessages(onCustomerEventConsumerService);
+
         Assertions.assertEquals(1, messages.size());
         Assertions.assertEquals(message.getCustomerId(), ((CustomerEventPayload) messages.get(0)).getCustomerId());
-
         var receivedHeaders = getReceivedHeaders(onCustomerEventConsumerService);
         Assertions.assertEquals("123", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));

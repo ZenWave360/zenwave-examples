@@ -1,8 +1,9 @@
 package io.zenwave360.example.boot.config;
 
 import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient;
+import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import org.springframework.cloud.stream.schema.client.SchemaRegistryClient;
+
 
 import java.util.Map;
 

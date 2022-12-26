@@ -10,18 +10,18 @@ tags:
   - name: "Customer"
 
 channels:
-  customer.requests:
+  customer.requests.avro:
     subscribe:
       summary: Customer Async Requests
-      operationId: doCustomerRequest
+      operationId: doCustomerRequestAvro
       tags:
         - name: Customer
       message:
         $ref: "#/components/messages/CustomerRequestMessage"
-  customer.events:
+  customer.events.avro:
     publish:
       summary: Customer Domain Events
-      operationId: onCustomerEvent
+      operationId: onCustomerEventAvro
       tags:
         - name: Customer
       message:
