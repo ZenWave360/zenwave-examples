@@ -11,12 +11,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +45,16 @@ public class IntegrationTests {
     ICustomerEventsProducer customerEventsProducer;
     @Autowired
     IOnCustomerEventConsumerService onCustomerEventConsumerService;
+    @Autowired @Qualifier("on-customer-event-error")
+    Object onCustomerEventErrorHandler;
+
+    @Autowired @Qualifier("on-customer-event-validation-error")
+    Object onCustomerEventValidationErrorHandler;
 
     @Test
     void doCustomerCommandTest() throws InterruptedException {
         // Given
-        var message = new CustomerRequestPayload().withCustomerId("231");
+        var message = new CustomerRequestPayload().withCustomerId("231").withRequestType(CustomerRequestPayload.RequestType.CREATE);
         var headers = new ICustomerCommandsProducer.CustomerRequestPayloadHeaders()
                 .entityId("231")
                 .commonHeader("value")
@@ -64,7 +74,7 @@ public class IntegrationTests {
     @Test
     void onCustomerEventTest() throws InterruptedException {
         // Given
-        var message = new CustomerEventPayload().withCustomerId("123");
+        var message = new CustomerEventPayload().withCustomerId("123").withEventType(CustomerEventPayload.EventType.CREATED);
         var headers = new ICustomerEventsProducer.CustomerEventPayloadHeaders()
                 .entityId("123")
                 .commonHeader("value")
@@ -81,6 +91,43 @@ public class IntegrationTests {
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
     }
 
+    @Test
+    void onCustomerEventDefaultDeadLetterQueueTest() throws InterruptedException {
+        // Given
+        var message = new CustomerEventPayload()
+                .withCustomerId("123")
+                .withEventType(null); // will throw NullPointerException
+        var headers = new ICustomerEventsProducer.CustomerEventPayloadHeaders();
+        // When
+        customerEventsProducer.onCustomerEvent(message, headers);
+        // Then
+        var messages = awaitReceivedMessages(onCustomerEventErrorHandler);
+        Assertions.assertEquals(1, messages.size());
+//        Assertions.assertEquals(message.getCustomerId(), ((CustomerEventPayload) messages.get(0)).getCustomerId());
+
+        var receivedHeaders = getReceivedHeaders(onCustomerEventErrorHandler);
+        Assertions.assertEquals(NullPointerException.class.getName(), receivedHeaders.get(0).get("x-exception-type"));
+    }
+
+    @Test
+    void onCustomerEventCustomDeadLetterQueueTest() throws InterruptedException {
+        // Given
+        var message = new CustomerEventPayload()
+                .withCustomerId(null) // will throw validation error
+                .withEventType(CustomerEventPayload.EventType.UPDATED);
+        var headers = new ICustomerEventsProducer.CustomerEventPayloadHeaders();
+        // When
+        customerEventsProducer.onCustomerEvent(message, headers);
+        // Then
+        var messages = awaitReceivedMessages(onCustomerEventValidationErrorHandler);
+        Assertions.assertEquals(1, messages.size());
+//        Assertions.assertEquals(message.getCustomerId(), ((CustomerEventPayload) messages.get(0)).getCustomerId());
+
+        var receivedHeaders = getReceivedHeaders(onCustomerEventValidationErrorHandler);
+        Assertions.assertEquals("customerId is null", receivedHeaders.get(0).get("x-exception-message"));
+    }
+
+
     private List awaitReceivedMessages(Object consumer) throws InterruptedException {
         await().atMost(5, SECONDS).until(() -> !getReceivedMessages(consumer).isEmpty());
         return getReceivedMessages(consumer);
@@ -91,5 +138,40 @@ public class IntegrationTests {
     }
     private List<Map> getReceivedHeaders(Object consumer) {
         return (List) ReflectionTestUtils.getField(consumer, "receivedHeaders");
+    }
+
+
+    @TestConfiguration
+    class TestsConfiguration {
+
+        private Logger log = LoggerFactory.getLogger(io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge.TestsConfiguration.class);
+
+        @Bean
+        public IOnCustomerEventConsumerService onCustomerEventConsumerService() {
+            return new IOnCustomerEventConsumerService() {
+                public List receivedMessages = new ArrayList();
+                public List receivedHeaders = new ArrayList();
+                @Override
+                public void onCustomerEvent(CustomerEventPayload payload, CustomerEventPayloadHeaders headers) {
+                    log.info("Received '{}' message with payload: {}", payload.getClass(), payload);
+                    receivedMessages.add(payload);
+                    receivedHeaders.add(headers);
+                }
+            };
+        }
+
+        @Bean
+        public IDoCustomerRequestConsumerService doCustomerRequestConsumerService() {
+            return new IDoCustomerRequestConsumerService() {
+                public List receivedMessages = new ArrayList();
+                public List receivedHeaders = new ArrayList();
+                @Override
+                public void doCustomerRequest(CustomerRequestPayload payload, CustomerRequestPayloadHeaders headers) {
+                    log.info("Received '{}' message with payload: {}", payload.getClass(), payload);
+                    receivedMessages.add(payload);
+                    receivedHeaders.add(headers);
+                }
+            };
+        }
     }
 }

@@ -7,14 +7,14 @@ spring:
       group-id: zenwave360-example
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
-        schema.registry.url: using-MockSchemaRegistryClient
+        schema.registry.url: mock://not-used
       value-deserializer: io.zenwave360.example.boot.config.CustomKafkaAvroDeserializer
     producer:
       auto.register.schemas: true
       group-id: zenwave360-example
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-        schema.registry.url: using-MockSchemaRegistryClient
+        schema.registry.url: mock://not-used
       value-serializer: io.zenwave360.example.boot.config.CustomKafkaAvroSerializer
     properties:
       specific.avro.reader: true

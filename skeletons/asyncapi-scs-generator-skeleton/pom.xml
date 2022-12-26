@@ -264,7 +264,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -282,7 +282,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -302,7 +302,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -321,7 +321,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -341,7 +341,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -360,7 +360,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -491,7 +491,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -509,7 +509,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -529,7 +529,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -548,7 +548,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -568,7 +568,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -587,7 +587,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.json.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -719,7 +719,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -737,7 +737,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -757,7 +757,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -776,7 +776,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -796,7 +796,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -815,7 +815,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -946,7 +946,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -964,7 +964,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -984,7 +984,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -1003,7 +1003,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -1023,7 +1023,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -1042,7 +1042,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneMessage.reactive.avro.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
 							</configOptions>
@@ -1173,7 +1173,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1191,7 +1191,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1211,7 +1211,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1230,7 +1230,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1250,7 +1250,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1269,7 +1269,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.json.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1400,7 +1400,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1418,7 +1418,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1438,7 +1438,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1457,7 +1457,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1477,7 +1477,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1496,7 +1496,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.json.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1628,7 +1628,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1646,7 +1646,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>imperative</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1666,7 +1666,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1685,7 +1685,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1705,7 +1705,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1724,7 +1724,7 @@
 								<role>client</role>
 								<style>imperative</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.imperative.avro.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1855,7 +1855,7 @@
 							<configOptions>
 								<role>provider</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.streambridge.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1873,7 +1873,7 @@
 							<configOptions>
 								<role>client</role>
 								<style>reactive</style>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.streambridge.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1893,7 +1893,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.outbox.mongodb.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1912,7 +1912,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>mongodb</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.outbox.mongodb.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1932,7 +1932,7 @@
 								<role>provider</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.outbox.jdbc.provider</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>
@@ -1951,7 +1951,7 @@
 								<role>client</role>
 								<style>reactive</style>
 								<transactionalOutbox>jdbc</transactionalOutbox>
-								<exposeMessages>true</exposeMessages>
+								<exposeMessage>true</exposeMessage>
 								<apiPackage>io.zenwave360.example.events.oneOfMessages.reactive.avro.messages.outbox.jdbc.client</apiPackage>
 								<modelPackage>io.zenwave360.example.events.oneOfMessages.model</modelPackage>
 							</configOptions>

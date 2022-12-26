@@ -3,7 +3,7 @@ info:
   title: Zenwave 360 Generated API
   version: 0.0.1
 
-defaultContentType: application/json
+defaultContentType: application/*+avro
 
 tags:
   - name: "Default"
