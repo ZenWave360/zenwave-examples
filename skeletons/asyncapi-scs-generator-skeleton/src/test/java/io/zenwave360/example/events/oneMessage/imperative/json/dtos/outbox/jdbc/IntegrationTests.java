@@ -1,10 +1,10 @@
-package io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge;
+package io.zenwave360.example.events.oneMessage.imperative.json.dtos.outbox.jdbc;
 
 import io.zenwave360.example.boot.Zenwave360ExampleApplication;
-import io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge.client.ICustomerCommandsProducer;
-import io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge.client.IOnCustomerEventConsumerService;
-import io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge.provider.ICustomerEventsProducer;
-import io.zenwave360.example.events.oneMessage.imperative.json.dtos.streambridge.provider.IDoCustomerRequestConsumerService;
+import io.zenwave360.example.events.oneMessage.imperative.json.dtos.outbox.jdbc.client.ICustomerCommandsProducer;
+import io.zenwave360.example.events.oneMessage.imperative.json.dtos.outbox.jdbc.client.IOnCustomerEventConsumerService;
+import io.zenwave360.example.events.oneMessage.imperative.json.dtos.outbox.jdbc.provider.ICustomerEventsProducer;
+import io.zenwave360.example.events.oneMessage.imperative.json.dtos.outbox.jdbc.provider.IDoCustomerRequestConsumerService;
 import io.zenwave360.example.events.oneMessage.model.CustomerEventPayload;
 import io.zenwave360.example.events.oneMessage.model.CustomerRequestPayload;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ import static org.awaitility.Awaitility.await;
 @EmbeddedKafka
 @SpringBootTest(classes = Zenwave360ExampleApplication.class)
 @ContextConfiguration(classes = TestsConfiguration.class)
-@DisplayName("Integration Tests: Imperative with json dtos via streambridge")
+@DisplayName("Integration Tests: Imperative with json dtos via jdbc outbox")
 public class IntegrationTests {
 
     private Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
@@ -53,9 +53,9 @@ public class IntegrationTests {
         customerCommandsProducer.doCustomerRequest(message, headers);
         // Then
         var messages = awaitReceivedMessages(doCustomerRequestConsumerService);
+
         Assertions.assertEquals(1, messages.size());
         Assertions.assertEquals(message.getCustomerId(), ((CustomerRequestPayload) messages.get(0)).getCustomerId());
-
         var receivedHeaders = getReceivedHeaders(doCustomerRequestConsumerService);
         Assertions.assertEquals("231", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
@@ -73,9 +73,9 @@ public class IntegrationTests {
         customerEventsProducer.onCustomerEvent(message, headers);
         // Then
         var messages = awaitReceivedMessages(onCustomerEventConsumerService);
+
         Assertions.assertEquals(1, messages.size());
         Assertions.assertEquals(message.getCustomerId(), ((CustomerEventPayload) messages.get(0)).getCustomerId());
-
         var receivedHeaders = getReceivedHeaders(onCustomerEventConsumerService);
         Assertions.assertEquals("123", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));

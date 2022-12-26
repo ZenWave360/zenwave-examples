@@ -36,6 +36,11 @@ components:
       title: Async Command/Request for a Customer
       summary: Async Command/Request for a Customer
       schemaFormat: application/vnd.apache.avro+json;version=1.9.0
+      headers:
+        type: object
+        properties:
+          entity-id:
+            type: string
       payload:
         $ref: "avro/CustomerRequestPayload.avsc"
     CustomerEventMessage:
@@ -43,6 +48,11 @@ components:
       title: Message for a Customer Event
       summary: Message for a Customer Event
       schemaFormat: application/vnd.apache.avro+json;version=1.9.0
+      headers:
+        type: object
+        properties:
+          entity-id:
+            type: string
       payload:
         $ref: "avro/CustomerEventPayload.avsc"
     CustomerEventMessage2:
@@ -50,5 +60,10 @@ components:
       title: Message for a Customer Event
       summary: Message for a Customer Event
       schemaFormat: application/vnd.apache.avro+json;version=1.9.0
+      headers:
+        type: object
+        properties:
+          entity-id:
+            type: string
       payload:
         $ref: "avro/CustomerEventPayload2.avsc"
