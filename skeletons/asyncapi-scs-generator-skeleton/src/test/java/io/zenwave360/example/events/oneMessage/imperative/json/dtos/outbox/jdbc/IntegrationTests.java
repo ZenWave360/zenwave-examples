@@ -15,13 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.List;
-import java.util.Map;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
+import static io.zenwave360.example.boot.config.TestUtils.awaitReceivedMessages;
+import static io.zenwave360.example.boot.config.TestUtils.getReceivedHeaders;
 
 @EmbeddedKafka
 @SpringBootTest(classes = Zenwave360ExampleApplication.class)
@@ -81,15 +77,4 @@ public class IntegrationTests {
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
     }
 
-    private List awaitReceivedMessages(Object consumer) throws InterruptedException {
-        await().atMost(5, SECONDS).until(() -> !getReceivedMessages(consumer).isEmpty());
-        return getReceivedMessages(consumer);
-    }
-
-    private List getReceivedMessages(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedMessages");
-    }
-    private List<Map> getReceivedHeaders(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedHeaders");
-    }
 }

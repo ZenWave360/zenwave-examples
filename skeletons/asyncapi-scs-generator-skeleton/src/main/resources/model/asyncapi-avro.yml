@@ -22,6 +22,7 @@ channels:
     publish:
       summary: Customer Domain Events
       operationId: onCustomerEventAvro
+      x-envelope-java-type: io.zenwave360.example.adapters.events.avro.Envelope
       tags:
         - name: Customer
       message:

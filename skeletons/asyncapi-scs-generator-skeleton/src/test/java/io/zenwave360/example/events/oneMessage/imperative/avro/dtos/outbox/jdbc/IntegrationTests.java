@@ -17,12 +17,16 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.Map;
 
+import static io.zenwave360.example.boot.config.TestUtils.awaitReceivedMessages;
+import static io.zenwave360.example.boot.config.TestUtils.getReceivedHeaders;
+import static io.zenwave360.example.boot.config.TestUtils.newCustomer;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
@@ -30,6 +34,7 @@ import static org.awaitility.Awaitility.await;
 @SpringBootTest(classes = Zenwave360ExampleApplication.class)
 @ContextConfiguration(classes = TestsConfiguration.class)
 @DisplayName("Integration Tests: Imperative with avro dtos via jdbc outbox")
+@DirtiesContext // shutdown the outbox @Scheduled task
 public class IntegrationTests {
 
     private Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
@@ -81,27 +86,5 @@ public class IntegrationTests {
         Assertions.assertEquals("123", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
     }
-
-    private List awaitReceivedMessages(Object consumer) throws InterruptedException {
-        await().atMost(5, SECONDS).until(() -> !getReceivedMessages(consumer).isEmpty());
-        return getReceivedMessages(consumer);
-    }
-
-    private List getReceivedMessages(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedMessages");
-    }
-    private List<Map> getReceivedHeaders(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedHeaders");
-    }
-
-    private Customer newCustomer() {
-        var customer = new Customer();
-        customer.setId("123");
-        customer.setUsername("joe");
-        customer.setPassword("123456");
-        customer.setEmail("joe@example.com");
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        return customer;
-    }
 }
+

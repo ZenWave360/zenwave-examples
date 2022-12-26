@@ -1,15 +1,12 @@
-package io.zenwave360.example.events.oneMessage.imperative.avro.dtos.streambridge;
+package io.zenwave360.example.events.oneMessage.imperative.avro.dtos.envelope.streambridge;
 
+import io.zenwave360.example.adapters.events.avro.Customer;
 import io.zenwave360.example.adapters.events.avro.CustomerEventPayload;
 import io.zenwave360.example.adapters.events.avro.CustomerEventPayload2;
-import io.zenwave360.example.adapters.events.avro.CustomerRequestPayload;
 import io.zenwave360.example.adapters.events.avro.EventType;
-import io.zenwave360.example.adapters.events.avro.RequestType;
 import io.zenwave360.example.boot.Zenwave360ExampleApplication;
-import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.streambridge.client.ICustomerCommandsProducer;
-import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.streambridge.client.IOnCustomerEventAvroConsumerService;
-import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.streambridge.provider.ICustomerEventsProducer;
-import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.streambridge.provider.IDoCustomerRequestAvroConsumerService;
+import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.envelope.streambridge.client.IOnCustomerEventAvroConsumerService;
+import io.zenwave360.example.events.oneMessage.imperative.avro.dtos.envelope.streambridge.provider.ICustomerEventsProducer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +17,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.List;
 
 import static io.zenwave360.example.boot.config.TestUtils.awaitReceivedMessages;
 import static io.zenwave360.example.boot.config.TestUtils.newCustomer;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 
 @EmbeddedKafka
 @SpringBootTest(classes = Zenwave360ExampleApplication.class)
@@ -34,32 +36,12 @@ public class IntegrationTests {
     private Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
     @Autowired
-    ICustomerCommandsProducer customerCommandsProducer;
-    @Autowired
-    IDoCustomerRequestAvroConsumerService doCustomerRequestConsumerService;
-
-    @Autowired
     ICustomerEventsProducer customerEventsProducer;
     @Autowired
     IOnCustomerEventAvroConsumerService onCustomerEventConsumerService;
 
     @Test
-    void doCustomerCommandTest() throws InterruptedException {
-        // Given
-        var message = new CustomerRequestPayload();
-        message.setId("123");
-        message.setPayload(newCustomer());
-        message.setRequestType(RequestType.create);
-        var headers = new ICustomerCommandsProducer.CustomerRequestPayloadHeaders();
-        // When
-        customerCommandsProducer.doCustomerRequestAvro(message, headers);
-        // Then
-        var messages = awaitReceivedMessages(doCustomerRequestConsumerService);
-        Assertions.assertEquals(1, messages.size());
-        Assertions.assertEquals(message.getId().toString(), ((CustomerRequestPayload) messages.get(0)).getId().toString());
-    }
-
-    @Test
+    @Disabled // we need a proper schema-registry in memory for multiple schemas
     void onCustomerEventTest() throws InterruptedException {
         // Given
         var message = new CustomerEventPayload();

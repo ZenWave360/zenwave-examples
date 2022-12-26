@@ -22,6 +22,7 @@ channels:
     publish:
       summary: Customer Domain Events
       operationId: onCustomerEvent
+      x-envelope-java-type: io.zenwave360.example.events.support.model.Envelope
       tags:
         - name: Customer
       message:

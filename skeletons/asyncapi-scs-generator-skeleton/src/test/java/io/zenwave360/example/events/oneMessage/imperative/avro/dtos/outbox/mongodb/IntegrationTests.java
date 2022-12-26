@@ -1,6 +1,5 @@
 package io.zenwave360.example.events.oneMessage.imperative.avro.dtos.outbox.mongodb;
 
-import io.zenwave360.example.adapters.events.avro.Customer;
 import io.zenwave360.example.adapters.events.avro.CustomerEventPayload;
 import io.zenwave360.example.adapters.events.avro.CustomerRequestPayload;
 import io.zenwave360.example.adapters.events.avro.EventType;
@@ -19,13 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.List;
-import java.util.Map;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
+import static io.zenwave360.example.boot.config.TestUtils.awaitReceivedMessages;
+import static io.zenwave360.example.boot.config.TestUtils.getReceivedHeaders;
+import static io.zenwave360.example.boot.config.TestUtils.newCustomer;
 
 @EmbeddedKafka
 @SpringBootTest(classes = Zenwave360ExampleApplication.class)
@@ -86,29 +82,5 @@ public class IntegrationTests {
         var receivedHeaders = getReceivedHeaders(onCustomerEventConsumerService);
         Assertions.assertEquals("231", receivedHeaders.get(0).get("entity-id"));
         Assertions.assertEquals("value", receivedHeaders.get(0).get("undocumented"));
-    }
-
-    private List awaitReceivedMessages(Object consumer) throws InterruptedException {
-        await().atMost(5, SECONDS).until(() -> !getReceivedMessages(consumer).isEmpty());
-        return getReceivedMessages(consumer);
-    }
-
-    private List getReceivedMessages(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedMessages");
-    }
-
-    private List<Map> getReceivedHeaders(Object consumer) {
-        return (List) ReflectionTestUtils.getField(consumer, "receivedHeaders");
-    }
-
-    private Customer newCustomer() {
-        var customer = new Customer();
-        customer.setId("123");
-        customer.setUsername("joe");
-        customer.setPassword("123456");
-        customer.setEmail("joe@example.com");
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        return customer;
     }
 }

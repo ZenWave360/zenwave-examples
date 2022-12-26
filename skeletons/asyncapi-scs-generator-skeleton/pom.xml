@@ -178,6 +178,80 @@
 					</execution>
 
 					<execution>
+						<id>generate-asyncapi-with-one-imperative-json-envelope-provider</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<configOptions>
+								<role>provider</role>
+								<style>imperative</style>
+								<useEnterpriseEnvelope>true</useEnterpriseEnvelope>
+								<operationIds>onCustomerEvent,</operationIds>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.dtos.envelope.streambridge.provider</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-asyncapi-with-one-imperative-json-envelope-client</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<configOptions>
+								<role>client</role>
+								<style>imperative</style>
+								<useEnterpriseEnvelope>true</useEnterpriseEnvelope>
+								<operationIds>onCustomerEvent,</operationIds>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.dtos.envelope.streambridge.client</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>generate-asyncapi-with-one-imperative-json-deadletterqueue-provider</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<configOptions>
+								<role>provider</role>
+								<style>imperative</style>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.dtos.deadletterqueue.streambridge.provider</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-asyncapi-with-one-imperative-json-deadletterqueue-client</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi.yml</inputSpec>
+							<configOptions>
+								<role>client</role>
+								<style>imperative</style>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.json.dtos.deadletterqueue.streambridge.client</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>generate-asyncapi-with-one-imperative-json-outbox-mongodb-provider</id>
 						<phase>generate-sources</phase>
 						<goals>
@@ -631,6 +705,46 @@
 							</configOptions>
 						</configuration>
 					</execution>
+
+					<execution>
+						<id>generate-asyncapi-with-one-imperative-avro-envelope-provider</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi-avro.yml</inputSpec>
+							<configOptions>
+								<role>provider</role>
+								<style>imperative</style>
+								<useEnterpriseEnvelope>true</useEnterpriseEnvelope>
+								<operationIds>onCustomerEventAvro,</operationIds>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.dtos.envelope.streambridge.provider</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-asyncapi-with-one-imperative-avro-envelope-client</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring-cloud-streams3</generatorName>
+							<inputSpec>classpath:model/asyncapi-avro.yml</inputSpec>
+							<configOptions>
+								<role>client</role>
+								<style>imperative</style>
+								<useEnterpriseEnvelope>true</useEnterpriseEnvelope>
+								<operationIds>onCustomerEventAvro,</operationIds>
+								<apiPackage>io.zenwave360.example.events.oneMessage.imperative.avro.dtos.envelope.streambridge.client</apiPackage>
+								<modelPackage>io.zenwave360.example.events.oneMessage.model</modelPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+
 
 					<execution>
 						<id>generate-asyncapi-with-one-imperative-avro-outbox-mongodb-provider</id>
