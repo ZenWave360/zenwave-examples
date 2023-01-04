@@ -55,7 +55,6 @@
     </properties>
 
     <modules>
-        <module>skeletons/asyncapi-scs-generator-skeleton</module>
         <module>skeletons/spring-boot-mongodb-elasticsearch-kafka-skeleton</module>
         <module>skeletons/spring-boot-jpa-mariadb-kafka-skeleton</module>
 
