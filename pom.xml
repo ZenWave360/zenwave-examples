@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.zenwave360.examples</groupId>
     <artifactId>zenwave-examples</artifactId>
-    <version>0.9.5-SNAPSHOT</version>
+    <version>0.9.6-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
@@ -18,7 +18,7 @@
 <!--        <skipTests>true</skipTests>-->
         <java.version>17</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
-        <archunit-junit5.version>0.22.0</archunit-junit5.version>
+        <archunit-junit5.version>1.0.1</archunit-junit5.version>
         <mapstruct.version>1.5.1.Final</mapstruct.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <avro.version>1.11.1</avro.version>
@@ -59,6 +59,7 @@
         <module>skeletons/spring-boot-jpa-mariadb-kafka-skeleton</module>
 
         <module>examples/spring-boot-mongodb-elasticsearch-kafka-example</module>
+        <module>examples/spring-boot-jpa-mariadb-kafka-example</module>
     </modules>
 
     <dependencyManagement>
@@ -76,6 +77,26 @@
                 <version>${testcontainers.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-suite</artifactId>
+                <version>1.9.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5-api</artifactId>
+                <version>${archunit-junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
+            <!-- https://www.archunit.org/userguide/html/000_Index.html#_junit_5 -->
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5-engine</artifactId>
+                <version>${archunit-junit5.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
