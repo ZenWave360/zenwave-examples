@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import io.zenwave360.example.config.*;
 import io.zenwave360.example.core.domain.*;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
@@ -14,11 +15,6 @@ import io.zenwave360.example.core.outbound.search.*;
 import io.zenwave360.example.infrastructure.jpa.inmemory.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -28,21 +24,18 @@ public class CustomerUseCasesTest {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Spy CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
-  @Spy CustomerRepositoryInMemory customerRepository = new CustomerRepositoryInMemory();
-  @Mock CustomerSearchRepository customerSearchRepository;
+  InMemoryTestsManualContext context = InMemoryTestsManualContext.INSTANCE;
+  CustomerUseCasesImpl customerUseCases = context.customerUseCases();
 
-  @Spy PaymentDetailsMapper paymentDetailsMapper = Mappers.getMapper(PaymentDetailsMapper.class);
-  @Spy PaymentDetailsRepositoryInMemory paymentDetailsRepository = new PaymentDetailsRepositoryInMemory();
+  CustomerRepositoryInMemory customerRepository = context.customerRepository();
+  CustomerSearchRepository customerSearchRepository = context.customerSearchRepository();
 
-  @Spy ShippingDetailsMapper shippingDetailsMapper = Mappers.getMapper(ShippingDetailsMapper.class);
-  @Spy ShippingDetailsRepositoryInMemory shippingDetailsRepository = new ShippingDetailsRepositoryInMemory();
+  PaymentDetailsRepositoryInMemory paymentDetailsRepository = context.paymentDetailsRepository();
 
-  @InjectMocks CustomerUseCasesImpl customerUseCases;
+  ShippingDetailsRepositoryInMemory shippingDetailsRepository = context.shippingDetailsRepository();
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.openMocks(this);
     customerRepository.save(new Customer());
     paymentDetailsRepository.save(new PaymentDetails());
     shippingDetailsRepository.save(new ShippingDetails());

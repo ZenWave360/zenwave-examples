@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import io.zenwave360.example.config.*;
 import io.zenwave360.example.core.domain.*;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
@@ -14,10 +15,6 @@ import io.zenwave360.example.core.outbound.search.*;
 import io.zenwave360.example.infrastructure.jpa.inmemory.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -27,14 +24,13 @@ public class CustomerOrderUseCasesTest {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Spy CustomerOrderMapper customerOrderMapper = Mappers.getMapper(CustomerOrderMapper.class);
-  @Spy CustomerOrderRepositoryInMemory customerOrderRepository = new CustomerOrderRepositoryInMemory();
+  InMemoryTestsManualContext context = InMemoryTestsManualContext.INSTANCE;
+  CustomerOrderUseCasesImpl customerOrderUseCases = context.customerOrderUseCases();
 
-  @InjectMocks CustomerOrderUseCasesImpl customerOrderUseCases;
+  CustomerOrderRepositoryInMemory customerOrderRepository = context.customerOrderRepository();
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.openMocks(this);
     customerOrderRepository.save(new CustomerOrder());
   }
 

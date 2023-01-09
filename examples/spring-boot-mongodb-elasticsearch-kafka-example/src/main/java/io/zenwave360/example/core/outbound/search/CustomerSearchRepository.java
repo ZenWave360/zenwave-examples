@@ -14,7 +14,26 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /** Spring Data Elasticsearch repository for the {@link CustomerDocument } entity. */
-public interface CustomerSearchRepository extends ElasticsearchRepository<CustomerDocument, String>, CustomerSearchRepositoryInternal {}
+public interface CustomerSearchRepository extends ElasticsearchRepository<CustomerDocument, String>, CustomerSearchRepositoryInternal {
+    class CustomerSearchRepositoryInternalImpl implements CustomerSearchRepositoryInternal {
+
+    private final ElasticsearchRestTemplate elasticsearchTemplate;
+
+    public CustomerSearchRepositoryInternalImpl(ElasticsearchRestTemplate elasticsearchTemplate) {
+        this.elasticsearchTemplate = elasticsearchTemplate;
+    }
+
+    @Override
+    public Page<CustomerDocument> search(String query, Pageable pageable) {
+        NativeSearchQuery nativeSearchQuery = new NativeSearchQuery(queryStringQuery(query));
+        nativeSearchQuery.setPageable(pageable);
+        List<CustomerDocument> hits =
+                elasticsearchTemplate.search(nativeSearchQuery, CustomerDocument.class).map(SearchHit::getContent).stream().collect(Collectors.toList());
+
+        return new PageImpl<>(hits, pageable, hits.size());
+    }
+}
+}
 
 interface CustomerSearchRepositoryInternal {
   Page<CustomerDocument> search(String query, Pageable pageable);
