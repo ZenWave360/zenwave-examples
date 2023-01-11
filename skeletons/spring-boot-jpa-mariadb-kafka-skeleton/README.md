@@ -43,6 +43,7 @@ jbang zw -p io.zenwave360.generator.plugins.JDLBackendApplicationDefaultPlugin \
     specFile=src/main/resources/model/orders-model.jdl \
     basePackage=io.zenwave360.example \
     persistence=jpa \
+    databaseType=mariadb \
     style=imperative \
     targetFolder=.
 ```
