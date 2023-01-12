@@ -6,8 +6,6 @@ import io.zenwave360.example.adapters.web.BaseWebTestClientTest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -128,7 +126,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testGetCustomer_200() {
-        var id = "1";
+        var id = "";
 
         webTestClient.method(GET).uri("/api/customers/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -152,13 +150,13 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     public void testUpdateCustomer_200() {
         CustomerDTO requestBody = new CustomerDTO();
         requestBody.setId(null);
-        requestBody.setVersion(1);
+        requestBody.setVersion(null);
         requestBody.setFirstName(null);
         requestBody.setLastName(null);
         requestBody.setPassword(null);
         requestBody.setEmail(null);
         requestBody.setUsername(null);
-        var id = "1";
+        var id = "";
 
         webTestClient.method(PUT).uri("/api/customers/{id}", id)
             .accept(MediaType.APPLICATION_JSON)

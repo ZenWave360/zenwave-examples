@@ -11,6 +11,14 @@ tags:
   - name: "CustomerOrder"
 
 channels:
+  customer.requests:
+    subscribe:
+      summary: Customer Async Requests
+      operationId: doCustomerRequest
+      tags:
+        - name: Customer
+      message:
+        $ref: "#/components/messages/CustomerRequestMessage"
   customer.events:
     publish:
       summary: Customer Domain Events
@@ -20,6 +28,14 @@ channels:
       message:
         $ref: "#/components/messages/CustomerEventMessage"
   
+  customer-order.requests:
+    subscribe:
+      summary: CustomerOrder Async Requests
+      operationId: doCustomerOrderRequest
+      tags:
+        - name: CustomerOrder
+      message:
+        $ref: "#/components/messages/CustomerOrderRequestMessage"
   customer-order.events:
     publish:
       summary: CustomerOrder Domain Events
@@ -29,6 +45,14 @@ channels:
       message:
         $ref: "#/components/messages/CustomerOrderEventMessage"
   
+  shipping-details.requests:
+    subscribe:
+      summary: ShippingDetails Async Requests
+      operationId: doShippingDetailsRequest
+      tags:
+        - name: Customer
+      message:
+        $ref: "#/components/messages/ShippingDetailsRequestMessage"
   shipping-details.events:
     publish:
       summary: ShippingDetails Domain Events
@@ -38,15 +62,14 @@ channels:
       message:
         $ref: "#/components/messages/ShippingDetailsEventMessage"
   
-  base-entity.events:
-    publish:
-      summary: BaseEntity Domain Events
-      operationId: onBaseEntityEvent
+  payment-details.requests:
+    subscribe:
+      summary: PaymentDetails Async Requests
+      operationId: doPaymentDetailsRequest
       tags:
-        - name: Default
+        - name: Customer
       message:
-        $ref: "#/components/messages/BaseEntityEventMessage"
-  
+        $ref: "#/components/messages/PaymentDetailsRequestMessage"
   payment-details.events:
     publish:
       summary: PaymentDetails Domain Events
@@ -56,18 +79,17 @@ channels:
       message:
         $ref: "#/components/messages/PaymentDetailsEventMessage"
   
-  ordered-item.events:
-    publish:
-      summary: OrderedItem Domain Events
-      operationId: onOrderedItemEvent
-      tags:
-        - name: Default
-      message:
-        $ref: "#/components/messages/OrderedItemEventMessage"
-  
 
 components:
   messages:
+    CustomerRequestMessage:
+      messageId: CustomerRequestMessage
+      name: CustomerRequestMessage
+      title: Async Command/Request for a Customer
+      summary: Async Command/Request for a Customer
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/CustomerRequestPayload"
     CustomerEventMessage:
       name: CustomerEventMessage
       messageId: CustomerEventMessage
@@ -77,6 +99,14 @@ components:
       payload:
         $ref: "#/components/schemas/CustomerEventPayload"
   
+    CustomerOrderRequestMessage:
+      messageId: CustomerOrderRequestMessage
+      name: CustomerOrderRequestMessage
+      title: Async Command/Request for a CustomerOrder
+      summary: Async Command/Request for a CustomerOrder
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/CustomerOrderRequestPayload"
     CustomerOrderEventMessage:
       name: CustomerOrderEventMessage
       messageId: CustomerOrderEventMessage
@@ -86,6 +116,14 @@ components:
       payload:
         $ref: "#/components/schemas/CustomerOrderEventPayload"
   
+    ShippingDetailsRequestMessage:
+      messageId: ShippingDetailsRequestMessage
+      name: ShippingDetailsRequestMessage
+      title: Async Command/Request for a ShippingDetails
+      summary: Async Command/Request for a ShippingDetails
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      payload:
+        $ref: "#/components/schemas/ShippingDetailsRequestPayload"
     ShippingDetailsEventMessage:
       name: ShippingDetailsEventMessage
       messageId: ShippingDetailsEventMessage
@@ -95,15 +133,14 @@ components:
       payload:
         $ref: "#/components/schemas/ShippingDetailsEventPayload"
   
-    BaseEntityEventMessage:
-      name: BaseEntityEventMessage
-      messageId: BaseEntityEventMessage
-      title: Message for a BaseEntity Event
-      summary: Message for a BaseEntity Event
+    PaymentDetailsRequestMessage:
+      messageId: PaymentDetailsRequestMessage
+      name: PaymentDetailsRequestMessage
+      title: Async Command/Request for a PaymentDetails
+      summary: Async Command/Request for a PaymentDetails
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
-        $ref: "#/components/schemas/BaseEntityEventPayload"
-  
+        $ref: "#/components/schemas/PaymentDetailsRequestPayload"
     PaymentDetailsEventMessage:
       name: PaymentDetailsEventMessage
       messageId: PaymentDetailsEventMessage
@@ -112,15 +149,6 @@ components:
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
       payload:
         $ref: "#/components/schemas/PaymentDetailsEventPayload"
-  
-    OrderedItemEventMessage:
-      name: OrderedItemEventMessage
-      messageId: OrderedItemEventMessage
-      title: Message for a OrderedItem Event
-      summary: Message for a OrderedItem Event
-      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
-      payload:
-        $ref: "#/components/schemas/OrderedItemEventPayload"
   
 
   schemas:
@@ -285,6 +313,19 @@ components:
       - "DELIVERED"
       - "SHIPPED"
 
+    CustomerRequestPayload:
+      type: object
+      properties:
+        customerId:
+          type: string
+        requestType:
+          type: string
+          enum:
+          - "create"
+          - "update"
+          - "delete"
+        customer:
+          $ref: "#/components/schemas/Customer"
     CustomerEventPayload:
       type: object
       properties:
@@ -299,6 +340,19 @@ components:
         customer:
           $ref: "#/components/schemas/Customer"
   
+    CustomerOrderRequestPayload:
+      type: object
+      properties:
+        customerOrderId:
+          type: string
+        requestType:
+          type: string
+          enum:
+          - "create"
+          - "update"
+          - "delete"
+        customerOrder:
+          $ref: "#/components/schemas/CustomerOrder"
     CustomerOrderEventPayload:
       type: object
       properties:
@@ -313,6 +367,19 @@ components:
         customerOrder:
           $ref: "#/components/schemas/CustomerOrder"
   
+    ShippingDetailsRequestPayload:
+      type: object
+      properties:
+        shippingDetailsId:
+          type: string
+        requestType:
+          type: string
+          enum:
+          - "create"
+          - "update"
+          - "delete"
+        shippingDetails:
+          $ref: "#/components/schemas/ShippingDetails"
     ShippingDetailsEventPayload:
       type: object
       properties:
@@ -327,20 +394,19 @@ components:
         shippingDetails:
           $ref: "#/components/schemas/ShippingDetails"
   
-    BaseEntityEventPayload:
+    PaymentDetailsRequestPayload:
       type: object
       properties:
-        baseEntityId:
+        paymentDetailsId:
           type: string
-        eventType:
+        requestType:
           type: string
           enum:
-          - "created"
-          - "updated"
-          - "deleted"
-        baseEntity:
-          $ref: "#/components/schemas/BaseEntity"
-  
+          - "create"
+          - "update"
+          - "delete"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentDetails"
     PaymentDetailsEventPayload:
       type: object
       properties:
@@ -354,18 +420,4 @@ components:
           - "deleted"
         paymentDetails:
           $ref: "#/components/schemas/PaymentDetails"
-  
-    OrderedItemEventPayload:
-      type: object
-      properties:
-        orderedItemId:
-          type: string
-        eventType:
-          type: string
-          enum:
-          - "created"
-          - "updated"
-          - "deleted"
-        orderedItem:
-          $ref: "#/components/schemas/OrderedItem"
   

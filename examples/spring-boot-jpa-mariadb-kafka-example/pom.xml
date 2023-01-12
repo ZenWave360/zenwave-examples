@@ -154,61 +154,59 @@
 				<artifactId>zenwave-code-generator-maven-plugin</artifactId>
 				<version>${zenwave.version}</version>
 				<configuration>
+					<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 					<skip>false</skip>
 					<addCompileSourceRoot>true</addCompileSourceRoot>
 					<addTestCompileSourceRoot>true</addTestCompileSourceRoot>
 				</configuration>
 				<executions>
-					<!-- Generate PRODUCER -->
+					<!-- DTOs -->
 					<execution>
-						<id>generate-asyncapi-producer</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<generatorName>spring-cloud-streams3</generatorName>
-							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
-							<configOptions>
-								<role>provider</role>
-								<style>imperative</style>
-<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
-								<apiPackage>io.zenwave360.example.core.events.provider</apiPackage>
-								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
-							</configOptions>
-						</configuration>
-					</execution>
-					<execution>
-						<id>generate-asyncapi-producer-dtos</id>
+						<id>generate-asyncapi-dtos</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<generatorName>jsonschema2pojo</generatorName>
-							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
-								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
+								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
 <!--								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>-->
 							</configOptions>
 						</configuration>
 					</execution>
-					<!-- Generate CONSUMER -->
+					<!-- Generate PROVIDER -->
 					<execution>
-						<id>generate-asyncapi-consumer</id>
+						<id>generate-asyncapi</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<skip>true</skip>
 							<generatorName>spring-cloud-streams3</generatorName>
-							<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
 							<configOptions>
-								<role>client</role>
+								<role>provider</role>
 								<style>imperative</style>
-								<apiPackage>io.zenwave360.example.core.events.client</apiPackage>
-								<modelPackage>io.zenwave360.example.core.events.model</modelPackage>
+<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
+								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
+								<producerApiPackage>io.zenwave360.example.core.outbound.events</producerApiPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+
+					<!-- Tests for Inbound Commands -->
+					<!-- mvn zenwave-code-generator:generate@consumer-tests -->
+					<execution>
+						<id>consumer-tests</id>
+						<configuration>
+							<generatorName>spring-cloud-streams3-tests</generatorName>
+							<configOptions>
+								<role>provider</role>
+								<style>imperative</style>
+								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+								<targetFolder>${pom.basedir}</targetFolder>
 							</configOptions>
 						</configuration>
 					</execution>

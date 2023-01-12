@@ -72,10 +72,11 @@ Generate AsyncAPI definition from JDL entities:
 
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIPlugin \
-    includeCommands=false \
+    includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
     idType=integer \
     idTypeFormat=int64 \
+    annotations=aggregate \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 

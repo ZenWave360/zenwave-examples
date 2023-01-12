@@ -1,8 +1,14 @@
 package io.zenwave360.example.config;
 
-import io.zenwave360.example.core.outbound.jpa.*;
-import io.zenwave360.example.core.outbound.search.*;
-import io.zenwave360.example.infrastructure.jpa.inmemory.*;
+import io.zenwave360.example.core.outbound.jpa.CustomerOrderRepository;
+import io.zenwave360.example.core.outbound.jpa.CustomerRepository;
+import io.zenwave360.example.core.outbound.jpa.PaymentDetailsRepository;
+import io.zenwave360.example.core.outbound.jpa.ShippingDetailsRepository;
+import io.zenwave360.example.core.outbound.search.CustomerSearchRepository;
+import io.zenwave360.example.infrastructure.jpa.inmemory.CustomerOrderRepositoryInMemory;
+import io.zenwave360.example.infrastructure.jpa.inmemory.CustomerRepositoryInMemory;
+import io.zenwave360.example.infrastructure.jpa.inmemory.PaymentDetailsRepositoryInMemory;
+import io.zenwave360.example.infrastructure.jpa.inmemory.ShippingDetailsRepositoryInMemory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
@@ -45,4 +51,5 @@ public class InMemoryTestsConfig {
   public <T extends CustomerOrderRepository> T customerOrderRepository() {
     return (T) customerOrderRepository;
   }
+
 }

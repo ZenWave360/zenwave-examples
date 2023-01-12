@@ -72,10 +72,11 @@ Generate AsyncAPI definition from JDL entities:
 
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIPlugin \
-    includeCommands=false \
+    includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
     idType=integer \
     idTypeFormat=int64 \
+    annotations=aggregate \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 
@@ -121,4 +122,21 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     openApiModelPackage=io.zenwave360.example.adapters.web.model \
     openApiModelNameSuffix=DTO \
     groupBy=service
+```
+#### AsyncAPI Commands Tests
+
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3TestsPlugin \
+    specFile=src/main/resources/model/asyncapi.yml \
+    role=provider \
+    style=imperative \
+    consumerApiPackage=io.zenwave360.example.core.events \
+    modelPackage=io.zenwave360.example.core.events.model \
+    targetFolder=.
+```
+or
+
+```shell
+mvn zenwave-code-generator:generate@consumer-tests
 ```
