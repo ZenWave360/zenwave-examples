@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.9.8-SNAPSHOT</version>
+		<version>0.9.9-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>spring-boot-jpa-mariadb-kafka-example</artifactId>
@@ -111,6 +111,11 @@
 		<dependency>
 			<groupId>com.tngtech.archunit</groupId>
 			<artifactId>archunit-junit5-engine</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
 		</dependency>
 	</dependencies>
 

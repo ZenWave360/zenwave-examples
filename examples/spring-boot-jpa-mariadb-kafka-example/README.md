@@ -18,15 +18,15 @@ jbang alias add --name=zw \
     --repos=mavencentral,snapshots=https://s01.oss.sonatype.org/content/repositories/snapshots \
     --deps=\
 org.slf4j:slf4j-simple:1.7.36,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-rest-assured:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.8-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.8-SNAPSHOT\
-    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.8-SNAPSHOT
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:openapi-rest-assured:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.9-SNAPSHOT,\
+io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.9-SNAPSHOT\
+    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.9-SNAPSHOT
 ```
 
 ### Starting Docker Infrastructure
@@ -123,6 +123,22 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     openApiModelNameSuffix=DTO \
     groupBy=service
 ```
+
+#### AsyncAPI Command Adapters
+
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3AdaptersPlugin \
+    specFile=src/main/resources/model/asyncapi.yml \
+    jdlFile=src/main/resources/model/orders-model.jdl \
+    role=provider \
+    style=imperative \
+    basePackage=io.zenwave360.example \
+    consumerApiPackage=io.zenwave360.example.adapters.events \
+    modelPackage=io.zenwave360.example.core.domain.events \
+    targetFolder=.
+```
+
 #### AsyncAPI Commands Tests
 
 
@@ -131,8 +147,9 @@ jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3TestsPlugin \
     specFile=src/main/resources/model/asyncapi.yml \
     role=provider \
     style=imperative \
-    consumerApiPackage=io.zenwave360.example.core.events \
-    modelPackage=io.zenwave360.example.core.events.model \
+    basePackage=io.zenwave360.example \
+    consumerApiPackage=io.zenwave360.example.adapters.events \
+    modelPackage=io.zenwave360.example.core.domain.events \
     targetFolder=.
 ```
 or
