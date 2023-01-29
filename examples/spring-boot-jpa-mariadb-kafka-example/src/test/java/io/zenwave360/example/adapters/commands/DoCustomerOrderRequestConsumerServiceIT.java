@@ -1,6 +1,6 @@
-package io.zenwave360.example.adapters.events;
+package io.zenwave360.example.adapters.commands;
 
-import io.zenwave360.example.adapters.events.IDoCustomerOrderRequestConsumerService.CustomerOrderRequestPayloadHeaders;
+import io.zenwave360.example.adapters.commands.IDoCustomerOrderRequestConsumerService.CustomerOrderRequestPayloadHeaders;
 import io.zenwave360.example.core.domain.events.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class DoCustomerOrderRequestConsumerServiceIT extends BaseConsumerTest {
   @Test
   public void doCustomerOrderRequestTest() {
     CustomerOrderRequestPayload payload = new CustomerOrderRequestPayload();
-    payload.setCustomerOrderId(null);
+    payload.setId(null);
     payload.setRequestType(null);
     payload.setCustomerOrder(null);
 

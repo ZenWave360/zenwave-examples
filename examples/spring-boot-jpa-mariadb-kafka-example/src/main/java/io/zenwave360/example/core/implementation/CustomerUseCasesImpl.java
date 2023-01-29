@@ -1,9 +1,12 @@
 package io.zenwave360.example.core.implementation;
 
 import io.zenwave360.example.core.domain.*;
+import io.zenwave360.example.core.domain.events.CustomerEventPayload;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
+import io.zenwave360.example.core.outbound.events.CustomerEventsProducer;
+import io.zenwave360.example.core.outbound.events.ICustomerEventsProducer;
 import io.zenwave360.example.core.outbound.jpa.*;
 import io.zenwave360.example.core.outbound.search.*;
 import java.util.Optional;
@@ -32,17 +35,21 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   private final ShippingDetailsMapper shippingDetailsMapper = Mappers.getMapper(ShippingDetailsMapper.class);
   private final ShippingDetailsRepository shippingDetailsRepository;
 
+  private final EventsMapper eventsMapper = Mappers.getMapper(EventsMapper.class);
+  private final ICustomerEventsProducer customerEventsProducer;
+
   /** Constructor. */
   public CustomerUseCasesImpl(
       CustomerRepository customerRepository,
       CustomerSearchRepository customerSearchRepository,
       PaymentDetailsRepository paymentDetailsRepository,
-      ShippingDetailsRepository shippingDetailsRepository) {
+      ShippingDetailsRepository shippingDetailsRepository,
+      ICustomerEventsProducer customerEventsProducer) {
     this.customerRepository = customerRepository;
     this.customerSearchRepository = customerSearchRepository;
     this.paymentDetailsRepository = paymentDetailsRepository;
-
     this.shippingDetailsRepository = shippingDetailsRepository;
+    this.customerEventsProducer = customerEventsProducer;
   }
 
   // Customer
@@ -51,8 +58,12 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public Customer createCustomer(CustomerInput customerInput) {
     log.debug("Request to save Customer: {}", customerInput);
     var customer = customerMapper.update(new Customer(), customerInput);
-    customer = customerRepository.save(customer);
-    // TODO: you may need to reload the entity here to fetch all the relationships
+    customer = customerRepository.save(customer); // TODO: you may need to reload the entity here to fetch all the relationships
+    CustomerEventPayload payload = new CustomerEventPayload()
+            .withId(customer.getId())
+            .withEventType(CustomerEventPayload.EventType.CREATED)
+            .withCustomer(eventsMapper.asCustomer(customer));
+    customerEventsProducer.onCustomerEvent(payload);
     return customer;
   }
 
@@ -61,6 +72,13 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     log.debug("Request to update Customer: {}", customerInput);
     var customer = customerRepository.findById(id);
     customer = customer.map(existingcustomer -> customerMapper.update(existingcustomer, customerInput));
+    if(customer.isPresent()) {
+      CustomerEventPayload payload = new CustomerEventPayload()
+              .withId(customer.get().getId())
+              .withEventType(CustomerEventPayload.EventType.UPDATED)
+              .withCustomer(eventsMapper.asCustomer(customer.get()));
+      customerEventsProducer.onCustomerEvent(payload);
+    }
     return customer.map(customerRepository::save);
   }
 
@@ -87,6 +105,10 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public void deleteCustomer(Long id) {
     log.debug("Request to delete Customer : {}", id);
     customerRepository.deleteById(id);
+    CustomerEventPayload payload = new CustomerEventPayload()
+            .withId(id)
+            .withEventType(CustomerEventPayload.EventType.DELETED);
+    customerEventsProducer.onCustomerEvent(payload);
   }
 
   // PaymentDetails

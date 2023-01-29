@@ -88,6 +88,8 @@ components:
       title: Async Command/Request for a Customer
       summary: Async Command/Request for a Customer
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerRequestPayload"
     CustomerEventMessage:
@@ -96,6 +98,8 @@ components:
       title: Message for a Customer Event
       summary: Message for a Customer Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerEventPayload"
   
@@ -105,6 +109,8 @@ components:
       title: Async Command/Request for a CustomerOrder
       summary: Async Command/Request for a CustomerOrder
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerOrderRequestPayload"
     CustomerOrderEventMessage:
@@ -113,6 +119,8 @@ components:
       title: Message for a CustomerOrder Event
       summary: Message for a CustomerOrder Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerOrderEventPayload"
   
@@ -122,6 +130,8 @@ components:
       title: Async Command/Request for a ShippingDetails
       summary: Async Command/Request for a ShippingDetails
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/ShippingDetailsRequestPayload"
     ShippingDetailsEventMessage:
@@ -130,6 +140,8 @@ components:
       title: Message for a ShippingDetails Event
       summary: Message for a ShippingDetails Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/ShippingDetailsEventPayload"
   
@@ -139,6 +151,8 @@ components:
       title: Async Command/Request for a PaymentDetails
       summary: Async Command/Request for a PaymentDetails
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/PaymentDetailsRequestPayload"
     PaymentDetailsEventMessage:
@@ -147,9 +161,25 @@ components:
       title: Message for a PaymentDetails Event
       summary: Message for a PaymentDetails Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/PaymentDetailsEventPayload"
   
+
+  messageTraits:
+    CommonHeaders:
+      headers:
+        type: object
+        properties:
+          kafka_messageKey:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $message.payload#/id
+          tracingId:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $tracingIdSupplier
 
   schemas:
     Customer:
@@ -163,7 +193,8 @@ components:
       - "username"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         firstName:
           type: "string"
           minLength: 3
@@ -189,7 +220,8 @@ components:
       x-business-entity: "CustomerOrder"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         date:
           type: "string"
           format: "date-time"
@@ -204,11 +236,13 @@ components:
           items:
             $ref: "#/components/schemas/OrderedItem"
         customerId:
-          type: "string"
+          type: "integer"
+          format: "int64"
         customer:
           $ref: "#/components/schemas/Customer"
         paymentDetailsId:
-          type: "string"
+          type: "integer"
+          format: "int64"
         paymentDetails:
           $ref: "#/components/schemas/PaymentDetails"
     ShippingDetails:
@@ -216,13 +250,15 @@ components:
       x-business-entity: "ShippingDetails"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         phone:
           type: "string"
         address:
           type: "string"
         customerId:
-          type: "string"
+          type: "integer"
+          format: "int64"
         customer:
           $ref: "#/components/schemas/Customer"
     BaseEntity:
@@ -230,17 +266,19 @@ components:
       x-business-entity: "BaseEntity"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
     CustomerOrderSearchCriteria:
       type: "object"
       x-business-entity: "CustomerOrderSearchCriteria"
       properties:
         id:
-          type: "string"
-        dateFrom:
+          type: "integer"
+          format: "int64"
+        dateTo:
           type: "string"
           format: "date-time"
-        dateTo:
+        dateFrom:
           type: "string"
           format: "date-time"
         status:
@@ -250,13 +288,15 @@ components:
       x-business-entity: "PaymentDetails"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         cardHolderName:
           type: "string"
         creditCardNumber:
           type: "string"
         customerId:
-          type: "string"
+          type: "integer"
+          format: "int64"
         customer:
           $ref: "#/components/schemas/Customer"
     OrderedItem:
@@ -267,7 +307,8 @@ components:
       - "price"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         catalogItemId:
           type: "integer"
           format: "int64"
@@ -286,7 +327,8 @@ components:
       x-business-entity: "CustomerCriteria"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          format: "int64"
         firstName:
           type: "string"
         lastName:
@@ -309,15 +351,16 @@ components:
       type: "string"
       x-business-entity: "OrderStatus"
       enum:
-      - "CONFIRMED"
       - "DELIVERED"
+      - "CONFIRMED"
       - "SHIPPED"
 
     CustomerRequestPayload:
       type: object
       properties:
-        customerId:
-          type: string
+        id:
+          type: integer
+          format: int64
         requestType:
           type: string
           enum:
@@ -329,8 +372,9 @@ components:
     CustomerEventPayload:
       type: object
       properties:
-        customerId:
-          type: string
+        id:
+          type: integer
+          format: int64
         eventType:
           type: string
           enum:
@@ -343,8 +387,9 @@ components:
     CustomerOrderRequestPayload:
       type: object
       properties:
-        customerOrderId:
-          type: string
+        id:
+          type: integer
+          format: int64
         requestType:
           type: string
           enum:
@@ -356,8 +401,9 @@ components:
     CustomerOrderEventPayload:
       type: object
       properties:
-        customerOrderId:
-          type: string
+        id:
+          type: integer
+          format: int64
         eventType:
           type: string
           enum:
@@ -370,8 +416,9 @@ components:
     ShippingDetailsRequestPayload:
       type: object
       properties:
-        shippingDetailsId:
-          type: string
+        id:
+          type: integer
+          format: int64
         requestType:
           type: string
           enum:
@@ -383,8 +430,9 @@ components:
     ShippingDetailsEventPayload:
       type: object
       properties:
-        shippingDetailsId:
-          type: string
+        id:
+          type: integer
+          format: int64
         eventType:
           type: string
           enum:
@@ -397,8 +445,9 @@ components:
     PaymentDetailsRequestPayload:
       type: object
       properties:
-        paymentDetailsId:
-          type: string
+        id:
+          type: integer
+          format: int64
         requestType:
           type: string
           enum:
@@ -410,8 +459,9 @@ components:
     PaymentDetailsEventPayload:
       type: object
       properties:
-        paymentDetailsId:
-          type: string
+        id:
+          type: integer
+          format: int64
         eventType:
           type: string
           enum:

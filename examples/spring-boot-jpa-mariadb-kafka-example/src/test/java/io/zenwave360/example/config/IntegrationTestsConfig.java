@@ -1,4 +1,8 @@
 package io.zenwave360.example.config;
 
-public class IntegrationTestsConfig {
+import org.springframework.context.annotation.Configuration;
+
+//@Configuration
+public class IntegrationTestsConfig extends InMemoryTestsConfig {
+
 }

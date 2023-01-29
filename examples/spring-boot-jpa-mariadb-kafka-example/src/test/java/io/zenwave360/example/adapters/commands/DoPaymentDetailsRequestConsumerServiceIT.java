@@ -1,6 +1,6 @@
-package io.zenwave360.example.adapters.events;
+package io.zenwave360.example.adapters.commands;
 
-import io.zenwave360.example.adapters.events.IDoPaymentDetailsRequestConsumerService.PaymentDetailsRequestPayloadHeaders;
+import io.zenwave360.example.adapters.commands.IDoPaymentDetailsRequestConsumerService.PaymentDetailsRequestPayloadHeaders;
 import io.zenwave360.example.core.domain.events.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class DoPaymentDetailsRequestConsumerServiceIT extends BaseConsumerTest {
   @Test
   public void doPaymentDetailsRequestTest() {
     PaymentDetailsRequestPayload payload = new PaymentDetailsRequestPayload();
-    payload.setPaymentDetailsId(null);
+    payload.setId(null);
     payload.setRequestType(null);
     payload.setPaymentDetails(null);
 

@@ -26,8 +26,8 @@ public class CustomerOrderApiIT extends BaseWebTestClientTest {
         CustomerOrderSearchCriteriaDTO requestBody = new CustomerOrderSearchCriteriaDTO();
         requestBody.setId(null);
         requestBody.setVersion(null);
-        requestBody.setDateFrom(null);
         requestBody.setDateTo(null);
+        requestBody.setDateFrom(null);
         requestBody.setStatus(null);
         var page = "";
         var limit = "";

@@ -1,6 +1,6 @@
-package io.zenwave360.example.adapters.events;
+package io.zenwave360.example.adapters.commands;
 
-import io.zenwave360.example.adapters.events.IDoShippingDetailsRequestConsumerService.ShippingDetailsRequestPayloadHeaders;
+import io.zenwave360.example.adapters.commands.IDoShippingDetailsRequestConsumerService.ShippingDetailsRequestPayloadHeaders;
 import io.zenwave360.example.core.domain.events.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class DoShippingDetailsRequestConsumerServiceIT extends BaseConsumerTest 
   @Test
   public void doShippingDetailsRequestTest() {
     ShippingDetailsRequestPayload payload = new ShippingDetailsRequestPayload();
-    payload.setShippingDetailsId(null);
+    payload.setId(null);
     payload.setRequestType(null);
     payload.setShippingDetails(null);
 

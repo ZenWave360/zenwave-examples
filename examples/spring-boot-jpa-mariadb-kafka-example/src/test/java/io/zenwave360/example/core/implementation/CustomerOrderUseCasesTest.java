@@ -14,12 +14,16 @@ import io.zenwave360.example.core.outbound.jpa.*;
 import io.zenwave360.example.core.outbound.search.*;
 import io.zenwave360.example.infrastructure.jpa.inmemory.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 
 /** Acceptance Test for CustomerOrderUseCases. */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerOrderUseCasesTest {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -37,6 +41,7 @@ public class CustomerOrderUseCasesTest {
   // CustomerOrder
 
   @Test
+  @Order(01)
   void testCRUDCustomerOrder() {
     var input = new CustomerOrderInput();
     // TODO fill input data
@@ -58,6 +63,7 @@ public class CustomerOrderUseCasesTest {
   }
 
   @Test
+  @Order(02)
   void testCreateCustomerOrder() {
     var input = new CustomerOrderInput();
     // TODO fill input data
@@ -67,6 +73,7 @@ public class CustomerOrderUseCasesTest {
   }
 
   @Test
+  @Order(03)
   void testUpdateCustomerOrder() {
     var id = 0L; // TODO fill id
     var input = new CustomerOrderInput();
@@ -78,12 +85,14 @@ public class CustomerOrderUseCasesTest {
   }
 
   @Test
+  @Order(04)
   void testListCustomerOrders() {
     var results = customerOrderUseCases.listCustomerOrders(PageRequest.of(0, 10));
     assertNotNull(results);
   }
 
   @Test
+  @Order(05)
   void testSearchCustomerOrders() {
     var criteria = new CustomerOrderSearchCriteria();
     // TODO fill criteria
@@ -92,6 +101,7 @@ public class CustomerOrderUseCasesTest {
   }
 
   @Test
+  @Order(06)
   void testGetCustomerOrder() {
     var id = 0L; // TODO fill id
     var customerOrder = customerOrderUseCases.getCustomerOrder(id);
@@ -99,6 +109,7 @@ public class CustomerOrderUseCasesTest {
   }
 
   @Test
+  @Order(07)
   void testDeleteCustomerOrder() {
     var id = 0L; // TODO fill id
     assertTrue(customerOrderRepository.containsKey(id));
