@@ -49,35 +49,61 @@ channels:
 components:
   messages:
     CustomerRequestMessage:
+      messageId: CustomerRequestMessage
       name: CustomerRequestMessage
       title: Async Command/Request for a Customer
       summary: Async Command/Request for a Customer
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerRequestPayload"
     CustomerEventMessage:
       name: CustomerEventMessage
+      messageId: CustomerEventMessage
       title: Message for a Customer Event
       summary: Message for a Customer Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerEventPayload"
   
     CustomerOrderRequestMessage:
+      messageId: CustomerOrderRequestMessage
       name: CustomerOrderRequestMessage
       title: Async Command/Request for a CustomerOrder
       summary: Async Command/Request for a CustomerOrder
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerOrderRequestPayload"
     CustomerOrderEventMessage:
       name: CustomerOrderEventMessage
+      messageId: CustomerOrderEventMessage
       title: Message for a CustomerOrder Event
       summary: Message for a CustomerOrder Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerOrderEventPayload"
   
+
+  messageTraits:
+    CommonHeaders:
+      headers:
+        type: object
+        properties:
+          kafka_messageKey:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $message.payload#/id
+          tracingId:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $tracingIdSupplier
 
   schemas:
     Customer:
@@ -208,7 +234,7 @@ components:
     CustomerRequestPayload:
       type: object
       properties:
-        customerId:
+        id:
           type: string
         requestType:
           type: string
@@ -221,7 +247,7 @@ components:
     CustomerEventPayload:
       type: object
       properties:
-        customerId:
+        id:
           type: string
         eventType:
           type: string
@@ -235,7 +261,7 @@ components:
     CustomerOrderRequestPayload:
       type: object
       properties:
-        customerOrderId:
+        id:
           type: string
         requestType:
           type: string
@@ -248,7 +274,7 @@ components:
     CustomerOrderEventPayload:
       type: object
       properties:
-        customerOrderId:
+        id:
           type: string
         eventType:
           type: string

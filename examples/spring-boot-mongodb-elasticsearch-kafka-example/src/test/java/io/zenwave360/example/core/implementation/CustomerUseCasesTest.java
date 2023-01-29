@@ -5,47 +5,44 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import io.zenwave360.example.config.*;
 import io.zenwave360.example.core.domain.*;
-import io.zenwave360.example.core.events.provider.ICustomerEventsProducer;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
 import io.zenwave360.example.core.outbound.mongodb.*;
-import io.zenwave360.example.core.outbound.mongodb.inmemory.*;
 import io.zenwave360.example.core.outbound.search.*;
+import io.zenwave360.example.infrastructure.mongodb.inmemory.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 
 /** Acceptance Test for CustomerUseCases. */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerUseCasesTest {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Spy CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
-  @Spy CustomerRepositoryInMemory customerRepository = new CustomerRepositoryInMemory();
-  @Mock CustomerSearchRepository customerSearchRepository;
-  @Mock ICustomerEventsProducer customerEventsProducer;
+  InMemoryTestsManualContext context = InMemoryTestsManualContext.INSTANCE;
+  CustomerUseCasesImpl customerUseCases = context.customerUseCases();
 
-  @InjectMocks CustomerUseCasesImpl customerUseCases;
-
+  CustomerRepositoryInMemory customerRepository = context.customerRepository();
+  CustomerSearchRepository customerSearchRepository = context.customerSearchRepository();
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.openMocks(this);
-    customerRepository.insert(new Customer());
+    customerRepository.save(new Customer());
   }
 
   // Customer
 
   @Test
+  @Order(01)
   void testCRUDCustomer() {
     var input = new CustomerInput();
     // TODO fill input data
@@ -67,6 +64,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
+  @Order(02)
   void testCreateCustomer() {
     var input = new CustomerInput();
     // TODO fill input data
@@ -76,6 +74,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
+  @Order(03)
   void testUpdateCustomer() {
     var id = "0"; // TODO fill id
     var input = new CustomerInput();
@@ -87,12 +86,14 @@ public class CustomerUseCasesTest {
   }
 
   @Test
+  @Order(04)
   void testListCustomers() {
     var results = customerUseCases.listCustomers(PageRequest.of(0, 10));
     assertNotNull(results);
   }
 
   @Test
+  @Order(05)
   void testSearchCustomers() {
     var criteria = new CustomerCriteria();
     // TODO fill criteria
@@ -101,6 +102,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
+  @Order(06)
   void testGetCustomer() {
     var id = "0"; // TODO fill id
     var customer = customerUseCases.getCustomer(id);
@@ -108,6 +110,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
+  @Order(07)
   void testDeleteCustomer() {
     var id = "0"; // TODO fill id
     assertTrue(customerRepository.containsKey(id));

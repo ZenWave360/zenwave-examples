@@ -12,19 +12,13 @@ public class OrderedItemInput implements Serializable {
 
   private Long catalogItemId;
 
-  // @minlength("3")
-
-  // @maxlength("250")
-
-  // @required("")
-
+  @NotNull
+  @Size(min = 3, max = 250)
   private String name;
 
   private Integer quantity;
 
-  // @required("")
-
-  private BigDecimal price;
+  @NotNull private BigDecimal price;
 
   public OrderedItemInput withCatalogItemId(Long catalogItemId) {
     this.catalogItemId = catalogItemId;

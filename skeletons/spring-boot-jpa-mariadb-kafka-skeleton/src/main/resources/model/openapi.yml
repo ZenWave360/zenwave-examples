@@ -509,10 +509,10 @@ components:
           format: "int64"
         version:
           type: "integer"
-        dateFrom:
+        dateTo:
           type: "string"
           format: "date-time"
-        dateTo:
+        dateFrom:
           type: "string"
           format: "date-time"
         status:
@@ -636,8 +636,8 @@ components:
       type: "string"
       x-business-entity: "OrderStatus"
       enum:
-      - "CONFIRMED"
       - "DELIVERED"
+      - "CONFIRMED"
       - "SHIPPED"
 
     Page:
@@ -690,3 +690,15 @@ components:
         type: array
         items:
           type: string
+
+  securitySchemes:
+    basicAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
+    bearerAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+security:
+  - basicAuth: []  # <-- use the same name here
+  - bearerAuth: []  # <-- use the same name here

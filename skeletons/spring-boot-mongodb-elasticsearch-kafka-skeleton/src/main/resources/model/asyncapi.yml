@@ -11,6 +11,14 @@ tags:
   - name: "CustomerOrder"
 
 channels:
+  customer.requests:
+    subscribe:
+      summary: Customer Async Requests
+      operationId: doCustomerRequest
+      tags:
+        - name: Customer
+      message:
+        $ref: "#/components/messages/CustomerRequestMessage"
   customer.events:
     publish:
       summary: Customer Domain Events
@@ -20,6 +28,14 @@ channels:
       message:
         $ref: "#/components/messages/CustomerEventMessage"
   
+  customer-order.requests:
+    subscribe:
+      summary: CustomerOrder Async Requests
+      operationId: doCustomerOrderRequest
+      tags:
+        - name: CustomerOrder
+      message:
+        $ref: "#/components/messages/CustomerOrderRequestMessage"
   customer-order.events:
     publish:
       summary: CustomerOrder Domain Events
@@ -32,22 +48,62 @@ channels:
 
 components:
   messages:
+    CustomerRequestMessage:
+      messageId: CustomerRequestMessage
+      name: CustomerRequestMessage
+      title: Async Command/Request for a Customer
+      summary: Async Command/Request for a Customer
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
+      payload:
+        $ref: "#/components/schemas/CustomerRequestPayload"
     CustomerEventMessage:
       name: CustomerEventMessage
+      messageId: CustomerEventMessage
       title: Message for a Customer Event
       summary: Message for a Customer Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerEventPayload"
   
+    CustomerOrderRequestMessage:
+      messageId: CustomerOrderRequestMessage
+      name: CustomerOrderRequestMessage
+      title: Async Command/Request for a CustomerOrder
+      summary: Async Command/Request for a CustomerOrder
+      schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
+      payload:
+        $ref: "#/components/schemas/CustomerOrderRequestPayload"
     CustomerOrderEventMessage:
       name: CustomerOrderEventMessage
+      messageId: CustomerOrderEventMessage
       title: Message for a CustomerOrder Event
       summary: Message for a CustomerOrder Event
       schemaFormat: application/vnd.aai.asyncapi;version=2.4.0
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
       payload:
         $ref: "#/components/schemas/CustomerOrderEventPayload"
   
+
+  messageTraits:
+    CommonHeaders:
+      headers:
+        type: object
+        properties:
+          kafka_messageKey:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $message.payload#/id
+          tracingId:
+            type: string
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $tracingIdSupplier
 
   schemas:
     Customer:
@@ -175,10 +231,23 @@ components:
       - "CONFIRMED"
       - "SHIPPED"
 
+    CustomerRequestPayload:
+      type: object
+      properties:
+        id:
+          type: string
+        requestType:
+          type: string
+          enum:
+          - "create"
+          - "update"
+          - "delete"
+        customer:
+          $ref: "#/components/schemas/Customer"
     CustomerEventPayload:
       type: object
       properties:
-        customerId:
+        id:
           type: string
         eventType:
           type: string
@@ -189,10 +258,23 @@ components:
         customer:
           $ref: "#/components/schemas/Customer"
   
+    CustomerOrderRequestPayload:
+      type: object
+      properties:
+        id:
+          type: string
+        requestType:
+          type: string
+          enum:
+          - "create"
+          - "update"
+          - "delete"
+        customerOrder:
+          $ref: "#/components/schemas/CustomerOrder"
     CustomerOrderEventPayload:
       type: object
       properties:
-        customerOrderId:
+        id:
           type: string
         eventType:
           type: string

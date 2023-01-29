@@ -1,83 +1,59 @@
-package io.zenwave360.example.core.inbound.dtos;
+package io.zenwave360.example.core.domain.search;
 
-import io.zenwave360.example.core.domain.*;
 import java.io.Serializable;
-import java.math.*;
-import java.time.*;
-import java.util.*;
 import javax.validation.constraints.*;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 /** */
-public class CustomerInput implements Serializable {
+@Document(indexName = "customer")
+public class CustomerDocument implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private String id;
 
-  private Integer version;
-
-  @NotNull
-  @Size(min = 3, max = 250)
   private String firstName;
-
-  @NotNull
-  @Size(min = 3, max = 250)
   private String lastName;
-
-  @NotNull
-  @Size(min = 3, max = 250)
   private String password;
-
-  @NotNull
-  @Size(min = 3, max = 250)
   private String email;
-
-  @NotNull
-  @Size(min = 3, max = 250)
   private String username;
+
+  public CustomerDocument withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public CustomerDocument withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public CustomerDocument withPassword(String password) {
+    this.password = password;
+    return this;
+  }
+
+  public CustomerDocument withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public CustomerDocument withUsername(String username) {
+    this.username = username;
+    return this;
+  }
 
   public String getId() {
     return id;
   }
 
-  public CustomerInput withId(String id) {
+  public CustomerDocument withId(String id) {
     this.id = id;
     return this;
   }
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public Integer getVersion() {
-    return version;
-  }
-
-  public void setVersion(Integer version) {
-    this.version = version;
-  }
-
-  public CustomerInput withFirstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
-
-  public CustomerInput withLastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
-  public CustomerInput withPassword(String password) {
-    this.password = password;
-    return this;
-  }
-
-  public CustomerInput withEmail(String email) {
-    this.email = email;
-    return this;
-  }
-
-  public CustomerInput withUsername(String username) {
-    this.username = username;
-    return this;
   }
 
   public String getFirstName() {

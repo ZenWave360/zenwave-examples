@@ -5,10 +5,8 @@ import java.math.*;
 import java.time.*;
 import java.util.*;
 import javax.validation.constraints.*;
-
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -19,6 +17,7 @@ public class Customer implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id private String id;
+  @Version private Integer version;
 
   @Field
   @NotNull
@@ -45,11 +44,6 @@ public class Customer implements Serializable {
   @Size(min = 3, max = 250)
   private String username;
 
-  @CreatedDate
-  private OffsetDateTime createdDate;
-  @LastModifiedDate
-  private OffsetDateTime lastModifiedDate;
-
   public String getId() {
     return id;
   }
@@ -61,6 +55,14 @@ public class Customer implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
   }
 
   public Customer withFirstName(String firstName) {
@@ -126,21 +128,5 @@ public class Customer implements Serializable {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-  public OffsetDateTime getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(OffsetDateTime createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public OffsetDateTime getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(OffsetDateTime lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
   }
 }

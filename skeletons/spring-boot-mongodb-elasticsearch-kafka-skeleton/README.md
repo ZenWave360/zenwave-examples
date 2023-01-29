@@ -7,26 +7,20 @@ https://github.com/ZenWave360/zenwave-code-generator/tree/main/examples/spring-b
 ### Install ZenWave
 
 ```shell
-jbang alias add --name=zw release@zenwave360/zenwave-code-generator
+jbang alias add --fresh --name=zw release@zenwave360/zenwave-code-generator
 ```
 
 or if you prefer to use the latest **snapshot** versions:
 
 ```shell
-jbang alias add --name=zw \
-    -m=io.zenwave360.generator.Main \
-    --repos=mavencentral,snapshots=https://s01.oss.sonatype.org/content/repositories/snapshots \
-    --deps=\
-org.slf4j:slf4j-simple:1.7.36,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-spring-cloud-streams3:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:asyncapi-jsonschema2pojo:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-spring-webtestclient:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:openapi-rest-assured:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-backend-application-default:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-openapi:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-to-asyncapi:0.9.10-SNAPSHOT,\
-io.github.zenwave360.zenwave-code-generator.plugins:jdl-openapi-controllers:0.9.10-SNAPSHOT\
-    io.github.zenwave360.zenwave-code-generator:zenwave-code-generator-cli:0.9.10-SNAPSHOT
+jbang alias add --fresh --name=zw snapshots@zenwave360/zenwave-code-generator
+```
+
+### Starting Docker Infrastructure
+
+```shell
+cd src/main/docker
+./start-all-dependencies.sh
 ```
 
 ### Generate Backend Application
@@ -64,20 +58,26 @@ Generate AsyncAPI definition from JDL entities:
 jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIPlugin \
     includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
-    idType=integer \
-    idTypeFormat=int64 \
     annotations=aggregate \
+    payloadStyle=stateTransfer \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
+#### API-First Maven Plugins
 
+There are two Maven Plugins for API-First code generation:
 
-#### SpringMVC Controllers from OpenAPI
+- OpenAPI Generator Maven Plugin: https://github.com/ZenWave360/zenwave-examples/blob/main/skeletons/spring-boot-mongodb-kafka-skeleton/pom.xml#L107
+- ZenWave Maven Plugin for AsyncAPI (spring-cloud-streams3 and jsonschema2pojo): https://github.com/ZenWave360/zenwave-examples/blob/main/skeletons/spring-boot-mongodb-kafka-skeleton/pom.xml#L139
 
-Generate new SpringMVC controllers from OpenAPI:
+Use the following command to generate OpenAPI and AsyncAPI api-first code:
 
 ```shell
 mvn clean generate-sources
 ```
+
+#### SpringMVC Controllers from OpenAPI
+
+Generate new SpringMVC controllers from OpenAPI:
 
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersPlugin \
@@ -105,18 +105,71 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     groupBy=service
 ```
 
+Generate Customer CRUD Integration Test:
+
 ```shell
 jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web \
-    openApiApiPackage=io.zenwave360.example.adapters.web.tests.webtestclient \
+    openApiApiPackage=io.zenwave360.example.adapters.web \
     openApiModelPackage=io.zenwave360.example.adapters.web.model \
     openApiModelNameSuffix=DTO \
     groupBy=businessFlow \
-    businessFlowTestName=CustomerCRUDTest \
-    operationIds=createCustomer,getCustomer,updateCustomer,deleteCustomer,getCustomer
+    businessFlowTestName=Customer_CRUD_IT \
+    operationIds=createCustomer,getCustomer,updateCustomer,deleteCustomer
 ```
+
+Generate CustomerOrder CRUD Integration Test:
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
+    specFile=src/main/resources/model/openapi.yml \
+    targetFolder=src/test/java \
+    testsPackage=io.zenwave360.example.adapters.web \
+    openApiApiPackage=io.zenwave360.example.adapters.web \
+    openApiModelPackage=io.zenwave360.example.adapters.web.model \
+    openApiModelNameSuffix=DTO \
+    groupBy=businessFlow \
+    businessFlowTestName=CustomerOrder_CRUD_IT \
+    operationIds=createCustomerOrder,getCustomerOrder,updateCustomerOrder,deleteCustomerOrder
+```
+
+#### AsyncAPI Command Adapters
+
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3AdaptersPlugin \
+    specFile=src/main/resources/model/asyncapi.yml \
+    jdlFile=src/main/resources/model/orders-model.jdl \
+    role=provider \
+    style=imperative \
+    basePackage=io.zenwave360.example \
+    modelPackage=io.zenwave360.example.core.domain.events \
+    consumerApiPackage=io.zenwave360.example.adapters.commands \
+    adaptersPackage=io.zenwave360.example.adapters.commands \
+    targetFolder=.
+```
+
+#### AsyncAPI Commands Tests
+
+
+```shell
+jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3TestsPlugin \
+    specFile=src/main/resources/model/asyncapi.yml \
+    role=provider \
+    style=imperative \
+    basePackage=io.zenwave360.example \
+    consumerApiPackage=io.zenwave360.example.adapters.commands \
+    modelPackage=io.zenwave360.example.core.domain.events \
+    targetFolder=.
+```
+or
+
+```shell
+mvn zenwave-code-generator:generate@consumer-tests
+```
+
 # REST-Assured Generator
 
 Generates REST-Assured tests based on OpenAPI specification.

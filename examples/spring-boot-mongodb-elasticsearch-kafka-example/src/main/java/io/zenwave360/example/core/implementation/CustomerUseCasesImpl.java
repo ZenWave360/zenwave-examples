@@ -1,39 +1,35 @@
 package io.zenwave360.example.core.implementation;
 
 import io.zenwave360.example.core.domain.*;
-import io.zenwave360.example.core.events.model.CustomerEventPayload;
-import io.zenwave360.example.core.events.provider.ICustomerEventsProducer;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
 import io.zenwave360.example.core.outbound.mongodb.*;
 import io.zenwave360.example.core.outbound.search.*;
 import java.util.Optional;
+import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /** Service Implementation for managing [Customer]. */
 @Service
+@Transactional
 public class CustomerUseCasesImpl implements CustomerUseCases {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  private final CustomerMapper customerMapper;
+  private final CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
   private final CustomerRepository customerRepository;
   private final CustomerSearchRepository customerSearchRepository;
 
-  private final ICustomerEventsProducer customerEventsProducer;
-
   /** Constructor. */
-  public CustomerUseCasesImpl(
-      CustomerMapper customerMapper, CustomerRepository customerRepository, CustomerSearchRepository customerSearchRepository, ICustomerEventsProducer customerEventsProducer) {
-    this.customerMapper = customerMapper;
+  public CustomerUseCasesImpl(CustomerRepository customerRepository, CustomerSearchRepository customerSearchRepository) {
     this.customerRepository = customerRepository;
     this.customerSearchRepository = customerSearchRepository;
-    this.customerEventsProducer = customerEventsProducer;
   }
 
   // Customer
@@ -42,13 +38,6 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public Customer createCustomer(CustomerInput customerInput) {
     log.debug("Request to save CustomerInput : {}", customerInput);
     var customer = customerRepository.save(customerMapper.update(new Customer(), customerInput));
-    customerEventsProducer.onCustomerEvent(new CustomerEventPayload()
-            .withCustomerId(customer.getId())
-            .withEventType(CustomerEventPayload.EventType.CREATED)
-            .withCustomer(new io.zenwave360.example.core.events.model.Customer()
-                    .withEmail(customer.getEmail())
-                    .withFirstName(customer.getFirstName())
-                    .withLastName(customer.getLastName())), null);
     return customer;
   }
 

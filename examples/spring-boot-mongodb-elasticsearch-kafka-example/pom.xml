@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.9.10-SNAPSHOT</version>
+		<version>0.9.11-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-example</artifactId>
-	<version>0.9.10-SNAPSHOT</version>
+	<version>0.9.11-SNAPSHOT</version>
 	<name>${pom.groupId}:${pom.artifactId}</name>
 	<description>ZenWave360 Example</description>
 
@@ -48,6 +48,10 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,8 +59,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -72,29 +76,18 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>elasticsearch</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>kafka</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>mongodb</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-suite</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit5-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit5-engine</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -155,6 +148,7 @@
 							<configOptions>
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
 								<!--								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>-->
+								<jsonschema2pojo.useLongIntegers>true</jsonschema2pojo.useLongIntegers>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -170,10 +164,10 @@
 							<configOptions>
 								<role>provider</role>
 								<style>imperative</style>
-								<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
+								<transactionalOutbox>mongodb</transactionalOutbox>
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
 								<producerApiPackage>io.zenwave360.example.core.outbound.events</producerApiPackage>
-								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.commands</consumerApiPackage>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -188,7 +182,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
-								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.commands</consumerApiPackage>
 								<targetFolder>${pom.basedir}</targetFolder>
 							</configOptions>
 						</configuration>

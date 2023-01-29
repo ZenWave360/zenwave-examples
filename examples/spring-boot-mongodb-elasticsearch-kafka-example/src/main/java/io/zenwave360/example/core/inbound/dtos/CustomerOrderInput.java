@@ -12,6 +12,8 @@ public class CustomerOrderInput implements Serializable {
 
   private String id;
 
+  private Integer version;
+
   private Instant date;
 
   private ShippingDetailsInput shippingDetails;
@@ -35,6 +37,14 @@ public class CustomerOrderInput implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
   }
 
   public CustomerOrderInput withDate(Instant date) {

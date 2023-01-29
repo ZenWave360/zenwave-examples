@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.github.zenwave360.examples</groupId>
 		<artifactId>zenwave-examples</artifactId>
-		<version>0.9.10-SNAPSHOT</version>
+		<version>0.9.11-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-mongodb-elasticsearch-kafka-skeleton</artifactId>
@@ -172,6 +172,7 @@
 							<configOptions>
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
 								<!--								<jsonschema2pojo.includeTypeInfo>true</jsonschema2pojo.includeTypeInfo>-->
+								<jsonschema2pojo.useLongIntegers>true</jsonschema2pojo.useLongIntegers>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -190,7 +191,7 @@
 								<!--								<transactionalOutbox>mongodb</transactionalOutbox>-->
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
 								<producerApiPackage>io.zenwave360.example.core.outbound.events</producerApiPackage>
-								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.commands</consumerApiPackage>
 							</configOptions>
 						</configuration>
 					</execution>
@@ -205,7 +206,7 @@
 								<role>provider</role>
 								<style>imperative</style>
 								<modelPackage>io.zenwave360.example.core.domain.events</modelPackage>
-								<consumerApiPackage>io.zenwave360.example.adapters.events</consumerApiPackage>
+								<consumerApiPackage>io.zenwave360.example.adapters.commands</consumerApiPackage>
 								<targetFolder>${pom.basedir}</targetFolder>
 							</configOptions>
 						</configuration>

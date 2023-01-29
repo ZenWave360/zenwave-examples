@@ -6,6 +6,7 @@ import java.time.*;
 import java.util.*;
 import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -17,6 +18,7 @@ public class CustomerOrder implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id private String id;
+  @Version private Integer version;
 
   @Field private Instant date;
 
@@ -41,6 +43,14 @@ public class CustomerOrder implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
   }
 
   public CustomerOrder withDate(Instant date) {
