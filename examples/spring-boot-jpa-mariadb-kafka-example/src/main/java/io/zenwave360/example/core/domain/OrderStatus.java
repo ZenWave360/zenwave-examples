@@ -2,8 +2,8 @@ package io.zenwave360.example.core.domain;
 
 /** Enum for OrderStatus. */
 public enum OrderStatus {
-  CONFIRMED("CONFIRMED"),
   DELIVERED("DELIVERED"),
+  CONFIRMED("CONFIRMED"),
   SHIPPED("SHIPPED"),
   ;
 

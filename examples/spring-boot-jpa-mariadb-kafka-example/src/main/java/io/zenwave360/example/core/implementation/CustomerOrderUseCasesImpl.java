@@ -46,7 +46,10 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
     log.debug("Request to update CustomerOrder: {}", customerOrderInput);
     var customerOrder = customerOrderRepository.findById(id);
     customerOrder = customerOrder.map(existingcustomerOrder -> customerOrderMapper.update(existingcustomerOrder, customerOrderInput));
-    return customerOrder.map(customerOrderRepository::save);
+    // saving is unnecessary (jpa save anti-pattern):
+    // https://vladmihalcea.com/best-spring-data-jparepository/
+    // return customerOrder.map(customerOrderRepository::save);
+    return customerOrder;
   }
 
   @Override

@@ -132,80 +132,10 @@ public class CustomerUseCasesTest {
     assertFalse(customerRepository.containsKey(id));
   }
 
-  // ShippingDetails
-
-  @Test
-  @Order(11)
-  void testCRUDShippingDetails() {
-    var input = new ShippingDetailsInput();
-    // TODO fill input data
-    var shippingDetails = customerUseCases.createShippingDetails(input);
-    assertNotNull(shippingDetails.getId());
-    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails));
-
-    var id = shippingDetails.getId();
-    var shippingDetailsUpdate = new ShippingDetailsInput();
-    // TODO fill update data
-    assertTrue(shippingDetailsRepository.containsKey(id));
-    var shippingDetailsUpdated = customerUseCases.updateShippingDetails(id, shippingDetailsUpdate);
-    assertTrue(shippingDetailsUpdated.isPresent());
-    assertTrue(shippingDetailsRepository.containsEntity(shippingDetailsUpdated.get()));
-
-    assertTrue(shippingDetailsRepository.containsKey(id));
-    customerUseCases.deleteShippingDetails(id);
-    assertFalse(shippingDetailsRepository.containsKey(id));
-  }
-
-  @Test
-  @Order(12)
-  void testCreateShippingDetails() {
-    var input = new ShippingDetailsInput();
-    // TODO fill input data
-    var shippingDetails = customerUseCases.createShippingDetails(input);
-    assertNotNull(shippingDetails.getId());
-    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails));
-  }
-
-  @Test
-  @Order(13)
-  void testUpdateShippingDetails() {
-    var id = 0L; // TODO fill id
-    var input = new ShippingDetailsInput();
-    // TODO fill input data
-    assertTrue(shippingDetailsRepository.containsKey(id));
-    var shippingDetails = customerUseCases.updateShippingDetails(id, input);
-    assertTrue(shippingDetails.isPresent());
-    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails.get()));
-  }
-
-  @Test
-  @Order(14)
-  void testListShippingDetails() {
-    var results = customerUseCases.listShippingDetails(PageRequest.of(0, 10));
-    assertNotNull(results);
-  }
-
-  @Test
-  @Order(16)
-  void testGetShippingDetails() {
-    var id = 0L; // TODO fill id
-    var shippingDetails = customerUseCases.getShippingDetails(id);
-    assertTrue(shippingDetails.isPresent());
-  }
-
-  @Test
-  @Order(17)
-  void testDeleteShippingDetails() {
-    var id = 0L; // TODO fill id
-    assertTrue(shippingDetailsRepository.containsKey(id));
-    customerUseCases.deleteShippingDetails(id);
-    assertFalse(shippingDetailsRepository.containsKey(id));
-  }
-
   // PaymentDetails
 
   @Test
-  @Order(21)
+  @Order(11)
   void testCRUDPaymentDetails() {
     var input = new PaymentDetailsInput();
     // TODO fill input data
@@ -227,7 +157,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
-  @Order(22)
+  @Order(12)
   void testCreatePaymentDetails() {
     var input = new PaymentDetailsInput();
     // TODO fill input data
@@ -237,7 +167,7 @@ public class CustomerUseCasesTest {
   }
 
   @Test
-  @Order(23)
+  @Order(13)
   void testUpdatePaymentDetails() {
     var id = 0L; // TODO fill id
     var input = new PaymentDetailsInput();
@@ -249,14 +179,14 @@ public class CustomerUseCasesTest {
   }
 
   @Test
-  @Order(24)
+  @Order(14)
   void testListPaymentDetails() {
     var results = customerUseCases.listPaymentDetails(PageRequest.of(0, 10));
     assertNotNull(results);
   }
 
   @Test
-  @Order(26)
+  @Order(16)
   void testGetPaymentDetails() {
     var id = 0L; // TODO fill id
     var paymentDetails = customerUseCases.getPaymentDetails(id);
@@ -264,11 +194,81 @@ public class CustomerUseCasesTest {
   }
 
   @Test
-  @Order(27)
+  @Order(17)
   void testDeletePaymentDetails() {
     var id = 0L; // TODO fill id
     assertTrue(paymentDetailsRepository.containsKey(id));
     customerUseCases.deletePaymentDetails(id);
     assertFalse(paymentDetailsRepository.containsKey(id));
+  }
+
+  // ShippingDetails
+
+  @Test
+  @Order(21)
+  void testCRUDShippingDetails() {
+    var input = new ShippingDetailsInput();
+    // TODO fill input data
+    var shippingDetails = customerUseCases.createShippingDetails(input);
+    assertNotNull(shippingDetails.getId());
+    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails));
+
+    var id = shippingDetails.getId();
+    var shippingDetailsUpdate = new ShippingDetailsInput();
+    // TODO fill update data
+    assertTrue(shippingDetailsRepository.containsKey(id));
+    var shippingDetailsUpdated = customerUseCases.updateShippingDetails(id, shippingDetailsUpdate);
+    assertTrue(shippingDetailsUpdated.isPresent());
+    assertTrue(shippingDetailsRepository.containsEntity(shippingDetailsUpdated.get()));
+
+    assertTrue(shippingDetailsRepository.containsKey(id));
+    customerUseCases.deleteShippingDetails(id);
+    assertFalse(shippingDetailsRepository.containsKey(id));
+  }
+
+  @Test
+  @Order(22)
+  void testCreateShippingDetails() {
+    var input = new ShippingDetailsInput();
+    // TODO fill input data
+    var shippingDetails = customerUseCases.createShippingDetails(input);
+    assertNotNull(shippingDetails.getId());
+    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails));
+  }
+
+  @Test
+  @Order(23)
+  void testUpdateShippingDetails() {
+    var id = 0L; // TODO fill id
+    var input = new ShippingDetailsInput();
+    // TODO fill input data
+    assertTrue(shippingDetailsRepository.containsKey(id));
+    var shippingDetails = customerUseCases.updateShippingDetails(id, input);
+    assertTrue(shippingDetails.isPresent());
+    assertTrue(shippingDetailsRepository.containsEntity(shippingDetails.get()));
+  }
+
+  @Test
+  @Order(24)
+  void testListShippingDetails() {
+    var results = customerUseCases.listShippingDetails(PageRequest.of(0, 10));
+    assertNotNull(results);
+  }
+
+  @Test
+  @Order(26)
+  void testGetShippingDetails() {
+    var id = 0L; // TODO fill id
+    var shippingDetails = customerUseCases.getShippingDetails(id);
+    assertTrue(shippingDetails.isPresent());
+  }
+
+  @Test
+  @Order(27)
+  void testDeleteShippingDetails() {
+    var id = 0L; // TODO fill id
+    assertTrue(shippingDetailsRepository.containsKey(id));
+    customerUseCases.deleteShippingDetails(id);
+    assertFalse(shippingDetailsRepository.containsKey(id));
   }
 }

@@ -127,7 +127,10 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     log.debug("Request to update PaymentDetails: {}", paymentDetailsInput);
     var paymentDetails = paymentDetailsRepository.findById(id);
     paymentDetails = paymentDetails.map(existingpaymentDetails -> paymentDetailsMapper.update(existingpaymentDetails, paymentDetailsInput));
-    return paymentDetails.map(paymentDetailsRepository::save);
+    // saving is unnecessary (jpa save anti-pattern):
+    // https://vladmihalcea.com/best-spring-data-jparepository/
+    // return paymentDetails.map(paymentDetailsRepository::save);
+    return paymentDetails;
   }
 
   @Override
@@ -164,7 +167,10 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     log.debug("Request to update ShippingDetails: {}", shippingDetailsInput);
     var shippingDetails = shippingDetailsRepository.findById(id);
     shippingDetails = shippingDetails.map(existingshippingDetails -> shippingDetailsMapper.update(existingshippingDetails, shippingDetailsInput));
-    return shippingDetails.map(shippingDetailsRepository::save);
+    // saving is unnecessary (jpa save anti-pattern):
+    // https://vladmihalcea.com/best-spring-data-jparepository/
+    // return shippingDetails.map(shippingDetailsRepository::save);
+    return shippingDetails;
   }
 
   @Override

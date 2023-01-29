@@ -57,10 +57,10 @@ public class ArchitectureTest {
      */
     @ArchTest
     static final ArchRule respectsOnionArchitecture = onionArchitecture()
-            .withOptionalLayers(true)
-            .domainModels("..core.domain..")
-            .domainServices("..core.inbound..", "..core.outbound..")
-            .applicationServices("..core.implementation..")
-            .adapter("inbound", "..adapters.(*)..")
-            .adapter("outbound", "..infrastructure.(*)..");
+        .withOptionalLayers(true)
+        .domainModels("..core.domain..")
+        .domainServices("..core.inbound..", "..core.outbound..")
+        .applicationServices("..core.implementation..")
+        .adapter("inbound", "..adapters.(*)..")
+        .adapter("outbound", "..infrastructure.(*)..");
 }

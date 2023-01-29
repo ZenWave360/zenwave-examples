@@ -10,19 +10,19 @@ import javax.validation.constraints.*;
 /** */
 public class CustomerOrderSearchCriteria implements Serializable {
 
-  private Instant dateFrom;
-
   private Instant dateTo;
+
+  private Instant dateFrom;
 
   private OrderStatus status;
 
-  public CustomerOrderSearchCriteria withDateFrom(Instant dateFrom) {
-    this.dateFrom = dateFrom;
+  public CustomerOrderSearchCriteria withDateTo(Instant dateTo) {
+    this.dateTo = dateTo;
     return this;
   }
 
-  public CustomerOrderSearchCriteria withDateTo(Instant dateTo) {
-    this.dateTo = dateTo;
+  public CustomerOrderSearchCriteria withDateFrom(Instant dateFrom) {
+    this.dateFrom = dateFrom;
     return this;
   }
 
@@ -31,20 +31,20 @@ public class CustomerOrderSearchCriteria implements Serializable {
     return this;
   }
 
-  public Instant getDateFrom() {
-    return dateFrom;
-  }
-
-  public void setDateFrom(Instant dateFrom) {
-    this.dateFrom = dateFrom;
-  }
-
   public Instant getDateTo() {
     return dateTo;
   }
 
   public void setDateTo(Instant dateTo) {
     this.dateTo = dateTo;
+  }
+
+  public Instant getDateFrom() {
+    return dateFrom;
+  }
+
+  public void setDateFrom(Instant dateFrom) {
+    this.dateFrom = dateFrom;
   }
 
   public OrderStatus getStatus() {
