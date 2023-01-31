@@ -1,19 +1,19 @@
 # ZenWave Example
 
-https://github.com/ZenWave360/zenwave-code-generator/tree/main/examples/spring-boot-mongo-elasticsearch
+https://github.com/ZenWave360/zenwave-sdk/tree/main/examples/spring-boot-mongo-elasticsearch
 
-## ZenWave Code Generator
+## ZenWave SDK
 
 ### Install ZenWave
 
 ```shell
-jbang alias add --fresh --name=zw release@zenwave360/zenwave-code-generator
+jbang alias add --fresh --name=zw release@zenwave360/zenwave-sdk
 ```
 
 or if you prefer to use the latest **snapshot** versions:
 
 ```shell
-jbang alias add --fresh --name=zw snapshots@zenwave360/zenwave-code-generator
+jbang alias add --fresh --name=zw snapshots@zenwave360/zenwave-sdk
 ```
 
 ### Starting Docker Infrastructure
@@ -167,5 +167,5 @@ jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3TestsPlugin \
 or
 
 ```shell
-mvn zenwave-code-generator:generate@consumer-tests
+mvn zenwave-sdk:generate@consumer-tests
 ```

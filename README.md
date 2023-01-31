@@ -1,8 +1,8 @@
-# ZenWave Code Generator Examples and Playground
+# ZenWave SDK Examples and Playground
 
 > 👉 [ZenWave360](https://zenwave360.github.io/) Helps You Create Software that's Easy to Understand
 
-This repository contains examples and playground for [ZenWave Code Generator](https://zenwave360.github.io/zenwave-code-generator/).
+This repository contains examples and playground for [ZenWave SDK](https://zenwave360.github.io/zenwave-sdk/).
 
 ## Examples vs Skeletons
 
@@ -13,11 +13,11 @@ They include:
 - JDL/ZDL Models in `src/main/resources/model` folder that will be the basis for code generation.
 - There is a README.md file with step-by-step instruction to construct a complete running application.
 - Maven Plugin configuration in `pom.xml` to generate code as part of the build process.
-- You may also find OpenAPI and AsyncAPI files in `src/main/resources/model` folder. They were generated from JDL/ZDL models using [ZenWave Code Generator](https://zenwave360.github.io/zenwave-code-generator/) and the reason they are already present for configured maven plugins not to fail during build.
+- You may also find OpenAPI and AsyncAPI files in `src/main/resources/model` folder. They were generated from JDL/ZDL models using [ZenWave SDK](https://zenwave360.github.io/zenwave-sdk/) and the reason they are already present for configured maven plugins not to fail during build.
 
-If you follow the instructions in the README.md file you can evaluate how ZenWave Code Generator can assist you "From Model To Code & Tests".
+If you follow the instructions in the README.md file you can evaluate how ZenWave SDK can assist you "From Model To Code & Tests".
 
-**Examples** are complete applications that were generated using ZenWave Code Generator and they are ready to run.
+**Examples** are complete applications that were generated using ZenWave SDK and they are ready to run.
 
 ## Skeletons
 
@@ -32,6 +32,6 @@ If you follow the instructions in the README.md file you can evaluate how ZenWav
 
 ## AsyncAPI: API-First Tests, Examples
 
-You may also be interested in checking out [ZenWave Code Generator for AsyncAPI: API-First Tests, Examples and the Kitchen Sink](/ZenWave360/AsyncAPI-ApiFirst-Generator-KitchenSink) repository.
+You may also be interested in checking out [ZenWave SDK for AsyncAPI: API-First Tests, Examples and the Kitchen Sink](/ZenWave360/AsyncAPI-ApiFirst-Generator-KitchenSink) repository.
 
 > 👉 [ZenWave360](https://zenwave360.github.io/) Helps You Create Software that's Easy to Understand

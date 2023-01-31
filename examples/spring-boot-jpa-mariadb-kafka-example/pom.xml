@@ -135,8 +135,8 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>io.github.zenwave360.zenwave-code-generator</groupId>
-				<artifactId>zenwave-code-generator-maven-plugin</artifactId>
+				<groupId>io.github.zenwave360.zenwave-sdk</groupId>
+				<artifactId>zenwave-sdk-maven-plugin</artifactId>
 				<version>${zenwave.version}</version>
 				<configuration>
 					<inputSpec>${pom.basedir}/src/main/resources/model/asyncapi.yml</inputSpec>
@@ -182,7 +182,7 @@
 					</execution>
 
 					<!-- Tests for Inbound Commands -->
-					<!-- mvn zenwave-code-generator:generate@consumer-tests -->
+					<!-- mvn zenwave-sdk:generate@consumer-tests -->
 					<execution>
 						<id>consumer-tests</id>
 						<configuration>
@@ -199,12 +199,12 @@
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>io.github.zenwave360.zenwave-code-generator.plugins</groupId>
+						<groupId>io.github.zenwave360.zenwave-sdk.plugins</groupId>
 						<artifactId>asyncapi-spring-cloud-streams3</artifactId>
 						<version>${zenwave.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>io.github.zenwave360.zenwave-code-generator.plugins</groupId>
+						<groupId>io.github.zenwave360.zenwave-sdk.plugins</groupId>
 						<artifactId>asyncapi-jsonschema2pojo</artifactId>
 						<version>${zenwave.version}</version>
 					</dependency>
