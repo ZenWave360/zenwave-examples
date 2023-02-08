@@ -103,7 +103,6 @@ Generates test for SpringMVC or Spring WebFlux using WebTestClient based on Open
 ```shell
 jbang zw -p io.zenwave360.sdk.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
-    jdlFile=src/main/resources/model/orders-model.jdl \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web \
     openApiApiPackage=io.zenwave360.example.adapters.web \
