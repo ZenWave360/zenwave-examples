@@ -26,7 +26,7 @@ cd src/main/docker
 ### Generate Backend Application
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLBackendApplicationDefaultPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.JDLBackendApplicationDefaultPlugin \
     specFile=src/main/resources/model/orders-model.jdl \
     basePackage=io.zenwave360.example \
     persistence=mongodb \
@@ -42,7 +42,7 @@ Generate OpenAPI definition from JDL entities:
 - CRUD operations for entities
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLToOpenAPIPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.JDLToOpenAPIPlugin \
     specFile=src/main/resources/model/orders-model.jdl \
     targetFile=src/main/resources/model/openapi.yml
 ```
@@ -55,7 +55,7 @@ Generate AsyncAPI definition from JDL entities:
 - Messages and payloads for each entity Create/Update/Delete events (AVRO and AsyncAPI schema)
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLToAsyncAPIPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.JDLToAsyncAPIPlugin \
     includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
     annotations=aggregate \
@@ -80,7 +80,7 @@ mvn clean generate-sources
 Generate new SpringMVC controllers from OpenAPI:
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.JDLOpenAPIControllersPlugin \
     specFile=src/main/resources/model/openapi.yml \
     jdlFile=src/main/resources/model/orders-model.jdl \
     basePackage=io.zenwave360.example \
@@ -95,7 +95,7 @@ jbang zw -p io.zenwave360.generator.plugins.JDLOpenAPIControllersPlugin \
 Generates test for SpringMVC or Spring WebFlux using WebTestClient based on OpenAPI specification.
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web.tests.webtestclient \
@@ -108,7 +108,7 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
 Generate Customer CRUD Integration Test:
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web \
@@ -123,7 +123,7 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
 Generate CustomerOrder CRUD Integration Test:
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.SpringWebTestClientPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web \
@@ -139,7 +139,7 @@ jbang zw -p io.zenwave360.generator.plugins.SpringWebTestClientPlugin \
 
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3AdaptersPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.SpringCloudStreams3AdaptersPlugin \
     specFile=src/main/resources/model/asyncapi.yml \
     jdlFile=src/main/resources/model/orders-model.jdl \
     role=provider \
@@ -155,7 +155,7 @@ jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3AdaptersPlugin \
 
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.SpringCloudStreams3TestsPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.SpringCloudStreams3TestsPlugin \
     specFile=src/main/resources/model/asyncapi.yml \
     role=provider \
     style=imperative \
@@ -175,7 +175,7 @@ mvn zenwave-sdk:generate@consumer-tests
 Generates REST-Assured tests based on OpenAPI specification.
 
 ```shell
-jbang zw -p io.zenwave360.generator.plugins.RestAssuredPlugin \
+jbang zw -p io.zenwave360.sdk.plugins.RestAssuredPlugin \
     specFile=src/main/resources/model/openapi.yml \
     targetFolder=src/test/java \
     testsPackage=io.zenwave360.example.adapters.web.tests.restassured \
