@@ -179,7 +179,7 @@ public class CustomerOrderApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testGetCustomerOrder_200() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(GET).uri("/api/customer-orders/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -258,7 +258,7 @@ public class CustomerOrderApiIT extends BaseWebTestClientTest {
         requestBody.getPaymentDetails().setCreditCardNumber(null);
         requestBody.getPaymentDetails().setCustomerId(null);
         requestBody.getPaymentDetails().setCustomer(null);
-        var id = "";
+        var id = "1";
 
         webTestClient.method(PUT).uri("/api/customer-orders/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -307,7 +307,7 @@ public class CustomerOrderApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testDeleteCustomerOrder_204() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(DELETE).uri("/api/customer-orders/{id}", id)
             .accept(MediaType.APPLICATION_JSON)

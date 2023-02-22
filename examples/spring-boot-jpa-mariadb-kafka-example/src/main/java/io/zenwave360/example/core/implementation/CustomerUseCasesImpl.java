@@ -2,6 +2,8 @@ package io.zenwave360.example.core.implementation;
 
 import io.zenwave360.example.core.domain.*;
 import io.zenwave360.example.core.domain.events.CustomerEventPayload;
+import io.zenwave360.example.core.domain.events.PaymentDetailsEventPayload;
+import io.zenwave360.example.core.domain.events.ShippingDetailsEventPayload;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
@@ -18,12 +20,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 /** Service Implementation for managing [Customer, PaymentDetails, ShippingDetails]. */
 @Service
 @Transactional
 public class CustomerUseCasesImpl implements CustomerUseCases {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
+
+  private final EntityManager entityManager;
 
   private final CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
   private final CustomerRepository customerRepository;
@@ -40,16 +46,25 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
 
   /** Constructor. */
   public CustomerUseCasesImpl(
+      EntityManager entityManager,
       CustomerRepository customerRepository,
       CustomerSearchRepository customerSearchRepository,
       PaymentDetailsRepository paymentDetailsRepository,
       ShippingDetailsRepository shippingDetailsRepository,
       ICustomerEventsProducer customerEventsProducer) {
+    this.entityManager = entityManager;
     this.customerRepository = customerRepository;
     this.customerSearchRepository = customerSearchRepository;
     this.paymentDetailsRepository = paymentDetailsRepository;
     this.shippingDetailsRepository = shippingDetailsRepository;
     this.customerEventsProducer = customerEventsProducer;
+  }
+
+  protected <T> T refresh(T entity) {
+    if(this.entityManager != null) {
+      this.entityManager.refresh(entity);
+    }
+    return entity;
   }
 
   // Customer
@@ -58,7 +73,8 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public Customer createCustomer(CustomerInput customerInput) {
     log.debug("Request to save Customer: {}", customerInput);
     var customer = customerMapper.update(new Customer(), customerInput);
-    customer = customerRepository.save(customer); // TODO: you may need to reload the entity here to fetch all the relationships
+    customer = customerRepository.save(customer);
+    customer = refresh(customer); // reload the entity here to fetch all the relationships
     CustomerEventPayload payload = new CustomerEventPayload()
             .withId(customer.getId())
             .withEventType(CustomerEventPayload.EventType.CREATED)
@@ -117,8 +133,12 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public PaymentDetails createPaymentDetails(PaymentDetailsInput paymentDetailsInput) {
     log.debug("Request to save PaymentDetails: {}", paymentDetailsInput);
     var paymentDetails = paymentDetailsMapper.update(new PaymentDetails(), paymentDetailsInput);
-    paymentDetails = paymentDetailsRepository.save(paymentDetails);
-    // TODO: you may need to reload the entity here to fetch all the relationships
+    paymentDetails = paymentDetailsRepository.save(paymentDetails); // TODO: you may need to reload the entity here to fetch all the relationships
+    PaymentDetailsEventPayload payload = new PaymentDetailsEventPayload()
+            .withId(paymentDetails.getId())
+            .withEventType(PaymentDetailsEventPayload.EventType.CREATED)
+            .withPaymentDetails(eventsMapper.asPaymentDetails(paymentDetails));
+    customerEventsProducer.onPaymentDetailsEvent(payload);
     return paymentDetails;
   }
 
@@ -127,9 +147,14 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     log.debug("Request to update PaymentDetails: {}", paymentDetailsInput);
     var paymentDetails = paymentDetailsRepository.findById(id);
     paymentDetails = paymentDetails.map(existingpaymentDetails -> paymentDetailsMapper.update(existingpaymentDetails, paymentDetailsInput));
-    // saving is unnecessary (jpa save anti-pattern):
-    // https://vladmihalcea.com/best-spring-data-jparepository/
-    // return paymentDetails.map(paymentDetailsRepository::save);
+    // saving is unnecessary (jpa save anti-pattern): https://vladmihalcea.com/best-spring-data-jparepository/
+    if(paymentDetails.isPresent()) {
+      PaymentDetailsEventPayload payload = new PaymentDetailsEventPayload()
+              .withId(paymentDetails.get().getId())
+              .withEventType(PaymentDetailsEventPayload.EventType.UPDATED)
+              .withPaymentDetails(eventsMapper.asPaymentDetails(paymentDetails.get()));
+      customerEventsProducer.onPaymentDetailsEvent(payload);
+    }
     return paymentDetails;
   }
 
@@ -149,6 +174,10 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public void deletePaymentDetails(Long id) {
     log.debug("Request to delete PaymentDetails : {}", id);
     paymentDetailsRepository.deleteById(id);
+    PaymentDetailsEventPayload payload = new PaymentDetailsEventPayload()
+            .withId(id)
+            .withEventType(PaymentDetailsEventPayload.EventType.DELETED);
+    customerEventsProducer.onPaymentDetailsEvent(payload);
   }
 
   // ShippingDetails
@@ -157,8 +186,12 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public ShippingDetails createShippingDetails(ShippingDetailsInput shippingDetailsInput) {
     log.debug("Request to save ShippingDetails: {}", shippingDetailsInput);
     var shippingDetails = shippingDetailsMapper.update(new ShippingDetails(), shippingDetailsInput);
-    shippingDetails = shippingDetailsRepository.save(shippingDetails);
-    // TODO: you may need to reload the entity here to fetch all the relationships
+    shippingDetails = shippingDetailsRepository.save(shippingDetails); // TODO: you may need to reload the entity here to fetch all the relationships
+    ShippingDetailsEventPayload payload = new ShippingDetailsEventPayload()
+            .withId(shippingDetails.getId())
+            .withEventType(ShippingDetailsEventPayload.EventType.CREATED)
+            .withShippingDetails(eventsMapper.asShippingDetails(shippingDetails));
+    customerEventsProducer.onShippingDetailsEvent(payload);
     return shippingDetails;
   }
 
@@ -167,9 +200,14 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
     log.debug("Request to update ShippingDetails: {}", shippingDetailsInput);
     var shippingDetails = shippingDetailsRepository.findById(id);
     shippingDetails = shippingDetails.map(existingshippingDetails -> shippingDetailsMapper.update(existingshippingDetails, shippingDetailsInput));
-    // saving is unnecessary (jpa save anti-pattern):
-    // https://vladmihalcea.com/best-spring-data-jparepository/
-    // return shippingDetails.map(shippingDetailsRepository::save);
+    // saving is unnecessary (jpa save anti-pattern): https://vladmihalcea.com/best-spring-data-jparepository/
+    if(shippingDetails.isPresent()) {
+      ShippingDetailsEventPayload payload = new ShippingDetailsEventPayload()
+              .withId(shippingDetails.get().getId())
+              .withEventType(ShippingDetailsEventPayload.EventType.UPDATED)
+              .withShippingDetails(eventsMapper.asShippingDetails(shippingDetails.get()));
+      customerEventsProducer.onShippingDetailsEvent(payload);
+    }
     return shippingDetails;
   }
 
@@ -189,5 +227,8 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   public void deleteShippingDetails(Long id) {
     log.debug("Request to delete ShippingDetails : {}", id);
     shippingDetailsRepository.deleteById(id);
+    ShippingDetailsEventPayload payload = new ShippingDetailsEventPayload()
+            .withId(id)
+            .withEventType(ShippingDetailsEventPayload.EventType.DELETED);
   }
 }

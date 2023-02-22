@@ -126,7 +126,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testGetCustomer_200() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(GET).uri("/api/customers/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -156,7 +156,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
         requestBody.setPassword(null);
         requestBody.setEmail(null);
         requestBody.setUsername(null);
-        var id = "";
+        var id = "1";
 
         webTestClient.method(PUT).uri("/api/customers/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -180,7 +180,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testDeleteCustomer_204() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(DELETE).uri("/api/customers/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -266,7 +266,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testGetShippingDetails_200() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(GET).uri("/api/shipping-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -308,7 +308,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
         requestBody.getCustomer().setPassword(null);
         requestBody.getCustomer().setEmail(null);
         requestBody.getCustomer().setUsername(null);
-        var id = "";
+        var id = "1";
 
         webTestClient.method(PUT).uri("/api/shipping-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -338,7 +338,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testDeleteShippingDetails_204() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(DELETE).uri("/api/shipping-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -424,7 +424,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testGetPaymentDetails_200() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(GET).uri("/api/payment-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -466,7 +466,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
         requestBody.getCustomer().setPassword(null);
         requestBody.getCustomer().setEmail(null);
         requestBody.getCustomer().setUsername(null);
-        var id = "";
+        var id = "1";
 
         webTestClient.method(PUT).uri("/api/payment-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)
@@ -496,7 +496,7 @@ public class CustomerApiIT extends BaseWebTestClientTest {
     */
     @Test
     public void testDeletePaymentDetails_204() {
-        var id = "";
+        var id = "1";
 
         webTestClient.method(DELETE).uri("/api/payment-details/{id}", id)
             .accept(MediaType.APPLICATION_JSON)

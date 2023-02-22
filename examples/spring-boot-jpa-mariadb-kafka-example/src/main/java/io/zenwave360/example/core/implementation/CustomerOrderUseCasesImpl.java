@@ -1,9 +1,14 @@
 package io.zenwave360.example.core.implementation;
 
 import io.zenwave360.example.core.domain.*;
+import io.zenwave360.example.core.domain.events.CustomerEventPayload;
+import io.zenwave360.example.core.domain.events.CustomerOrderEventPayload;
+import io.zenwave360.example.core.domain.events.PaymentDetailsEventPayload;
 import io.zenwave360.example.core.implementation.mappers.*;
 import io.zenwave360.example.core.inbound.*;
 import io.zenwave360.example.core.inbound.dtos.*;
+import io.zenwave360.example.core.outbound.events.CustomerOrderEventsProducer;
+import io.zenwave360.example.core.outbound.events.ICustomerOrderEventsProducer;
 import io.zenwave360.example.core.outbound.jpa.*;
 import io.zenwave360.example.core.outbound.search.*;
 import java.util.Optional;
@@ -25,9 +30,14 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
   private final CustomerOrderMapper customerOrderMapper = Mappers.getMapper(CustomerOrderMapper.class);
   private final CustomerOrderRepository customerOrderRepository;
 
+  private final EventsMapper eventsMapper = Mappers.getMapper(EventsMapper.class);
+
+  private final ICustomerOrderEventsProducer customerOrderEventsProducer;
+
   /** Constructor. */
-  public CustomerOrderUseCasesImpl(CustomerOrderRepository customerOrderRepository) {
+  public CustomerOrderUseCasesImpl(CustomerOrderRepository customerOrderRepository, ICustomerOrderEventsProducer customerOrderEventsProducer) {
     this.customerOrderRepository = customerOrderRepository;
+    this.customerOrderEventsProducer = customerOrderEventsProducer;
   }
 
   // CustomerOrder
@@ -36,8 +46,12 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
   public CustomerOrder createCustomerOrder(CustomerOrderInput customerOrderInput) {
     log.debug("Request to save CustomerOrder: {}", customerOrderInput);
     var customerOrder = customerOrderMapper.update(new CustomerOrder(), customerOrderInput);
-    customerOrder = customerOrderRepository.save(customerOrder);
-    // TODO: you may need to reload the entity here to fetch all the relationships
+    customerOrder = customerOrderRepository.save(customerOrder); // TODO: you may need to reload the entity here to fetch all the relationships
+    CustomerOrderEventPayload payload = new CustomerOrderEventPayload()
+            .withId(customerOrder.getId())
+            .withEventType(CustomerOrderEventPayload.EventType.CREATED)
+            .withCustomerOrder(eventsMapper.asCustomerOrder(customerOrder));
+    customerOrderEventsProducer.onCustomerOrderEvent(payload);
     return customerOrder;
   }
 
@@ -46,9 +60,14 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
     log.debug("Request to update CustomerOrder: {}", customerOrderInput);
     var customerOrder = customerOrderRepository.findById(id);
     customerOrder = customerOrder.map(existingcustomerOrder -> customerOrderMapper.update(existingcustomerOrder, customerOrderInput));
-    // saving is unnecessary (jpa save anti-pattern):
-    // https://vladmihalcea.com/best-spring-data-jparepository/
-    // return customerOrder.map(customerOrderRepository::save);
+    // saving is unnecessary (jpa save anti-pattern): https://vladmihalcea.com/best-spring-data-jparepository/
+    if(customerOrder.isPresent()) {
+      CustomerOrderEventPayload payload = new CustomerOrderEventPayload()
+              .withId(customerOrder.get().getId())
+              .withEventType(CustomerOrderEventPayload.EventType.UPDATED)
+              .withCustomerOrder(eventsMapper.asCustomerOrder(customerOrder.get()));
+      customerOrderEventsProducer.onCustomerOrderEvent(payload);
+    }
     return customerOrder;
   }
 
@@ -75,5 +94,9 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
   public void deleteCustomerOrder(Long id) {
     log.debug("Request to delete CustomerOrder : {}", id);
     customerOrderRepository.deleteById(id);
+    CustomerOrderEventPayload payload = new CustomerOrderEventPayload()
+            .withId(id)
+            .withEventType(CustomerOrderEventPayload.EventType.DELETED);
+    customerOrderEventsProducer.onCustomerOrderEvent(payload);
   }
 }
