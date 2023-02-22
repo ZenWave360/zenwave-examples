@@ -2,11 +2,15 @@ package io.zenwave360.example.infrastructure.jpa;
 
 import io.zenwave360.example.core.domain.*;
 import io.zenwave360.example.core.outbound.jpa.CustomerRepository;
+import java.time.*;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CustomerRepositoryIntegrationTest extends BaseRepositoryIntegrationTest {
+
+  @Autowired EntityManager entityManager;
 
   @Autowired CustomerRepository customerRepository;
 
@@ -29,13 +33,20 @@ public class CustomerRepositoryIntegrationTest extends BaseRepositoryIntegration
   @Test
   public void saveTest() {
     Customer customer = new Customer();
-    customer.setFirstName(null);
-    customer.setLastName(null);
-    customer.setPassword(null);
-    customer.setEmail(null);
-    customer.setUsername(null);
+    customer.setFirstName("aaa");
+    customer.setLastName("aaa");
+    customer.setPassword("aaa");
+    customer.setEmail("aaa");
+    customer.setUsername("aaa");
 
+    // ManyToOne shipmentDetails owner: false
+
+    // ManyToOne paymentDetails owner: false
+
+    // Persist aggregate root
     var created = customerRepository.save(customer);
+
+    entityManager.refresh(created); // reloading to get relationships persisted by id
     Assertions.assertTrue(created.getId() != null);
     Assertions.assertTrue(created.getVersion() != null);
     Assertions.assertTrue(created.getCreatedBy() != null);
@@ -46,18 +57,18 @@ public class CustomerRepositoryIntegrationTest extends BaseRepositoryIntegration
   public void updateTest() {
     var id = 1L;
     var customer = customerRepository.findById(id).orElseThrow();
-    customer.setFirstName(null);
-    customer.setLastName(null);
-    customer.setPassword(null);
-    customer.setEmail(null);
-    customer.setUsername(null);
+    customer.setFirstName("aaa");
+    customer.setLastName("aaa");
+    customer.setPassword("aaa");
+    customer.setEmail("aaa");
+    customer.setUsername("aaa");
 
     customer = customerRepository.save(customer);
-    Assertions.assertEquals("", customer.getFirstName());
-    Assertions.assertEquals("", customer.getLastName());
-    Assertions.assertEquals("", customer.getPassword());
-    Assertions.assertEquals("", customer.getEmail());
-    Assertions.assertEquals("", customer.getUsername());
+    Assertions.assertEquals("aaa", customer.getFirstName());
+    Assertions.assertEquals("aaa", customer.getLastName());
+    Assertions.assertEquals("aaa", customer.getPassword());
+    Assertions.assertEquals("aaa", customer.getEmail());
+    Assertions.assertEquals("aaa", customer.getUsername());
   }
 
   @Test

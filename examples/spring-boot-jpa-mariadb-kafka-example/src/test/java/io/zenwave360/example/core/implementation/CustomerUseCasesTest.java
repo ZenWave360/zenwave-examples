@@ -45,8 +45,11 @@ public class CustomerUseCasesTest {
 
   @BeforeEach
   void setUp() {
+    customerRepository.clear();
     customerRepository.save(new Customer());
+    paymentDetailsRepository.clear();
     paymentDetailsRepository.save(new PaymentDetails());
+    shippingDetailsRepository.clear();
     shippingDetailsRepository.save(new ShippingDetails());
   }
 

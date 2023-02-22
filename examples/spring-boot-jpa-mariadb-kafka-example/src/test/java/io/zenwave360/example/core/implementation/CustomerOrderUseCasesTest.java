@@ -35,6 +35,7 @@ public class CustomerOrderUseCasesTest {
 
   @BeforeEach
   void setUp() {
+    customerOrderRepository.clear();
     customerOrderRepository.save(new CustomerOrder());
   }
 

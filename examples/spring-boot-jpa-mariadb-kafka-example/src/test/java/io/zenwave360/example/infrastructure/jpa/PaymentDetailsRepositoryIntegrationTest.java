@@ -2,11 +2,15 @@ package io.zenwave360.example.infrastructure.jpa;
 
 import io.zenwave360.example.core.domain.*;
 import io.zenwave360.example.core.outbound.jpa.PaymentDetailsRepository;
+import java.time.*;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class PaymentDetailsRepositoryIntegrationTest extends BaseRepositoryIntegrationTest {
+
+  @Autowired EntityManager entityManager;
 
   @Autowired PaymentDetailsRepository paymentDetailsRepository;
 
@@ -27,20 +31,29 @@ public class PaymentDetailsRepositoryIntegrationTest extends BaseRepositoryInteg
   @Test
   public void saveTest() {
     PaymentDetails paymentDetails = new PaymentDetails();
-    paymentDetails.setCardHolderName(null);
-    paymentDetails.setCreditCardNumber(null);
+    paymentDetails.setCardHolderName("");
+    paymentDetails.setCreditCardNumber("");
 
+    // ManyToOne customer owner: true
+    var customerId = 1L;
+    paymentDetails.setCustomerId(customerId); // using id to write relationship
+
+    // Persist aggregate root
     var created = paymentDetailsRepository.save(paymentDetails);
+
+    entityManager.refresh(created); // reloading to get relationships persisted by id
     Assertions.assertTrue(created.getId() != null);
     Assertions.assertTrue(created.getVersion() != null);
+
+    Assertions.assertTrue(paymentDetails.getCustomer().getId() == customerId);
   }
 
   @Test
   public void updateTest() {
     var id = 1L;
     var paymentDetails = paymentDetailsRepository.findById(id).orElseThrow();
-    paymentDetails.setCardHolderName(null);
-    paymentDetails.setCreditCardNumber(null);
+    paymentDetails.setCardHolderName("");
+    paymentDetails.setCreditCardNumber("");
 
     paymentDetails = paymentDetailsRepository.save(paymentDetails);
     Assertions.assertEquals("", paymentDetails.getCardHolderName());
