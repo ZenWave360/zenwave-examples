@@ -24,7 +24,7 @@ import javax.persistence.EntityManager;
 
 /** Service Implementation for managing [Customer, PaymentDetails, ShippingDetails]. */
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class CustomerUseCasesImpl implements CustomerUseCases {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -70,6 +70,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   // Customer
 
   @Override
+  @Transactional(readOnly = false)
   public Customer createCustomer(CustomerInput customerInput) {
     log.debug("Request to save Customer: {}", customerInput);
     var customer = customerMapper.update(new Customer(), customerInput);
@@ -84,6 +85,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public Optional<Customer> updateCustomer(Long id, CustomerInput customerInput) {
     log.debug("Request to update Customer: {}", customerInput);
     var customer = customerRepository.findById(id);
@@ -118,6 +120,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public void deleteCustomer(Long id) {
     log.debug("Request to delete Customer : {}", id);
     customerRepository.deleteById(id);
@@ -143,6 +146,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public Optional<PaymentDetails> updatePaymentDetails(Long id, PaymentDetailsInput paymentDetailsInput) {
     log.debug("Request to update PaymentDetails: {}", paymentDetailsInput);
     var paymentDetails = paymentDetailsRepository.findById(id);
@@ -171,6 +175,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public void deletePaymentDetails(Long id) {
     log.debug("Request to delete PaymentDetails : {}", id);
     paymentDetailsRepository.deleteById(id);
@@ -183,6 +188,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   // ShippingDetails
 
   @Override
+  @Transactional(readOnly = false)
   public ShippingDetails createShippingDetails(ShippingDetailsInput shippingDetailsInput) {
     log.debug("Request to save ShippingDetails: {}", shippingDetailsInput);
     var shippingDetails = shippingDetailsMapper.update(new ShippingDetails(), shippingDetailsInput);
@@ -196,6 +202,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public Optional<ShippingDetails> updateShippingDetails(Long id, ShippingDetailsInput shippingDetailsInput) {
     log.debug("Request to update ShippingDetails: {}", shippingDetailsInput);
     var shippingDetails = shippingDetailsRepository.findById(id);
@@ -224,6 +231,7 @@ public class CustomerUseCasesImpl implements CustomerUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public void deleteShippingDetails(Long id) {
     log.debug("Request to delete ShippingDetails : {}", id);
     shippingDetailsRepository.deleteById(id);

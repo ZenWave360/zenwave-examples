@@ -64,7 +64,7 @@ jbang zw -p io.zenwave360.sdk.plugins.JDLToAsyncAPIPlugin \
     idType=integer \
     idTypeFormat=int64 \
     annotations=aggregate \
-    payloadStyle=stateTransfer \
+    payloadStyle=event \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 

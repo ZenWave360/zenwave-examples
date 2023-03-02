@@ -15,8 +15,8 @@ public class DoCustomerOrderRequestConsumerServiceIT extends BaseConsumerTest {
   public void doCustomerOrderRequestTest() {
     CustomerOrderRequestPayload payload = new CustomerOrderRequestPayload();
     payload.setId(null);
-    payload.setRequestType(null);
-    payload.setCustomerOrder(null);
+    payload.setRequestType(CustomerOrderRequestPayload.RequestType.CREATE);
+    payload.setCustomerOrder(new CustomerOrder());
 
     CustomerOrderRequestPayloadHeaders headers = new CustomerOrderRequestPayloadHeaders();
 

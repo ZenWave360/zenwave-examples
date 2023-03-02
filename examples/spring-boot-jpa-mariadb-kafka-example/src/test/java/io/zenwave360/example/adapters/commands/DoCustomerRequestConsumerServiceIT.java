@@ -15,8 +15,8 @@ public class DoCustomerRequestConsumerServiceIT extends BaseConsumerTest {
   public void doCustomerRequestTest() {
     CustomerRequestPayload payload = new CustomerRequestPayload();
     payload.setId(null);
-    payload.setRequestType(null);
-    payload.setCustomer(null);
+    payload.setRequestType(CustomerRequestPayload.RequestType.CREATE);
+    payload.setCustomer(new Customer().withUsername("username"));
 
     CustomerRequestPayloadHeaders headers = new CustomerRequestPayloadHeaders();
 

@@ -9,17 +9,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AdapterEventsMapper {
-  CustomerInput asCustomerInput(Customer dto);
-
-  ShippingDetailsInput asShippingDetailsInput(ShippingDetails dto);
-
-  CustomerOrderInput asCustomerOrderInput(CustomerOrder dto);
-
-  PaymentDetailsInput asPaymentDetailsInput(PaymentDetails dto);
-
-  OrderedItemInput asOrderedItemInput(OrderedItem dto);
-
-  OrderShippingDetailsInput asOrderShippingDetailsInput(OrderShippingDetails dto);
 
   default Instant asInstant(OffsetDateTime date) {
     return date != null ? date.toInstant() : null;

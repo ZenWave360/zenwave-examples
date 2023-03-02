@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /** Service Implementation for managing [CustomerOrder]. */
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -56,6 +56,7 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public Optional<CustomerOrder> updateCustomerOrder(Long id, CustomerOrderInput customerOrderInput) {
     log.debug("Request to update CustomerOrder: {}", customerOrderInput);
     var customerOrder = customerOrderRepository.findById(id);
@@ -91,6 +92,7 @@ public class CustomerOrderUseCasesImpl implements CustomerOrderUseCases {
   }
 
   @Override
+  @Transactional(readOnly = false)
   public void deleteCustomerOrder(Long id) {
     log.debug("Request to delete CustomerOrder : {}", id);
     customerOrderRepository.deleteById(id);

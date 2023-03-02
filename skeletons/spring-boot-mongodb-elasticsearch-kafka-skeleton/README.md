@@ -59,7 +59,7 @@ jbang zw -p io.zenwave360.sdk.plugins.JDLToAsyncAPIPlugin \
     includeCommands=true \
     specFile=src/main/resources/model/orders-model.jdl \
     annotations=aggregate \
-    payloadStyle=stateTransfer \
+    payloadStyle=event \
     targetFile=src/main/resources/model/asyncapi.yml
 ```
 #### API-First Maven Plugins
